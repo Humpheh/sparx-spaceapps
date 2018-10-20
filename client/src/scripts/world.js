@@ -20,9 +20,9 @@ import { Entity } from "./entities";
 
 export const TILE_SIZE = 64;
 
-var randomisedTiles = {
+let randomisedTiles = {
     'ice_m1': ['ice_m1', 'ice_m1a'],
-    'ice_m2': ['ice_m2', 'ice_m2a'],
+    'ice_m2': ['ice_m2', 'ice_m2a', 'ice_m2b'],
     'ice_m3': ['ice_m3', 'ice_m3a']
 };
 
