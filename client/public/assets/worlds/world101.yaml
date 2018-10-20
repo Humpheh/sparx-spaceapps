@@ -1,6 +1,7 @@
 ---
 
 entities:
-  - x: 2
-    y: 2
+  - x: 11
+    y: 28
+    tileScale: 2
     sprite: iceicebaby
