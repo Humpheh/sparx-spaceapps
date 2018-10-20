@@ -35,24 +35,53 @@ entities:
             y: 204
             w: 181
             h: 128
+            showIf:
+              key: tent_1
+              check: true
+              case: eq
             events:
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'TENT_1', value: true}
+                content: {key: 'tent_1', value: true}
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'TENT_2', value: false}
+                content: {key: 'tent_2', value: false}
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'TENT_3', value: false}
+                content: {key: 'tent_3', value: false}
+              - type: text
+                text: "It's a small tent."
           - x: 493
             y: 204
             w: 199
             h: 128
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_1', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_2', value: true}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_3', value: false}
+              - type: text
+                text: "It's a small tent."
           - x: 742
             y: 204
             w: 189
             h: 128
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_1', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_2', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_3', value: true}
+              - type: text
+                text: "It's a small tent."
         events:
           - type: text
             text: "GREAT GOOGLY MOOGLY!!"
