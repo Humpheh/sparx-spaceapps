@@ -8,6 +8,7 @@ import EE, {
 } from "./events";
 import { WorldContainer } from "./world";
 import { ActionEventHandler } from "./actionEvents";
+import { Slide } from "./slide";
 
 const DEFAULT_WORLD_ID = 1;
 
@@ -20,50 +21,61 @@ function getBackground(texture, width, height) {
     return tilingBackground;
 }
 
+export const GameApp = new PIXI.Application(
+    window.innerWidth,
+    window.innerHeight,
+    {backgroundColor: 0x1099bb}
+);
+
 function start(loader, resources) {
     console.log(resources);
-    let app = new PIXI.Application(
-        window.innerWidth,
-        window.innerHeight,
-        {backgroundColor: 0x1099bb}
-    );
-    document.body.appendChild(app.view);
+    document.body.appendChild(GameApp.view);
 
     let background = getBackground(
         resources['sea_background'].texture,
         window.innerWidth * 10,
         window.innerHeight * 10
     );
-    app.stage.addChild(background);
+    GameApp.stage.addChild(background);
 
     let worldContainer = new WorldContainer(DEFAULT_WORLD_ID);
-    app.stage.addChild(worldContainer.container);
+    GameApp.stage.addChild(worldContainer.container);
 
     let character = new Character();
-    // character.setLocation(app.renderer.width / 2, app.renderer.height / 2);
-    app.stage.addChild(character.container);
+    // character.setLocation(GameApp.renderer.width / 2, GameApp.renderer.height / 2);
+    GameApp.stage.addChild(character.container);
 
     let uiContainer = new PIXI.Container();
 
-    let eventHandler = new ActionEventHandler(app.screen.width, app.screen.height, uiContainer);
+    let eventHandler = new ActionEventHandler(GameApp.screen.width, GameApp.screen.height, uiContainer);
     EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
 
-    app.stage.addChild(uiContainer);
+    GameApp.stage.addChild(uiContainer);
 
     // Text prompt update
-    app.ticker.add(t => {
+    GameApp.ticker.add(t => {
         eventHandler.ticker(t);
     });
 
+    let par = PIXI.loader.resources['vignette'].texture;
+    let vignette = new PIXI.Sprite(par);
+    vignette.width = GameApp.renderer.width;
+    vignette.height = GameApp.renderer.height;
+    GameApp.stage.addChild(vignette);
+
     // Character position updates
-    app.ticker.add(t => {
+    GameApp.ticker.add(t => {
         worldContainer.world.ticker(t, character);
         character.keyboardTick(t, worldContainer.world);
-        app.stage.pivot.x = character.getX() - app.renderer.width / 2;
-        app.stage.pivot.y = character.getY() - app.renderer.height / 2;
+        GameApp.stage.pivot.x = character.getX() - GameApp.renderer.width / 2;
+        GameApp.stage.pivot.y = character.getY() - GameApp.renderer.height / 2;
 
-        uiContainer.x = character.getX() - app.renderer.width / 2;
-        uiContainer.y = character.getY() - app.renderer.height / 2;
+        let xx = character.getX() - GameApp.renderer.width / 2;
+        let yy = character.getY() - GameApp.renderer.height / 2;
+        uiContainer.x = xx;
+        uiContainer.y = yy;
+        vignette.x = xx;
+        vignette.y = yy;
     });
 
     window.setWorld = (worldId) => { worldContainer.setWorld(worldId); };
@@ -76,6 +88,8 @@ function loadRootAssets() {
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
+        .add('fakeslide_1', 'public/assets/slides/fakeslide_1.png')
+        .add('vignette', 'public/assets/vignette.png')
         .load(start);
 }
 

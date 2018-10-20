@@ -1,5 +1,6 @@
 import { TextPrompt } from "./textprompt";
 import EE, { E_SET_WORLD_LOCK } from "./events";
+import { Slide } from "./slide";
 
 export class ActionEventHandler {
     constructor(w, h, uiContainer) {
@@ -42,6 +43,8 @@ export class ActionEventHandler {
         switch (event.type) {
         case 'text':
             return this.newTextHandler(event);
+        case 'slide':
+            return this.newSlideHandler(event);
         }
         return null;
     }
@@ -61,6 +64,26 @@ export class ActionEventHandler {
             );
             this.tickers.push(prompt);
             return prompt;
+        };
+    }
+
+    newSlideHandler(event) {
+        return (onFinish) => {
+            let slide;
+            let finishHandler = (events, done) => {
+                if (!events) {
+                    const index = this.tickers.indexOf(slide);
+                    this.tickers.splice(index, 1);
+                    onFinish();
+                } else {
+                    this.runEvents(events, done);
+                }
+            };
+            slide = new Slide(
+                event.image, this.uiContainer, event, finishHandler
+            );
+            this.tickers.push(slide);
+            return slide;
         };
     }
 

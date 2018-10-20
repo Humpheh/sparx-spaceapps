@@ -1,0 +1,55 @@
+import * as PIXI from "pixi.js";
+import { GameApp } from "./index";
+
+export class Slide {
+    // w and h here are the size of the window
+    constructor(image, parentContainer, conf, finishCallback) {
+        this.finishCallback = finishCallback;
+
+        this.container = new PIXI.Container();
+
+        let par = PIXI.loader.resources[image].texture;
+        this.sprite = new PIXI.Sprite(par);
+        this.sprite.x = GameApp.renderer.width/2;
+        this.sprite.y = GameApp.renderer.height/2;
+        this.sprite.anchor.set(0.5, 0.5);
+        this.container.addChild(this.sprite);
+
+        let startX = GameApp.renderer.width/2 - this.sprite.width / 2;
+        let startY = GameApp.renderer.height/2 - this.sprite.height / 2;
+
+        for (let hitbox of conf.hitboxes) {
+            let hitboxarea = new PIXI.Graphics();
+            hitboxarea.beginFill(0x000000, 0.25);
+            hitboxarea.drawRect(startX+hitbox.x, startY+hitbox.y, hitbox.w, hitbox.h);
+            hitboxarea.endFill();
+            hitboxarea.interactive = true;
+            hitboxarea.on('mousedown', (e) => {
+                this.triggerEvent(hitbox.event);
+            });
+
+            this.container.addChild(hitboxarea);
+        }
+
+        this.parentContainer = parentContainer;
+        parentContainer.addChild(this.container);
+    }
+
+    triggerEvent(event){
+        if (this.disabled) {
+            return;
+        }
+        console.log('clicked on hitbox', event);
+        if (event) {
+            this.disabled = true;
+            this.finishCallback && this.finishCallback(event, () => {
+                this.disabled = false;
+            });
+        } else {
+            this.finishCallback && this.finishCallback();
+            this.parentContainer.removeChild(this.container);
+        }
+    }
+
+    ticker(delta){}
+}

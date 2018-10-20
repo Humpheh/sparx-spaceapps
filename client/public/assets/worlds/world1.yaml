@@ -12,6 +12,22 @@ entities:
       - type: text
         text: "How you doin'?"
         character: tuxside
+      - type: slide
+        image: 'fakeslide_1'
+        hitboxes:
+          - x: 10
+            y: 10
+            w: 40
+            h: 40
+            event:
+              - type: text
+                text: 'HOW DID YOU DO THAT'
+              - type: text
+                text: 'WHAT DO YOU MEAN'
+          - x: 50
+            y: 50
+            w: 40
+            h: 40
 
   - x: 7
     y: 30
