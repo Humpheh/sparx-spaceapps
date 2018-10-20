@@ -106,7 +106,7 @@ entities:
             events:
               - type: event
                 event: GO_TO_WORLD
-                content: 101
+                content: 102
           - x: 814
             y: 669
             w: 161
