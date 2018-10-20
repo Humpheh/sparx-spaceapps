@@ -11,7 +11,7 @@ entities:
     sprite: iceicebaby
     events:
       - type: slide
-        image: water_slide
+        image: snow_slide
         events:
           - type: text
             text: "I live in Antarctica, one of the most beautiful parts of the world."
