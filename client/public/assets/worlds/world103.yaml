@@ -106,7 +106,7 @@ entities:
             events:
               - type: event
                 event: GO_TO_WORLD
-                content: 102
+                content: 101
           - x: 814
             y: 669
             w: 161
@@ -114,4 +114,4 @@ entities:
             events:
               - type: event
                 event: GO_TO_WORLD
-                content: 4
+                content: 3
