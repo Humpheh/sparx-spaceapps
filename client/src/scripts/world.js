@@ -1,6 +1,8 @@
 import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
+
 import { makeEventHander } from "./events";
+import { getRandomInt } from "./utils";
 
 import EE, {
     E_PLAYER_MOVED,
@@ -9,6 +11,12 @@ import { Entity } from "./entities";
 
 
 export const TILE_SIZE = 64;
+
+var randomisedTiles = {
+    'ice_m1': ['ice_m1', 'ice_m1a'],
+    'ice_m2': ['ice_m2', 'ice_m2a'],
+    'ice_m3': ['ice_m3', 'ice_m3a']
+};
 
 class Tile {
     constructor(x, y, sprite) {
@@ -29,6 +37,10 @@ class Tile {
 
     static loadSprite(textureLocation) {
         // create a new Sprite from an image path
+        if (randomisedTiles.hasOwnProperty(textureLocation)) {
+            const idx = getRandomInt(0, randomisedTiles[textureLocation].length - 1);
+            textureLocation = randomisedTiles[textureLocation][idx];
+        }
         const texture = PIXI.Texture.fromImage('public/assets/sprites/' + textureLocation + '.png');
         return new PIXI.Sprite(texture);
     }
