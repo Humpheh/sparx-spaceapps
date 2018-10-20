@@ -1,6 +1,4 @@
----
-
-# Choose your items
+# Check the climate
 
 playerStart:
   x: 0
@@ -17,4 +15,7 @@ entities:
         events:
           - type: text
             text: "YEE HOWDY BOY YOU BETTER CHECK THE CLIMATE"
-            character: tuxside
+            character: walrusside
+          - type: event
+            event: GO_TO_WORLD
+            content: 103

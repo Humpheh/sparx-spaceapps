@@ -14,6 +14,7 @@ import { Slide } from "./slide";
 
 import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
 import { HungerMeter } from "./hunger";
+import { newSnow } from "./particles";
 const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
 
 function getBackground(texture, width, height) {
@@ -70,11 +71,14 @@ function initGame(loader, resources) {
         worldContainer.doDetectCollisions(x, y);
     });
 
+
     let uiContainer = new PIXI.Container();
+
+    let snowEmitter = newSnow(uiContainer);
+    GameApp.ticker.add(snowEmitter);
 
     let hungerMeter = new HungerMeter();
     uiContainer.addChild(hungerMeter.getComponent());
-
 
     let eventHandler = new ActionEventHandler(
         GameApp.screen.width,
@@ -134,8 +138,10 @@ function loadRootAssets() {
         .add('walrusside', 'public/assets/penguin/walrus_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
         .add('snow_slide', 'public/assets/slides/snow_slide.png')
+        .add('world_map', 'public/assets/slides/world_map.jpg')
         .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
+        .add('snow', 'public/assets/particles/snow.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

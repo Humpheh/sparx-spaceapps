@@ -1,121 +1,82 @@
+import * as PIXI from "pixi.js";
+import {Emitter} from "pixi-particles";
+import { GameApp } from "./index";
+
+export function newSnow(container) {
 // Create a new emitter
-let emitter = new PIXI.particles.Emitter(
-    // The PIXI.Container to put the emitter in
-    // if using blend modes, it's important to put this
-    // on top of a bitmap, and not use the root stage Container
-    container,
+    let emitter = new Emitter(
+        container,
+        [PIXI.loader.resources['snow'].texture],
 
-    // The collection of particle images to use
-    [PIXI.Texture.fromImage('image.jpg')],
-
-    // Emitter configuration, edit this to change the look
-    // of the emitter
-    {
-        alpha: {
-            list: [
-                {
-                    value: 0.8,
-                    time: 0
-                },
-                {
-                    value: 0.1,
-                    time: 1
-                }
-            ],
-            isStepped: false
-        },
-        scale: {
-            list: [
-                {
-                    value: 1,
-                    time: 0
-                },
-                {
-                    value: 0.3,
-                    time: 1
-                }
-            ],
-            isStepped: false
-        },
-        color: {
-            list: [
-                {
-                    value: "fb1010",
-                    time: 0
-                },
-                {
-                    value: "f5b830",
-                    time: 1
-                }
-            ],
-            isStepped: false
-        },
-        speed: {
-            list: [
-                {
-                    value: 200,
-                    time: 0
-                },
-                {
-                    value: 100,
-                    time: 1
-                }
-            ],
-            isStepped: false
-        },
-        startRotation: {
-            min: 0,
-            max: 360
-        },
-        rotationSpeed: {
-            min: 0,
-            max: 0
-        },
-        lifetime: {
-            min: 0.5,
-            max: 0.5
-        },
-        frequency: 0.008,
-        spawnChance: 1,
-        particlesPerWave: 1,
-        emitterLifetime: 0.31,
-        maxParticles: 1000,
-        pos: {
-            x: 0,
-            y: 0
-        },
-        addAtBack: false,
-        spawnType: "circle",
-        spawnCircle: {
-            x: 0,
-            y: 0,
-            r: 10
+        // Emitter configuration, edit this to change the look
+        // of the emitter
+        {
+            "alpha": {
+                "start": 1,
+                "end": 0
+            },
+            "scale": {
+                "start": 0.2,
+                "end": 0.2,
+                "minimumScaleMultiplier": 1
+            },
+            "color": {
+                "start": "#ffffff",
+                "end": "#ffffff"
+            },
+            "speed": {
+                "start": 50,
+                "end": 50,
+                "minimumSpeedMultiplier": 0.001
+            },
+            "acceleration": {
+                "x": 0,
+                "y": 0
+            },
+            "maxSpeed": 0,
+            "startRotation": {
+                "min": 40,
+                "max": 50
+            },
+            "noRotation": true,
+            "rotationSpeed": {
+                "min": 0,
+                "max": 0
+            },
+            "lifetime": {
+                "min": 3,
+                "max": 6
+            },
+            "blendMode": "normal",
+            "frequency": 0.01,
+            "emitterLifetime": -1,
+            "maxParticles": 500,
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "addAtBack": false,
+            "spawnType": "rect",
+            "spawnRect": {
+                "x": 0,
+                "y": 0,
+                "w": GameApp.renderer.width,
+                "h": GameApp.renderer.height
+            }
         }
-    }
-);
+    );
 
-// Calculate the current time
-var elapsed = Date.now();
+    // Start emitting
+    emitter.emit = true;
 
-// Update function every frame
-var update = function(){
+    let time = 1000;
 
-    // Update the next frame
-    requestAnimationFrame(update);
+    // Update function every frame
+    return function (delta) {
+        time += delta;
 
-    var now = Date.now();
-
-    // The emitter requires the elapsed
-    // number of seconds since the last update
-    emitter.update((now - elapsed) * 0.001);
-    elapsed = now;
-
-    // Should re-render the PIXI Stage
-    // renderer.render(stage);
-};
-
-// Start emitting
-emitter.emit = true;
-
-// Start the update
-update();
+        // The emitter requires the elapsed
+        // number of seconds since the last update
+        emitter.update(time * 0.0001);
+    };
+}

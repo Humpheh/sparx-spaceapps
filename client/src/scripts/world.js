@@ -112,7 +112,7 @@ class World {
 
     fileToTileData(world, callback) {
         let worldData = PIXI.loader.resources['world' + world + '_tiles'].data;
-        let rows = worldData.split(/\r\n|\n/);
+        let rows = worldData ? worldData.split(/\r\n|\n/) : '';
 
         let tileData = [];
         for (let y = 0; y < rows.length; y++) {
@@ -294,10 +294,10 @@ export class WorldContainer {
     _setWorld(id) {
         console.log("Setting world to: " + id);
 
-        EE.emit(E_START_QUEUING_EVENTS);
-
         // Break any active event flow on world change
         EE.emit(E_ABORT_EVENT_FLOW);
+
+        EE.emit(E_START_QUEUING_EVENTS);
 
         if (this.world) {
             console.log("Removing previous world");

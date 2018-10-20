@@ -1,5 +1,3 @@
----
-
 # Choose your items
 
 playerStart:
@@ -114,4 +112,4 @@ entities:
             events:
               - type: event
                 event: GO_TO_WORLD
-                content: 4
+                content: 3
