@@ -2,6 +2,8 @@ import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
 import { makeEventHander } from "./events";
 
+import EE, { E_PLAYER_MOVED } from "./events";
+
 
 const tileSize = 64;
 
@@ -44,6 +46,10 @@ class FixedEntity {
 
         console.log(entitySpec);
     }
+
+    dispatchInteractionActions() {
+        console.log("In collision");
+    }
 }
 
 export class World {
@@ -58,6 +64,8 @@ export class World {
 
         this.fileToTileData(world, td => this.loadWorld(td));
         this.loadWorldSpec();
+
+        this.registerEventListeners();
     }
 
     loadWorld(tileData) {
@@ -146,4 +154,45 @@ export class World {
         let yt = Math.round(y / tileSize);
         return !this.isSolid(xt, yt);
     }
+
+    collidesAt(x, y) {
+        let collidees = [];
+        for (let entity of this.entities) {
+            if (collidesWith(entity, x, y)) {
+                collidees.push(entity);
+            }
+        }
+        return collidees;
+    }
+
+    playerMoved(x, y) {
+        let collidees = this.collidesAt(x, y);
+        for (let collidee of collidees) {
+            collidee.dispatchInteractionActions();
+        }
+    }
+
+    registerEventListeners() {
+        EE.on(E_PLAYER_MOVED, (context) => this.playerMoved(context.x, context.y), this);
+    }
+}
+
+function collidesWith(entity, x, y) {
+    // Character (x, y) is in collision with entity if the following all hold:
+    //
+    // entity_x_position - entity_width/2 <= x <= entity_x_position + entity_width/2
+    // entity_y_position - entity_height/2 <= y <= entity_y_position + entity_height/2
+    //
+    // The character is currently modelled as a particle for this purpose. We
+    // assume entities are anchored at their midpoint.
+
+    const entity_x = entity.sprite.x;
+    const entity_y = entity.sprite.y;
+    const entity_w = entity.sprite.width;
+    const entity_h = entity.sprite.height;
+
+    const collidesX = (entity_x - (entity_w / 2) <= x) && (entity_x + (entity_w / 2) >= x);
+    const collidesY = (entity_y - (entity_h / 2) <= y) && (entity_y + (entity_h / 2) >= y);
+
+    return collidesX && collidesY;
 }
