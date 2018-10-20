@@ -10,21 +10,79 @@ entities:
     tileScale: 4
     sprite: walrus
     events:
+      # - type: slide
+      #   image: snow_slide
+      #   events:
+      #     - type: text
+      #       text: "I live in Antarctica, one of the most beautiful parts of the world."
+      #       character: tuxside
+      #     - type: text
+      #       text: "Though Antarctica has been a stunning place to raise my children, I've never really travelled much."
+      #       character: tuxside
+      #     - type: text
+      #       text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
+      #       character: tuxside
+      #     - type: text
+      #       text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
+      #       character: tuxside
+      #     - type: text
+      #       text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
+      #       character: tuxside
       - type: slide
-        image: snow_slide
+        image: select_items
+        hitboxes:
+          - x: 268
+            y: 204
+            w: 181
+            h: 128
+            showIf:
+              key: tent_1
+              check: true
+              case: eq
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_1', value: true}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_2', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_3', value: false}
+              - type: text
+                text: "It's a small tent."
+          - x: 493
+            y: 204
+            w: 199
+            h: 128
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_1', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_2', value: true}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_3', value: false}
+              - type: text
+                text: "It's a small tent."
+          - x: 742
+            y: 204
+            w: 189
+            h: 128
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_1', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_2', value: false}
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'tent_3', value: true}
+              - type: text
+                text: "It's a small tent."
         events:
           - type: text
-            text: "I live in Antarctica, one of the most beautiful parts of the world."
-            character: tuxside
-          - type: text
-            text: "Though Antarctica has been a stunning place to raise my children, I've never really travelled much."
-            character: tuxside
-          - type: text
-            text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
-            character: tuxside
-          - type: text
-            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
-            character: tuxside
-          - type: text
-            text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
+            text: "GREAT GOOGLY MOOGLY!!"
             character: tuxside

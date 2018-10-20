@@ -1,3 +1,5 @@
+import Config from "./config";
+import { KeyboardEventHandler, KEY_ESCAPE } from "./keyboard";
 import { TextPrompt } from "./textprompt";
 import EE, { E_ABORT_EVENT_FLOW, E_SET_WORLD_LOCK } from "./events";
 import { Slide } from "./slide";
@@ -24,6 +26,16 @@ export class ActionEventHandler {
                 this.abortingFlow = true;
             }
         });
+
+        // Allow the ESC key to abort event flow prematurely when debug mode is
+        // active
+        new KeyboardEventHandler(
+            KEY_ESCAPE,
+            () => {
+                console.log("got escape key");
+                Config.debug && EE.emit(E_ABORT_EVENT_FLOW);
+            }
+        ).bindListeners();
     }
 
     runEvents(eventSpec, onDone) {

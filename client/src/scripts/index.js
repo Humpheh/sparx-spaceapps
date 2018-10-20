@@ -11,8 +11,9 @@ import EE, {
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
+
 import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
-const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 101;
+const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
 
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
@@ -124,8 +125,10 @@ function loadRootAssets() {
         .add('walrus', 'public/assets/sprites/walrus.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
+        .add('walrusside', 'public/assets/penguin/walrus_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
-        .add('snow_slide', 'public/assets/snow_slide.png')
+        .add('snow_slide', 'public/assets/slides/snow_slide.png')
+        .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
         .load((loader, resources) => {
             initGame(loader, resources);
