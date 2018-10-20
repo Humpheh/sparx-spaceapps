@@ -8,7 +8,7 @@ entities:
   - x: 1
     y: 0
     walkable: true
-    tileScale: 4
+    tileScale: 2
     moveSpeed: 0.5
     sprite: berg
     move:
@@ -16,8 +16,6 @@ entities:
         y: 1
       - x: 1
         y: 10
-
-entities:
   - x: 4
     y: 0
     walkable: true
@@ -29,9 +27,6 @@ entities:
         y: 1
       - x: 4
         y: 10
-
-
-entities:
   - x: 6
     y: 0
     walkable: true
