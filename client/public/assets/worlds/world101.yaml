@@ -6,20 +6,28 @@ entities:
     tileScale: 2
     sprite: iceicebaby
     events:
-      - type: text
-        text: "I live in Antarctica, one of the most beautiful parts of the world."
-        character: tuxside
-      - type: text
-        text: "Though Antarctica has been a stunning place to raise my children, but I've never really travelled much."
-        character: tuxside
-      - type: text
-        text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
-        character: tuxside
-      - type: text
-        text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
-        character: tuxside
-      - type: text
-        text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
-        character: tuxside
-      - type: text
-        text: "This travel brochure has some useful information about the Arctic."
+      - type: slide
+        image: fakeslide_1
+        hitboxes:
+          - x: 10
+            y: 10
+            w: 50
+            h: 50
+        events:
+          - type: text
+            text: "I live in Antarctica, one of the most beautiful parts of the world."
+            character: tuxside
+          - type: text
+            text: "Though Antarctica has been a stunning place to raise my children, but I've never really travelled much."
+            character: tuxside
+          - type: text
+            text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
+            character: tuxside
+          - type: text
+            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
+            character: tuxside
+          - type: text
+            text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
+            character: tuxside
+          - type: text
+            text: "This travel brochure has some useful information about the Arctic."
