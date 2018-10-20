@@ -42,13 +42,14 @@ export class Slide {
                 this.worldContainer.doCheck(check.key, check.check, check.case);
 
             let hitboxarea = new PIXI.Graphics();
-            hitboxarea.beginFill(0x000000, show ? 0.25 : 0);
+            hitboxarea.beginFill(0x000000, 1);
             hitboxarea.drawRoundedRect(startX+hitbox.x, startY+hitbox.y, hitbox.w, hitbox.h, 10);
             hitboxarea.endFill();
             hitboxarea.interactive = true;
-            hitboxarea.on('mousedown', (e) => {
-                this.triggerEvent(hitbox.events);
-            });
+            hitboxarea.alpha = show ? 0.25 : 0;
+            hitboxarea.on('mousedown', () => this.triggerEvent(hitbox.events));
+            hitboxarea.on('mouseover', () => hitboxarea.alpha = 0.1);
+            hitboxarea.on('mouseout', () => hitboxarea.alpha = show ? 0.25 : 0);
 
             this.container.addChild(hitboxarea);
         }

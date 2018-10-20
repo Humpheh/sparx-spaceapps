@@ -5,16 +5,23 @@ import re
 pathRoot = os.path.join(os.getcwd(), 'client', 'public', 'assets', 'worlds')
 
 
+def listFiles(dir):
+    return [f for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
+
 def listPathFiles(dir):
-    files = [f for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
-    csvs = [f for f in files if f.split(".")[1] == "csv"]
-    path_files = [f for f in csvs if f.startswith("path")]
-    return path_files
+    return [f for f in listCSVs(dir) if f.startswith("path")]
+
+def listWorldFiles(dir):
+    return [f for f in listCSVs(dir) if f.startswith("world")]
+
+def listCSVs(dir):
+    return [f for f in listFiles(dir) if f.split(".")[1] == "csv"]
 
 def outputCSV(csv_data, name):
     with open(os.path.join(pathRoot, name), 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter=",")
         for line in csv_data:
+            print line
             writer.writerow(line)
 
 def loadCSV(name):
@@ -122,11 +129,29 @@ convertCodes = {
     "    ": "      "
 }
 
-path_files = listPathFiles(pathRoot)
-# print path_files
-
-for p in path_files:
+def pathToWorld(p):
     lines = loadCSV(p)
 
     lines = convertLinesToWorldLines(lines)
     outputCSV(lines, re.sub('path', 'world', p))
+
+
+def worldToPath(w):
+    lines = loadCSV(w)
+
+    path_lines = lines
+    for ii, line in enumerate(lines):
+        for jj, tile in enumerate(line):
+            if tile != "      ":
+                path_lines[ii][jj] = "true"
+            else:
+                path_lines[ii][jj] = "    "
+
+    outputCSV(path_lines, re.sub('world', 'path', w))
+
+if __name__ == "__main__":
+    # files = listPathFiles(pathRoot)
+    files = listWorldFiles(pathRoot)
+    for p in files:
+        # pathToWorld(p)
+        worldToPath(p)
