@@ -1,6 +1,9 @@
 import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
 import { Character } from "./character";
+import EE, {
+    E_ENTITY_DISPATCH_ACTIONS,
+} from "./events";
 import { World } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 
@@ -21,14 +24,7 @@ app.stage.addChild(character.container);
 let uiContainer = new PIXI.Container();
 
 let eventHandler = new ActionEventHandler(app.screen.width, app.screen.height, uiContainer);
-
-eventHandler.runEvents([{
-    type: 'text',
-    text: 'Wat the hell',
-}, {
-    type: 'text',
-    text: 'Why hello there'
-}], () => console.log('done'));
+EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
 
 app.stage.addChild(uiContainer);
 

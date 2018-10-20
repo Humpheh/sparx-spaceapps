@@ -2,7 +2,10 @@ import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
 import { makeEventHander } from "./events";
 
-import EE, { E_PLAYER_MOVED } from "./events";
+import EE, {
+    E_ENTITY_DISPATCH_ACTIONS,
+    E_PLAYER_MOVED,
+} from "./events";
 
 
 const tileSize = 64;
@@ -44,11 +47,13 @@ class FixedEntity {
         this.sprite.width = tileSize;
         this.sprite.height = tileSize;
 
-        console.log(entitySpec);
+        this.events = entitySpec.events;
+
+        this.dispatchInteractionActions = this.dispatchInteractionActions.bind(this);
     }
 
     dispatchInteractionActions() {
-        console.log("In collision");
+        EE.emit(E_ENTITY_DISPATCH_ACTIONS, this.events);
     }
 }
 

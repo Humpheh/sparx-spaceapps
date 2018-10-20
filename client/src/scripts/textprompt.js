@@ -39,6 +39,8 @@ export class TextPrompt {
 
         this.parentContainer = parentContainer;
         parentContainer.addChild(this.container);
+
+        this.ticker = this.ticker.bind(this);
     }
 
     static _makeBackground(x, y, w, h) {
