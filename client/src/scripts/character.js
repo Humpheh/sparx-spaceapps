@@ -41,7 +41,7 @@ export class Character {
         animation.animationSpeed = 0.1;
         animation.width = animation.width*0.5;
         animation.height = animation.height*0.5;
-        animation.anchor.set(0.5);
+        animation.anchor.set(0.5, 0.75);
         animation.play();
 
         this.container.addChild(animation);
