@@ -3,7 +3,7 @@ import { GameApp } from "./index";
 
 export class Slide {
     // w and h here are the size of the window
-    constructor(image, parentContainer, conf, finishCallback) {
+    constructor(image, parentContainer, worldContainer, conf, finishCallback) {
         this.finishCallback = finishCallback;
 
         this.container = new PIXI.Container();
@@ -18,9 +18,13 @@ export class Slide {
         let startX = GameApp.renderer.width/2 - this.sprite.width / 2;
         let startY = GameApp.renderer.height/2 - this.sprite.height / 2;
 
-        for (let hitbox of conf.hitboxes) {
+        for (let hitbox of conf.hitboxes || []) {
+            let check = hitbox.showIf;
+            let show = !check ? true :
+                worldContainer.doCheck(check.key, check.check, check.case);
+
             let hitboxarea = new PIXI.Graphics();
-            hitboxarea.beginFill(0x000000, 0.25);
+            hitboxarea.beginFill(0x000000, show ? 0.25 : 0);
             hitboxarea.drawRect(startX+hitbox.x, startY+hitbox.y, hitbox.w, hitbox.h);
             hitboxarea.endFill();
             hitboxarea.interactive = true;
@@ -33,6 +37,26 @@ export class Slide {
 
         this.parentContainer = parentContainer;
         parentContainer.addChild(this.container);
+
+        if (conf.events) {
+            this.runEvents(conf.events, () => {
+                // If we have no hitboxes, remove the slide
+                if (!conf.hitboxes) {
+                    this.finishCallback && this.finishCallback();
+                    this.parentContainer.removeChild(this.container);
+                }
+            });
+        }
+    }
+
+    runEvents(events, callback) {
+        this.disabled = true;
+        this.finishCallback && this.finishCallback(events, () => {
+            this.disabled = false;
+            if (callback) {
+                callback();
+            }
+        });
     }
 
     triggerEvent(events){
@@ -41,10 +65,7 @@ export class Slide {
         }
         console.log('clicked on hitbox', events);
         if (events) {
-            this.disabled = true;
-            this.finishCallback && this.finishCallback(events, () => {
-                this.disabled = false;
-            });
+            this.runEvents(events);
         } else {
             this.finishCallback && this.finishCallback();
             this.parentContainer.removeChild(this.container);

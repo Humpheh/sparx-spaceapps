@@ -1,5 +1,9 @@
 ---
 
+playerStart:
+  x: 11
+  y: 28
+
 entities:
   - x: 15 # From far left
     y: 30 # From far top
@@ -20,7 +24,6 @@ entities:
       - type: event
         event: DESTROY_ENTITY
         content: 2
-
 
   - x: 10 # From far left
     y: 30 # From far top
@@ -58,29 +61,32 @@ entities:
 
       - type: slide
         image: 'fakeslide_1'
-        hitboxes:
-          - x: 10
-            y: 10
-            w: 40
-            h: 40
-            showIf:
-              - key: val
-                check: true
-                case: eq # gt, lt
-            events:
-              - type: text
-                text: 'HOW DID YOU DO THAT'
-              - type: text
-                text: 'WHAT DO YOU MEAN'
-          - x: 50
-            y: 50
-            w: 40
-            h: 40
+        events:
+          - type: text
+            text: 'HOW DID YOU DO THAT'
+          - type: text
+            text: 'WHAT DO YOU MEAN'
+          - type: event
+            event: SET_GLOBAL
+            content: {key: 'val', value: false}
+#        hitboxes:
+#          - x: 10
+#            y: 10
+#            w: 40
+#            h: 40
+#            showIf:
+#              key: val
+#              check: false
+#              case: eq # gt, lt
+#          - x: 50
+#            y: 50
+#            w: 40
+#            h: 40
 
       # Example internal event (this destroys itself)
-      - type: event
-        event: DESTROY_ENTITY
-        content: 1
+#      - type: event
+#        event: DESTROY_ENTITY
+#        content: 1
 
       # Example internal event (this sets a global variable)
       - type: event
@@ -107,14 +113,26 @@ entities:
         event: DEPEND_GLOBAL
         content: {key: 'mylist', value: 7}
 
-  - x: 7
-    y: 30
+  - x: 2
+    y: 33
     walkable: true
-    tileScale: 2
-    sprite: scratchcat
-    moveSpeed: 0.1
+    tileScale: 1
+    sprite: berg
+    moveSpeed: 1
     move:
-      - x: 7
-        y: 30
-      - x: 7
-        y: 35
+      - x: 2
+        y: 33
+      - x: 6
+        y: 33
+
+  - x: 4
+    y: 32
+    walkable: true
+    tileScale: 1
+    sprite: berg
+    moveSpeed: 1
+    move:
+      - x: 2
+        y: 32
+      - x: 6
+        y: 32

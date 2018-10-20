@@ -103,7 +103,8 @@ export class ActionEventHandler {
                 }
             };
             slide = new Slide(
-                event.image, this.uiContainer, event, finishHandler
+                event.image, this.uiContainer, this.worldContainer,
+                event, finishHandler
             );
             this.tickers.push(slide);
             return slide;
