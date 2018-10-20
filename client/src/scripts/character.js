@@ -12,7 +12,7 @@ const SPRITE_IMAGE = 'public/assets/bunny.png';
 const MOVE_PER_TICK = 3;
 
 export class Character {
-    constructor(world) {
+    constructor() {
         this.container = new PIXI.Container();
 
         const sprite = PIXI.Sprite.fromImage(SPRITE_IMAGE);
@@ -71,25 +71,5 @@ export class Character {
 
     getY() {
         return this.sprite.y;
-    }
-}
-
-
-class CharacterKeyboardListener {
-    constructor(character) {
-        this.character = character;
-        this.eventHandlers = [];
-    }
-
-    bindKey() {
-        let handler = new KeyboardEventHandler(
-            KEY_DOWN,
-            () => {
-                let y = this.character.getY();
-                this.character.sprite.y = y + 5;
-            }
-        );
-        handler.bindListeners();
-        this.eventHandlers.push(handler);
     }
 }

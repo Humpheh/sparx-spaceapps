@@ -20,8 +20,11 @@ app.stage.addChild(character.container);
 
 let uiContainer = new PIXI.Container();
 
-let textPrompt = new TextPrompt('Hello there! What the f did you just say to me I\'ll have you know that this text is going to wrap', 0, 0, app.screen.width, 100);
-uiContainer.addChild(textPrompt.getContainer());
+let textPrompt = new TextPrompt(
+    'Hello there! What the f did you just say to me I\'ll have you know that this text is going to wrap',
+    0, 0, app.screen.width, 100,
+    uiContainer
+);
 
 app.stage.addChild(uiContainer);
 

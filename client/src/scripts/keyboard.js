@@ -3,6 +3,7 @@ export const KEY_DOWN = 40;
 export const KEY_UP = 38;
 export const KEY_LEFT = 37;
 export const KEY_RIGHT = 39;
+export const KEY_SPACE = 32;
 
 
 export class KeyboardEventHandler {
@@ -10,6 +11,7 @@ export class KeyboardEventHandler {
         // default properties
         Object.assign(this, {
             "isKeyDown": false,
+            "isKeyUp": true,
         });
 
         this.allowRepeat = true;
@@ -36,6 +38,7 @@ export class KeyboardEventHandler {
         if (evt.keyCode === this.keyCode) {
             if (this.allowRepeat || !this.isKeyDown) {
                 this.isKeyDown = true;
+                this.isKeyUp = false;
                 this.onPress();
             }
         }
@@ -45,6 +48,7 @@ export class KeyboardEventHandler {
     upHandler(evt) {
         if (evt.keyCode === this.keyCode) {
             this.isKeyDown = false;
+            this.isKeyUp = true;
             this.onRelease();
         }
         evt.preventDefault();
