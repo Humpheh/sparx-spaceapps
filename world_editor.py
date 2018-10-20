@@ -1,6 +1,7 @@
 import os
 import csv
 import re
+import copy
 from pathsToWorlds import convertLinesToWorldLines, outputCSV
 from flask import Flask, render_template, abort, request
 
@@ -11,7 +12,8 @@ pathRoot = os.path.join(os.getcwd(), 'client', 'public', 'assets', 'worlds')
 
 @app.route("/<path>")
 def index(path):
-    if not path:
+    # print path
+    if (not path) or (path == "favicon.ico"):
         abort(404)
 
     lines = []
@@ -29,20 +31,17 @@ def save(path):
         abort(404)
 
     lines = []
-    print request.data[:-1]
+    # print repr(request.data[:-1])
     for r in request.data[:-1].split(",,"):
         # print r.split(','), len(r.split(','))
         lines.append(r.split(','))
 
-    lines_with_comma_ending = lines
-    for lc in lines_with_comma_ending:
-        lc.append('')
-        lines_with_comma_ending.append(lc)
-
-    outputCSV(lines_with_comma_ending, path)
+    lines_with_comma = copy.deepcopy(lines)
+    for l in lines_with_comma:
+        l.append("")
+    outputCSV(lines_with_comma, path)
 
     lines = convertLinesToWorldLines(lines)
-    print lines
     outputCSV(lines, re.sub('path', 'world', path))
     return ('', 204)
 

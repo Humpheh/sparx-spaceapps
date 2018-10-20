@@ -39,34 +39,36 @@
                         tile.style.backgroundColor = 'blue';
                      }
 
-                     tile.onmouseover = function() {
-                        console.log(mouse_clicked);
-                        var r = this.getAttribute("r");
-                        var t = this.getAttribute("t");
+                     if (t < data[r].length - 1) {
+                         tile.onmouseover = function() {
+                            console.log(mouse_clicked);
+                            var r = this.getAttribute("r");
+                            var t = this.getAttribute("t");
 
-                        if (mouse_clicked) {
-                           console.log('click', r, t);
-                           if (this.style.backgroundColor == 'white') {
-                              this.style.backgroundColor = 'blue';
-                              data[r][t] = '    ';
-                           } else {
-                              this.style.backgroundColor = 'white';
-                              data[r][t] = 'true';
-                           }
-                        }
-                     };
-                     tile.onclick = function(e) {
-                        var r = this.getAttribute("r");
-                        var t = this.getAttribute("t");
+                            if (mouse_clicked) {
+                               console.log('click', r, t);
+                               if (this.style.backgroundColor == 'white') {
+                                  this.style.backgroundColor = 'blue';
+                                  data[r][t] = '    ';
+                               } else {
+                                  this.style.backgroundColor = 'white';
+                                  data[r][t] = 'true';
+                               }
+                            }
+                         };
+                         tile.onclick = function(e) {
+                            var r = this.getAttribute("r");
+                            var t = this.getAttribute("t");
 
-                        console.log('click', r, t);
-                        if (this.style.backgroundColor == 'white') {
-                           this.style.backgroundColor = 'blue';
-                           data[r][t] = '    ';
-                        } else {
-                           this.style.backgroundColor = 'white';
-                           data[r][t] = 'true';
-                        }
+                            console.log('click', r, t);
+                            if (this.style.backgroundColor == 'white') {
+                               this.style.backgroundColor = 'blue';
+                               data[r][t] = '    ';
+                            } else {
+                               this.style.backgroundColor = 'white';
+                               data[r][t] = 'true';
+                            }
+                         }
                      }
                      row.appendChild(tile);
                   }
