@@ -1,5 +1,10 @@
 import * as PIXI from "pixi.js";
-import EE, { E_ENTITY_DISPATCH_ACTIONS, E_SET_WORLD_LOCK } from "./events";
+import EE, {
+    E_ADD_HUNGER,
+    E_DESTROY_ENTITY,
+    E_ENTITY_DISPATCH_ACTIONS,
+    E_SET_WORLD_LOCK
+} from "./events";
 import { TILE_SIZE } from "./world";
 
 export class Entity {
@@ -74,5 +79,33 @@ export class Entity {
         if (Math.abs(xDiff) < 10 && Math.abs(yDiff) < 10) {
             this.moveIndex = (this.moveIndex+1) % this.entitySpec.move.length;
         }
+    }
+}
+
+export class FishEntity extends Entity {
+    constructor(x, y) {
+        let id = Math.random();
+        super(x, y, PIXI.loader.resources['fish'].texture, {
+            id: id,
+            events: [{
+                type: 'event',
+                event: E_ADD_HUNGER,
+                content: 25,
+            }, {
+                type: 'event',
+                event: E_DESTROY_ENTITY,
+                content: id,
+            }]
+        });
+        this.startY = this.sprite.y;
+        this.time = Math.random()*200;
+    }
+
+    ticker(delta, character) {
+        this.time += delta;
+        let sinTime = Math.sin(this.time/15);
+        sinTime = sinTime > 0 ? 0 : sinTime;
+        this.sprite.y = this.startY + (sinTime * 10);
+        this.sprite.rotation = sinTime * Math.PI/10 * Math.random();
     }
 }

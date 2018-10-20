@@ -14,6 +14,8 @@ export const E_ABORT_EVENT_FLOW = 'ABORT_EVENT_FLOW';
 export const E_ABORT_EVENT_FLOW_NEW_WORLD = 'ABORT_EVENT_FLOW_NEW_WORLD';
 export const E_START_QUEUING_EVENTS = 'START_QUEUING_EVENTS';
 export const E_STOP_QUEUING_EVENTS = 'STOP_QUEUING_EVENTS';
+export const E_ADD_HUNGER = 'ADD_HUNGER';
+export const E_RUN_EVENTS = 'RUN_EVENTS';
 
 let EE = new EventEmitter();
 
@@ -24,7 +26,6 @@ function addDebugLogger(event) {
 }
 
 if (Config.debug) {
-    addDebugLogger(E_PLAYER_MOVED);
     addDebugLogger(E_SET_WORLD_LOCK);
     addDebugLogger(E_ENTITY_DISPATCH_ACTIONS);
     addDebugLogger(E_DESTROY_ENTITY);

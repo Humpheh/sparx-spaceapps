@@ -13,6 +13,7 @@ import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
 
 import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
+import { HungerMeter } from "./hunger";
 const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
 
 function getBackground(texture, width, height) {
@@ -71,6 +72,10 @@ function initGame(loader, resources) {
 
     let uiContainer = new PIXI.Container();
 
+    let hungerMeter = new HungerMeter();
+    uiContainer.addChild(hungerMeter.getComponent());
+
+
     let eventHandler = new ActionEventHandler(
         GameApp.screen.width,
         GameApp.screen.height,
@@ -121,6 +126,7 @@ function loadRootAssets() {
         .add('public/assets/penguin/penguin2.json')
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
         .add('berg', 'public/assets/sprites/berg.png')
+        .add('fish', 'public/assets/sprites/fish.png')
         .add('berg_big', 'public/assets/sprites/berg_big.png')
         .add('walrus', 'public/assets/sprites/walrus.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')

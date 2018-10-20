@@ -16,10 +16,11 @@ import { getRandomInt } from "./utils";
 import EE, {
     E_PLAYER_MOVED,
 } from "./events";
-import { Entity } from "./entities";
+import { Entity, FishEntity } from "./entities";
 
 
 export const TILE_SIZE = 64;
+export const FISH_CHANCE = 0.002;
 
 let randomisedTiles = {
     'ice_m1': ['ice_m1', 'ice_m1a'],
@@ -88,10 +89,19 @@ class World {
             let row = [];
             for (let x = 0; x < tileData[y].length; x++) {
                 let tile = this.createTile(x, y, tileData[y][x]);
+                if (tile && Math.random() < FISH_CHANCE) {
+                    this.createFish(x, y);
+                }
                 row.push(tile);
             }
             this.world.push(row);
         }
+    }
+
+    createFish(x, y) {
+        let fish = new FishEntity(x, y);
+        this.container.addChild(fish.sprite);
+        this.entities.push(fish);
     }
 
     loadWorldSpec(world) {
@@ -128,6 +138,9 @@ class World {
     createTile(x, y, data) {
         let parts = data.split(',');
         let img = parts[0];
+        if (img.trim() === '') {
+            return null;
+        }
         let solid = (parts.length > 1 && parts[1] === 's');
 
         let gridSpace = new Tile(x, y, img, solid);

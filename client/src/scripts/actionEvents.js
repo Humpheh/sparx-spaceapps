@@ -2,8 +2,7 @@ import Config from "./config";
 import { KeyboardEventHandler, KEY_ESCAPE } from "./keyboard";
 import { TextPrompt } from "./textprompt";
 import EE, {
-    E_ABORT_EVENT_FLOW,
-    E_SET_WORLD_LOCK,
+    E_ABORT_EVENT_FLOW, E_RUN_EVENTS, E_SET_WORLD_LOCK,
     E_START_QUEUING_EVENTS, E_STOP_QUEUING_EVENTS
 } from "./events";
 import { Slide } from "./slide";
@@ -60,6 +59,10 @@ export class ActionEventHandler {
         EE.on(E_STOP_QUEUING_EVENTS, () => {
             this.queueEvents = false;
             this._dispatchQueuedEvents();
+        });
+
+        EE.on(E_RUN_EVENTS, (data, onDone) => {
+            this.runEvents(data, onDone);
         });
 
         // Allow the ESC key to abort event flow prematurely when debug mode is
