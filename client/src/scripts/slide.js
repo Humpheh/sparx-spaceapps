@@ -58,10 +58,10 @@ export class Slide {
 
     runEvents(events, callback) {
         this.disabled = true;
-        this.finishCallback && this.finishCallback(events, () => {
+        this.finishCallback && this.finishCallback(events, (aborted) => {
             this.disabled = false;
             if (callback) {
-                callback();
+                callback(aborted);
             }
         });
     }
@@ -72,8 +72,12 @@ export class Slide {
         }
         console.log('clicked on hitbox', events);
         if (events) {
-            this.runEvents(events, () => {
+            this.runEvents(events, (aborted) => {
                 this.parentContainer.removeChild(this.container);
+                if (aborted) {
+                    this.finishCallback && this.finishCallback();
+                    return;
+                }
                 this.setupContainer();
             });
         } else {
