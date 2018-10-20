@@ -126,7 +126,8 @@ function loadRootAssets() {
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
-        .add('snow_slide', 'public/assets/snow_slide.png')
+        .add('snow_slide', 'public/assets/slides/snow_slide.png')
+        .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
         .load((loader, resources) => {
             initGame(loader, resources);
