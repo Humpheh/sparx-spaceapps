@@ -2,7 +2,7 @@
 
 playerStart:
   x: 11
-  y: 28
+  y: 26
 
 entities:
   - x: 15 # From far left
