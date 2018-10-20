@@ -207,7 +207,7 @@ class World {
         });
     }
 
-    onPlayerMove(x, y) {
+    doDetectCollisions(x, y) {
         let collidees = this.collidesAt(x, y);
         this.updateCollisionStates(collidees);
     }
@@ -222,14 +222,9 @@ class World {
 export class WorldContainer {
     constructor(initialId) {
         this.values = {};
-
         this.world = null;
-        this.setWorld = this.setWorld.bind(this);
-
         this.worldChangeCallbacks = [];
-
         this.container = new PIXI.Container();
-
         this.registerEventListeners();
 
         EE.on(E_SET_GLOBAL, (vals) => {
@@ -270,16 +265,19 @@ export class WorldContainer {
         return false;
     }
 
+    doDetectCollisions(x, y) {
+        this.world && this.world.doDetectCollisions(x, y);
+    }
+
     registerWorldChangeCallback(fn) {
         this.worldChangeCallbacks.push(fn);
     }
 
     registerEventListeners() {
-        EE.on(E_PLAYER_MOVED, (context) => this.world.onPlayerMove(context.x, context.y), this.world);
-        EE.on(E_GO_TO_WORLD, (worldId) => this.setWorld(worldId));
+        EE.on(E_GO_TO_WORLD, (worldId) => this._setWorld(worldId));
     }
 
-    setWorld(id) {
+    _setWorld(id) {
         console.log("Setting world to: " + id);
 
         // Break any active event flow on world change
@@ -294,7 +292,7 @@ export class WorldContainer {
         this.container.addChild(this.world.container);
 
         for (let cb of this.worldChangeCallbacks) {
-            cb(this.world);
+            cb(this.world, this);
         }
     }
 }

@@ -5,6 +5,8 @@ import yaml from "js-yaml";
 import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
+    E_GO_TO_WORLD,
+    E_PLAYER_MOVED,
 } from "./events";
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
@@ -27,7 +29,7 @@ export const GameApp = new PIXI.Application(
     {backgroundColor: 0x1099bb}
 );
 
-function start(loader, resources) {
+function initGame(loader, resources) {
     console.log(resources);
     document.body.appendChild(GameApp.view);
 
@@ -61,7 +63,10 @@ function start(loader, resources) {
             tileToGlobal(startingPosition.y)
         );
     });
-    worldContainer.setWorld(DEFAULT_WORLD_ID);
+    worldContainer.registerWorldChangeCallback((_, worldContainer) => {
+        let { x, y } = character.getLocation();
+        worldContainer.doDetectCollisions(x, y);
+    });
 
     let uiContainer = new PIXI.Container();
 
@@ -72,6 +77,7 @@ function start(loader, resources) {
         worldContainer
     );
     EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
+    EE.on(E_PLAYER_MOVED, (context) => worldContainer.doDetectCollisions(context.x, context.y));
 
     GameApp.stage.addChild(uiContainer);
 
@@ -101,7 +107,11 @@ function start(loader, resources) {
         vignette.y = yy;
     });
 
-    window.setWorld = (worldId) => { worldContainer.setWorld(worldId); };
+    window.setWorld = (worldId) => { EE.emit(E_GO_TO_WORLD, worldId); };
+}
+
+function start() {
+    EE.emit(E_GO_TO_WORLD, DEFAULT_WORLD_ID);
 }
 
 function loadRootAssets() {
@@ -117,7 +127,10 @@ function loadRootAssets() {
         .add('water_slide', 'public/assets/slides/water_slide.png')
         .add('snow_slide', 'public/assets/snow_slide.png')
         .add('vignette', 'public/assets/vignette.png')
-        .load(start);
+        .load((loader, resources) => {
+            initGame(loader, resources);
+            start();
+        });
 }
 
 let worldLoader = new PIXI.loaders.Loader();
