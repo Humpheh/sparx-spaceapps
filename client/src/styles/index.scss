@@ -1,8 +1,12 @@
 $body-color: blue;
 
+html {
+    height: 100%;
+}
+
 body {
   color: $body-color;
   padding: 0;
   margin: 0;
- 
+  height: 100%;
 }
