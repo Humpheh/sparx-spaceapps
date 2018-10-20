@@ -37,6 +37,17 @@ export class Slide {
 
         this.parentContainer = parentContainer;
         parentContainer.addChild(this.container);
+
+        if (conf.events) {
+            this.runEvents(conf.events);
+        }
+    }
+
+    runEvents(events) {
+        this.disabled = true;
+        this.finishCallback && this.finishCallback(events, () => {
+            this.disabled = false;
+        });
     }
 
     triggerEvent(events){
@@ -45,10 +56,7 @@ export class Slide {
         }
         console.log('clicked on hitbox', events);
         if (events) {
-            this.disabled = true;
-            this.finishCallback && this.finishCallback(events, () => {
-                this.disabled = false;
-            });
+            this.runEvents(events);
         } else {
             this.finishCallback && this.finishCallback();
             this.parentContainer.removeChild(this.container);

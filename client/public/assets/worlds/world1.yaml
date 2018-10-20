@@ -57,6 +57,14 @@ entities:
 
       - type: slide
         image: 'fakeslide_1'
+        events:
+          - type: text
+            text: 'HOW DID YOU DO THAT'
+          - type: text
+            text: 'WHAT DO YOU MEAN'
+          - type: event
+            event: SET_GLOBAL
+            content: {key: 'val', value: false}
         hitboxes:
           - x: 10
             y: 10
@@ -66,14 +74,6 @@ entities:
               key: val
               check: false
               case: eq # gt, lt
-            events:
-              - type: text
-                text: 'HOW DID YOU DO THAT'
-              - type: text
-                text: 'WHAT DO YOU MEAN'
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'val', value: false}
           - x: 50
             y: 50
             w: 40
