@@ -60,7 +60,7 @@ entities:
         content: false
 
       - type: slide
-        image: 'fakeslide_1'
+        image: water_slide
         events:
           - type: text
             text: 'HOW DID YOU DO THAT'

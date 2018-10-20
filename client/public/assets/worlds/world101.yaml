@@ -1,25 +1,23 @@
 ---
 
+playerStart:
+  x: 1
+  y: 1
+
 entities:
-  - x: 11
-    y: 28
+  - x: 1
+    y: 1
     tileScale: 4
     sprite: walrus
-    flip: true
     events:
       - type: slide
-        image: fakeslide_1
-        hitboxes:
-          - x: 10
-            y: 10
-            w: 50
-            h: 50
+        image: snow_slide
         events:
           - type: text
             text: "I live in Antarctica, one of the most beautiful parts of the world."
             character: tuxside
           - type: text
-            text: "Though Antarctica has been a stunning place to raise my children, but I've never really travelled much."
+            text: "Though Antarctica has been a stunning place to raise my children, I've never really travelled much."
             character: tuxside
           - type: text
             text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
@@ -30,5 +28,3 @@ entities:
           - type: text
             text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
             character: tuxside
-          - type: text
-            text: "This travel brochure has some useful information about the Arctic."
