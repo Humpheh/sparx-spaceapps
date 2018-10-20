@@ -45,6 +45,7 @@ export class Entity {
         }
         this.moveIndex = this.moveIndex || 0;
 
+        let speed = this.entitySpec.moveSpeed || 1;
         let target = this.entitySpec.move[this.moveIndex];
 
         let xDiff = this.sprite.x - (target.x * TILE_SIZE);
@@ -52,11 +53,11 @@ export class Entity {
 
         let movedX = 0, movedY = 0;
         if (Math.abs(xDiff) > 10) {
-            movedX = (xDiff > 0 ? -1 : 1) * delta;
+            movedX = (xDiff > 0 ? -1 : 1) * delta * speed;
             this.sprite.x += movedX;
         }
         if (Math.abs(yDiff) > 10) {
-            movedY = (yDiff > 0 ? -1 : 1) * delta;
+            movedY = (yDiff > 0 ? -1 : 1) * delta * speed;
             this.sprite.y += movedY;
         }
 

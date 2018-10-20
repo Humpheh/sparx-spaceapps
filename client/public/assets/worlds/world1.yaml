@@ -1,20 +1,24 @@
 ---
 
 entities:
-  - x: 0 # From far left
-    y: 0 # From far top
+  - x: 10 # From far left
+    y: 30 # From far top
     sprite: scratchcat
     events:
       - type: text
         text: 'Sup dawg'
+        character: tuxside
+        flipSide: true
       - type: text
         text: "How you doin'?"
+        character: tuxside
 
   - x: 7
     y: 30
     walkable: true
     tileScale: 2
     sprite: scratchcat
+    moveSpeed: 0.1
     move:
       - x: 7
         y: 30

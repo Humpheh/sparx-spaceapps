@@ -6,9 +6,10 @@ import {
 } from "./keyboard";
 
 const TEXT_PADDING = 20;
+const BOX_MARGIN = 20;
 
 export class TextPrompt {
-    constructor(text, x, y, w, h, parentContainer, finishCallback) {
+    constructor(text, x, y, w, h, conf, parentContainer, finishCallback) {
         this.textLen = 0;
         this.text = text;
         this.timer = 0;
@@ -23,11 +24,11 @@ export class TextPrompt {
             fontFamily: 'Tahoma',
             fontSize: 22,
             wordWrap: true,
-            wordWrapWidth: w - TEXT_PADDING*2
+            wordWrapWidth: w - TEXT_PADDING*2 - BOX_MARGIN*2
         }));
 
-        this.textComponent.x = x + TEXT_PADDING;
-        this.textComponent.y = y + TEXT_PADDING;
+        this.textComponent.x = x + TEXT_PADDING + BOX_MARGIN;
+        this.textComponent.y = y + TEXT_PADDING + BOX_MARGIN;
 
         let graphics = TextPrompt._makeBackground(x, y, w, h);
         this.readyPrompt = TextPrompt._makeReadyPrompt(x, y, w, h);
@@ -35,11 +36,24 @@ export class TextPrompt {
         this.container.addChild(graphics);
         this.container.addChild(this.textComponent);
 
-        this.dismissHandler.bindListeners();
+        if (conf.character) {
+            let par = PIXI.loader.resources[conf.character].texture;
+            let sprite = new PIXI.Sprite(par);
+            sprite.scale.x = 0.5;
+            sprite.scale.y = 0.5;
+            sprite.x = BOX_MARGIN;
+            if (conf.flipSide) {
+                sprite.scale.x = -0.5;
+                sprite.x = x - BOX_MARGIN + w;
+            }
+            sprite.y = y-sprite.height+BOX_MARGIN;
+            this.container.addChild(sprite);
+        }
 
         this.parentContainer = parentContainer;
         parentContainer.addChild(this.container);
 
+        this.dismissHandler.bindListeners();
         this.ticker = this.ticker.bind(this);
     }
 
@@ -47,7 +61,7 @@ export class TextPrompt {
         let graphics = new PIXI.Graphics();
         graphics.lineStyle(5, 0xFFFFFF, 1);
         graphics.beginFill(0xFFFFFF, 0.8);
-        graphics.drawRoundedRect(x+5, y+5, w-10, h-10, 10);
+        graphics.drawRoundedRect(x+BOX_MARGIN, y+BOX_MARGIN, w-BOX_MARGIN*2, h-BOX_MARGIN*2, 10);
         graphics.endFill();
         return graphics;
     }
@@ -55,7 +69,7 @@ export class TextPrompt {
     static _makeReadyPrompt(x, y, w, h) {
         let readyPrompt = new PIXI.Graphics();
         readyPrompt.lineStyle(0);
-        readyPrompt.beginFill(0xFF00BB, 1);
+        readyPrompt.beginFill(0xFF00FF, 1);
         readyPrompt.drawRoundedRect(x+w-TEXT_PADDING-20, y+h-TEXT_PADDING-20, 20, 20, 4);
         readyPrompt.endFill();
         return readyPrompt;

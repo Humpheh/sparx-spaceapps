@@ -69,4 +69,5 @@ PIXI.loader
     .add('world1_tiles', 'public/assets/worlds/world1.csv')
     .add('public/assets/penguin/penguin2.json')
     .add('scratchcat', 'public/assets/sprites/scratchcat.png')
+    .add('tuxside', 'public/assets/penguin/tux_side.png')
     .load(start);

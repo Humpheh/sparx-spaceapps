@@ -56,8 +56,8 @@ export class ActionEventHandler {
             };
             prompt = new TextPrompt(
                 event.text,
-                0, this.worldHeight - 150, this.worldWidth, 150,
-                this.uiContainer, finishHandler
+                0, this.worldHeight - 200, this.worldWidth, 200,
+                event, this.uiContainer, finishHandler
             );
             this.tickers.push(prompt);
             return prompt;
