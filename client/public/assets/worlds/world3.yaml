@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 2 #16
-  y: 24 #38
+  x: 16 #16
+  y: 38 #38
 
 entities:
   - x: -0.5
@@ -16,3 +16,14 @@ entities:
         y: 20
       - x: -0.5
         y: 24
+  - x: 6.5
+    y: 12
+    walkable: true
+    tileScale: 2
+    moveSpeed: 1
+    sprite: berg
+    move:
+      - x: 6.5
+        y: 12
+      - x: 6.5
+        y: 16
