@@ -114,7 +114,7 @@ function loadRootAssets() {
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
-        .add('blurred_snow_slide', 'public/assets/blurred_snow_slide.png')
+        .add('snow_slide', 'public/assets/snow_slide.png')
         .add('vignette', 'public/assets/vignette.png')
         .load(start);
 }
