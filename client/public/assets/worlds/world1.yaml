@@ -30,7 +30,7 @@ entities:
         text: "How you doin'?"
         character: tuxside
 
-      // GO_TO_WORLD will automatically abort further events in this interaction
+      # GO_TO_WORLD will automatically abort further events in this interaction
       - type: event
         event: GO_TO_WORLD
         content: 2
