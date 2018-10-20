@@ -31,10 +31,18 @@ def save(path):
     lines = []
     print request.data[:-1]
     for r in request.data[:-1].split(",,"):
-        print r.split(','), len(r.split(','))
+        # print r.split(','), len(r.split(','))
         lines.append(r.split(','))
-    # print lines
+
+    lines_with_comma_ending = lines
+    for lc in lines_with_comma_ending:
+        lc.append('')
+        lines_with_comma_ending.append(lc)
+
+    outputCSV(lines_with_comma_ending, path)
+
     lines = convertLinesToWorldLines(lines)
+    print lines
     outputCSV(lines, re.sub('path', 'world', path))
     return ('', 204)
 
