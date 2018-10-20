@@ -25,7 +25,7 @@ export class Slide {
             hitboxarea.endFill();
             hitboxarea.interactive = true;
             hitboxarea.on('mousedown', (e) => {
-                this.triggerEvent(hitbox.event);
+                this.triggerEvent(hitbox.events);
             });
 
             this.container.addChild(hitboxarea);
@@ -35,14 +35,14 @@ export class Slide {
         parentContainer.addChild(this.container);
     }
 
-    triggerEvent(event){
+    triggerEvent(events){
         if (this.disabled) {
             return;
         }
-        console.log('clicked on hitbox', event);
-        if (event) {
+        console.log('clicked on hitbox', events);
+        if (events) {
             this.disabled = true;
-            this.finishCallback && this.finishCallback(event, () => {
+            this.finishCallback && this.finishCallback(events, () => {
                 this.disabled = false;
             });
         } else {

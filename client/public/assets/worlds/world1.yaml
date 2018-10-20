@@ -11,6 +11,20 @@ entities:
         character: tuxside
         flipSide: true
 
+      # Example internal event (this sets a global variable)
+      - type: event
+        event: SET_GLOBAL
+        content: {key: 'val', value: false}
+
+      - type: check
+        key: val
+        check: true
+        case: eq # gt, lt
+        events:
+          - type: text
+            text: 'Sorry, you cannot do this now'
+          - type: quit
+
       # Shows a text box
       - type: text
         text: "How you doin'?"
@@ -28,7 +42,7 @@ entities:
             y: 10
             w: 40
             h: 40
-            event:
+            events:
               - type: text
                 text: 'HOW DID YOU DO THAT'
               - type: text

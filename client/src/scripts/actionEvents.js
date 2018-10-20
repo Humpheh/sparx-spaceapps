@@ -3,10 +3,11 @@ import EE, { E_SET_WORLD_LOCK } from "./events";
 import { Slide } from "./slide";
 
 export class ActionEventHandler {
-    constructor(w, h, uiContainer) {
+    constructor(w, h, uiContainer, worldContainer) {
         this.worldWidth = w;
         this.worldHeight = h;
         this.uiContainer = uiContainer;
+        this.worldContainer = worldContainer;
 
         this.tickers = [];
     }
@@ -47,8 +48,21 @@ export class ActionEventHandler {
             return this.newSlideHandler(event);
         case 'event':
             return this.newEventDispatcher(event);
+        case 'check':
+            return this.newCheck(event);
         }
         return null;
+    }
+
+    newCheck(event) {
+        return (onFinish) => {
+            let ok = this.worldContainer.doCheck(event.key, event.check, event.case);
+            if (!ok) {
+                this.runEvents(event.events, onFinish);
+            } else {
+                onFinish();
+            }
+        };
     }
 
     newTextHandler(event) {

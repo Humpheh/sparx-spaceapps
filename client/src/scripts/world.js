@@ -236,6 +236,23 @@ export class WorldContainer {
         });
     }
 
+    doCheck(key, val, check) {
+        let value = this.values[key];
+        if (!value) {
+            return false;
+        }
+        switch (check) {
+            case 'eq':
+                return value == val;
+            case 'gt':
+                return value > val;
+            case 'lt':
+                return value < val;
+        }
+        console.error('unknown comparator', check);
+        return false;
+    }
+
     registerEventListeners() {
         EE.on(E_PLAYER_MOVED, (context) => this.world.onPlayerMove(context.x, context.y), this.world);
     }

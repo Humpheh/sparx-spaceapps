@@ -47,7 +47,12 @@ function start(loader, resources) {
 
     let uiContainer = new PIXI.Container();
 
-    let eventHandler = new ActionEventHandler(GameApp.screen.width, GameApp.screen.height, uiContainer);
+    let eventHandler = new ActionEventHandler(
+        GameApp.screen.width,
+        GameApp.screen.height,
+        uiContainer,
+        worldContainer
+    );
     EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
 
     GameApp.stage.addChild(uiContainer);
