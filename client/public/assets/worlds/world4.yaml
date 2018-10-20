@@ -15,7 +15,7 @@ entities:
       - x: 1
         y: 1
       - x: 1
-        y: 10
+        y: 30
   - x: 4
     y: 0
     walkable: true
@@ -26,7 +26,7 @@ entities:
       - x: 4
         y: 1
       - x: 4
-        y: 10
+        y: 30
   - x: 6
     y: 0
     walkable: true
@@ -37,7 +37,7 @@ entities:
       - x: 6
         y: 1
       - x: 6
-        y: 10
+        y: 30
   - x: 10
     y: 0
     walkable: true
@@ -48,7 +48,7 @@ entities:
       - x: 10
         y: 1
       - x: 10
-        y: 10
+        y: 30
   - x: 13
     y: 0
     walkable: true
@@ -59,4 +59,26 @@ entities:
       - x: 13
         y: 1
       - x: 13
-        y: 10
+        y: 30
+  - x: 12
+    y: 0
+    walkable: true
+    tileScale: 1
+    moveSpeed: 0.1
+    sprite: berg
+    move:
+      - x: 12
+        y: 1
+      - x: 12
+        y: 30
+  - x: 16
+    y: 0
+    walkable: true
+    tileScale: 3
+    moveSpeed: 0.2
+    sprite: berg
+    move:
+      - x: 16
+        y: 1
+      - x: 16
+        y: 30

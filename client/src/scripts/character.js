@@ -150,6 +150,13 @@ export class Character {
         }
     }
 
+    getLocation() {
+        return {
+            'x': this.sprite.x,
+            'y': this.sprite.y
+        };
+    }
+
     setLocation(x, y) {
         this.sprite.x = x;
         this.sprite.y = y;

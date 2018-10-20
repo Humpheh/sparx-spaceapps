@@ -13,11 +13,22 @@ export class ActionEventHandler {
 
         // Set to true if the event flow is to be aborted for the current run
         this.abortingFlow = false;
-        EE.on(E_ABORT_EVENT_FLOW, () => { this.abortingFlow = true; });
+
+        // We need to know we are actually in events we can abort. If not we
+        // will abort the next attempted run of the events (e.g. when the next
+        // collision occurs).
+        this.eventsActive = false;
+
+        EE.on(E_ABORT_EVENT_FLOW, () => {
+            if (this.eventsActive) {
+                this.abortingFlow = true;
+            }
+        });
     }
 
     runEvents(eventSpec, onDone) {
         EE.emit(E_SET_WORLD_LOCK, true);
+        this.eventsActive = true;
         let events = this.loadEvents(eventSpec);
         let doEvent = (index) => {
             console.log('EVENT:', events[index]);
@@ -25,6 +36,7 @@ export class ActionEventHandler {
                 EE.emit(E_SET_WORLD_LOCK, false);
                 onDone();
                 this.abortingFlow = false;
+                this.eventsActive = false;
                 return;
             }
             events[index](() => doEvent(index+1));
