@@ -2,7 +2,10 @@ import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
 import { makeEventHander } from "./events";
 
-import EE, { E_PLAYER_MOVED } from "./events";
+import EE, {
+    E_ENTITY_DISPATCH_ACTIONS,
+    E_PLAYER_MOVED,
+} from "./events";
 
 
 const tileSize = 64;
@@ -44,11 +47,13 @@ class FixedEntity {
         this.sprite.width = tileSize;
         this.sprite.height = tileSize;
 
-        console.log(entitySpec);
+        this.events = entitySpec.events;
+
+        this.dispatchInteractionActions = this.dispatchInteractionActions.bind(this);
     }
 
     dispatchInteractionActions() {
-        console.log("In collision");
+        EE.emit(E_ENTITY_DISPATCH_ACTIONS, this.events);
     }
 }
 
@@ -65,6 +70,7 @@ export class World {
         this.fileToTileData(world, td => this.loadWorld(td));
         this.loadWorldSpec();
 
+        this.inCollision = new Set();
         this.registerEventListeners();
     }
 
@@ -148,20 +154,35 @@ export class World {
     }
 
     collidesAt(x, y) {
-        let collidees = [];
+        let collidees = new Set();
         for (let entity of this.entities) {
             if (collidesWith(entity, x, y)) {
-                collidees.push(entity);
+                collidees.add(entity);
             }
         }
         return collidees;
     }
 
+    updateCollisionStates(newCollidees) {
+        // Entities we are no longer in collision with
+        this.inCollision.forEach((collidee) => {
+            if (!newCollidees.has(collidee)) {
+                this.inCollision.delete(collidee);
+            }
+        });
+
+        // And look for new colliders, and tell them to dispatch actions
+        newCollidees.forEach((collidee) => {
+            if (!this.inCollision.has(collidee)) {
+                this.inCollision.add(collidee);
+                collidee.dispatchInteractionActions();
+            }
+        });
+    }
+
     playerMoved(x, y) {
         let collidees = this.collidesAt(x, y);
-        for (let collidee of collidees) {
-            collidee.dispatchInteractionActions();
-        }
+        this.updateCollisionStates(collidees);
     }
 
     registerEventListeners() {

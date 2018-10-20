@@ -25,18 +25,23 @@ export class Character {
     constructor() {
         this.container = new PIXI.Container();
 
-        let animations = [
-            this.makeAnimation('b', [1,2,3,2]),
-            this.makeAnimation('f', [1,2,3,2]),
-            this.makeAnimation('l', [1,2,3,2]),
-            this.makeAnimation('r', [1,2,3,2]),
-        ];
+        let animationFrames = {
+            b: this.makeAnimation('b', [1, 2, 3, 2]),
+            f: this.makeAnimation('f', [1, 2, 3, 2]),
+            l: this.makeAnimation('l', [1, 2, 3, 2]),
+            r: this.makeAnimation('r', [1, 2, 3, 2]),
+        };
 
-        this.container.addChild(animations[0]);
+        let animation = new PIXI.extras.AnimatedSprite(animationFrames.b);
+        animation.animationSpeed = 0.1;
+        animation.width = animation.width*0.5;
+        animation.height = animation.height*0.5;
+        animation.anchor.set(0.5);
+        animation.play();
 
-        this.sprite = animations[0];
-        this.sprite.anchor.set(0.5);
-        this.sprite.play();
+        this.container.addChild(animation);
+
+        this.sprite = animation;
 
         this.moveDown = new KeyboardEventHandler(KEY_DOWN);
         this.moveUp = new KeyboardEventHandler(KEY_UP);
@@ -60,11 +65,7 @@ export class Character {
             // magically works since the spritesheet was loaded with the pixi loader
             frames.push(PIXI.Texture.fromFrame('penguin_'+ dir + i + '.png'));
         }
-        let animation = new PIXI.extras.AnimatedSprite(frames);
-        animation.animationSpeed = 0.1;
-        animation.width = animation.width*0.5;
-        animation.height = animation.height*0.5;
-        return animation;
+        return frames;
     }
 
     keyboardTick(delta, world) {

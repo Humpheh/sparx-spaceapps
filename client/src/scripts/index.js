@@ -1,6 +1,9 @@
 import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
 import { Character } from "./character";
+import EE, {
+    E_ENTITY_DISPATCH_ACTIONS,
+} from "./events";
 import { World } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 
@@ -23,14 +26,7 @@ function start(loader, resources) {
     let uiContainer = new PIXI.Container();
 
     let eventHandler = new ActionEventHandler(app.screen.width, app.screen.height, uiContainer);
-
-    eventHandler.runEvents([{
-        type: 'text',
-        text: 'Wat the hell',
-    }, {
-        type: 'text',
-        text: 'Why hello there'
-    }], () => console.log('done'));
+    EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
 
     app.stage.addChild(uiContainer);
 
@@ -55,4 +51,3 @@ PIXI.loader
     .add('world1_tiles', 'public/assets/worlds/world1.csv')
     .add('public/assets/penguin/penguin2.json')
     .load(start);
-
