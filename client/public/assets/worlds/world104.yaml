@@ -1,0 +1,17 @@
+# Choose your items
+
+playerStart:
+  x: 0
+  y: 0
+
+entities:
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
+    events:
+      - type: slide
+        image: world_map
+        events:
+          - type: text
+            text: "off to the arctic..."

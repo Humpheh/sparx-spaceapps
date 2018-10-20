@@ -35,29 +35,31 @@ export class ActionEventHandler {
         this.uiContainer = uiContainer;
         this.worldContainer = worldContainer;
 
+        // every event stream invocation gets a key issued from this
+        // monotonically-increasing counter. We can use the key to verify a
+        // stream should continue. When events should abort, we drop all the
+        // currently-running event streams and future callbacks should quite
+        // early.
+        this.currentEventKey = 0;
+
         this.tickers = [];
 
-        // Set to true if the event flow is to be aborted for the current run
-        this.abortingFlow = false;
-
-        // We need to know we are actually in events we can abort. If not we
-        // will abort the next attempted run of the events (e.g. when the next
-        // collision occurs).
-        this.eventsActive = false;
+        // the list of current running event keys. List because event streams
+        // can be nested.
+        this.currentEventKeys = [];
 
         this.queueEvents = false;
         this.eventQueue = new EventQueue();
 
         EE.on(E_ABORT_EVENT_FLOW, () => {
-            if (this.eventsActive && !this.queueEvents) {
-                this.abortingFlow = true;
-            }
+            this.currentEventKeys = [];
         });
         EE.on(E_START_QUEUING_EVENTS, () => {
             this.queueEvents = true;
         });
         EE.on(E_STOP_QUEUING_EVENTS, () => {
             this.queueEvents = false;
+            this.abortingFlow = false;
             this._dispatchQueuedEvents();
         });
 
@@ -77,18 +79,20 @@ export class ActionEventHandler {
     }
 
     // Internal event runner, bypasses the queue
-    _runEvents(eventSpec, onDone) {
+    _runEvents(eventSpec, onDone, key) {
         EE.emit(E_SET_WORLD_LOCK, true);
 
-        this.eventsActive = true;
+        if (this.currentEventKeys.indexOf(key) <= -1) {
+            this.currentEventKeys.push(key);
+        }
+
         let events = this.loadEvents(eventSpec);
         let doEvent = (index) => {
             console.log('EVENT:', events[index]);
-            if (!events[index] || this.abortingFlow) {
+            const shouldAbort = this._shouldAbortEvent(key);
+            if (!events[index] || shouldAbort) {
                 EE.emit(E_SET_WORLD_LOCK, false);
-                onDone(this.abortingFlow);
-                this.abortingFlow = false;
-                this.eventsActive = false;
+                onDone(shouldAbort);
                 return;
             }
             events[index](() => doEvent(index+1));
@@ -96,12 +100,20 @@ export class ActionEventHandler {
         doEvent(0);
     }
 
+    _getEventKey() {
+        return this.currentEventKey++;
+    }
+
+    _shouldAbortEvent(key) {
+        return this.currentEventKeys.indexOf(key) == -1;
+    }
+
     runEvents(eventSpec, onDone) {
         if (this.queueEvents) {
             this.eventQueue.queueEvents(eventSpec, onDone);
             return;
         }
-        this._runEvents(eventSpec, onDone);
+        this._runEvents(eventSpec, onDone, this._getEventKey());
     }
 
     _dispatchQueuedEvents() {
@@ -141,7 +153,7 @@ export class ActionEventHandler {
         return (onFinish) => {
             let ok = this.worldContainer.doCheck(event.key, event.check, event.case);
             if (!ok) {
-                this._runEvents(event.events, onFinish);
+                this._runEvents(event.events, onFinish, this._getEventKey());
             } else {
                 onFinish();
             }
@@ -175,7 +187,7 @@ export class ActionEventHandler {
                     this.tickers.splice(index, 1);
                     onFinish();
                 } else {
-                    this._runEvents(events, done);
+                    this._runEvents(events, done, this._getEventKey());
                 }
             };
             slide = new Slide(

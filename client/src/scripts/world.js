@@ -294,10 +294,10 @@ export class WorldContainer {
     _setWorld(id) {
         console.log("Setting world to: " + id);
 
-        EE.emit(E_START_QUEUING_EVENTS);
-
         // Break any active event flow on world change
         EE.emit(E_ABORT_EVENT_FLOW);
+
+        EE.emit(E_START_QUEUING_EVENTS);
 
         if (this.world) {
             console.log("Removing previous world");
