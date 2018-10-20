@@ -9,8 +9,8 @@ import EE, {
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
-
-const DEFAULT_WORLD_ID = 101;
+import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
+const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 101;
 
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
