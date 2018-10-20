@@ -45,6 +45,8 @@ export class ActionEventHandler {
             return this.newTextHandler(event);
         case 'slide':
             return this.newSlideHandler(event);
+        case 'event':
+            return this.newEventDispatcher(event);
         }
         return null;
     }
@@ -84,6 +86,13 @@ export class ActionEventHandler {
             );
             this.tickers.push(slide);
             return slide;
+        };
+    }
+
+    newEventDispatcher(event) {
+        return (onFinish) => {
+            EE.emit(event.event, event.content);
+            onFinish();
         };
     }
 

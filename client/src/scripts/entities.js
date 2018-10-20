@@ -4,6 +4,7 @@ import { TILE_SIZE } from "./world";
 
 export class Entity {
     constructor(x, y, texture, entitySpec) {
+        this.id = entitySpec.id || 'ALL_OTHER_ENTITIES';
         this.entitySpec = entitySpec;
 
         this.sprite = new PIXI.Sprite(texture);

@@ -1,7 +1,13 @@
 import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
 
-import { makeEventHander } from "./events";
+import {
+    E_APPEND_GLOBAL, E_DEPEND_GLOBAL,
+    E_DESTROY_ENTITY,
+    E_INC_GLOBAL,
+    E_SET_GLOBAL,
+    makeEventHander
+} from "./events";
 import { getRandomInt } from "./utils";
 
 import EE, {
@@ -60,6 +66,17 @@ class World {
         this.loadWorldSpec(id);
 
         this.inCollision = new Set();
+
+        EE.on(E_DESTROY_ENTITY, (id) => {
+            this.entities.forEach((e, i) => {
+                if (e.id === id) {
+                    // Lol we already found it previously
+                    const index = this.entities.indexOf(e);
+                    this.entities.splice(index, 1);
+                    this.container.removeChild(e.sprite);
+                }
+            });
+        });
     }
 
     loadWorld(tileData) {
@@ -188,6 +205,8 @@ class World {
 
 export class WorldContainer {
     constructor(initialId) {
+        this.values = {};
+
         this.world = null;
         this.setWorld = this.setWorld.bind(this);
 
@@ -195,6 +214,26 @@ export class WorldContainer {
         this.setWorld(initialId);
 
         this.registerEventListeners();
+
+        EE.on(E_SET_GLOBAL, (vals) => {
+            this.values[vals.key] = vals.value;
+            console.log('setting values', this.values);
+        });
+        EE.on(E_INC_GLOBAL, (vals) => {
+            this.values[vals.key] = (this.values[vals.key] || 0) + vals.value;
+            console.log('adding values', this.values);
+        });
+        EE.on(E_APPEND_GLOBAL, (vals) => {
+            this.values[vals.key] = (this.values[vals.key] || []).concat([vals.value]);
+            console.log('concat values', this.values);
+        });
+        EE.on(E_DEPEND_GLOBAL, (vals) => {
+            const index = (this.values[vals.key] || []).indexOf(vals.value);
+            if (index) {
+                this.values[vals.key].splice(index, 1);
+            }
+            console.log('depend values', this.values);
+        });
     }
 
     registerEventListeners() {
