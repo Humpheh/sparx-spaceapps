@@ -6,11 +6,11 @@ import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
 } from "./events";
-import { WorldContainer } from "./world";
+import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
 
-const DEFAULT_WORLD_ID = 1;
+const DEFAULT_WORLD_ID = 101;
 
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
@@ -47,12 +47,21 @@ function start(loader, resources) {
         background.scale.y = 1 + Math.cos(bgTicker/400) * 0.04;
     });
 
-    let worldContainer = new WorldContainer(DEFAULT_WORLD_ID);
+    let worldContainer = new WorldContainer();
     GameApp.stage.addChild(worldContainer.container);
 
     let character = new Character();
     // character.setLocation(GameApp.renderer.width / 2, GameApp.renderer.height / 2);
     GameApp.stage.addChild(character.container);
+
+    worldContainer.registerWorldChangeCallback((world) => {
+        const startingPosition = world.getStartingPosition();
+        character.setLocation(
+            tileToGlobal(startingPosition.x),
+            tileToGlobal(startingPosition.y)
+        );
+    });
+    worldContainer.setWorld(DEFAULT_WORLD_ID);
 
     let uiContainer = new PIXI.Container();
 
