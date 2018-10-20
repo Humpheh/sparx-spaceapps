@@ -4,6 +4,7 @@ import yaml from "js-yaml";
 import {
     E_APPEND_GLOBAL, E_DEPEND_GLOBAL,
     E_ABORT_EVENT_FLOW,
+    E_START_QUEUING_EVENTS, E_STOP_QUEUING_EVENTS,
     E_DESTROY_ENTITY,
     E_INC_GLOBAL,
     E_SET_GLOBAL,
@@ -280,6 +281,8 @@ export class WorldContainer {
     _setWorld(id) {
         console.log("Setting world to: " + id);
 
+        EE.emit(E_START_QUEUING_EVENTS);
+
         // Break any active event flow on world change
         EE.emit(E_ABORT_EVENT_FLOW);
 
@@ -294,6 +297,8 @@ export class WorldContainer {
         for (let cb of this.worldChangeCallbacks) {
             cb(this.world, this);
         }
+
+        EE.emit(E_STOP_QUEUING_EVENTS);
     }
 }
 

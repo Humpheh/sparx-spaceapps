@@ -1,8 +1,33 @@
 import Config from "./config";
 import { KeyboardEventHandler, KEY_ESCAPE } from "./keyboard";
 import { TextPrompt } from "./textprompt";
-import EE, { E_ABORT_EVENT_FLOW, E_SET_WORLD_LOCK } from "./events";
+import EE, {
+    E_ABORT_EVENT_FLOW,
+    E_SET_WORLD_LOCK,
+    E_START_QUEUING_EVENTS, E_STOP_QUEUING_EVENTS
+} from "./events";
 import { Slide } from "./slide";
+
+class EventQueue {
+    constructor() {
+        this.eventQueue = [];
+    }
+
+    queueEvents(eventSpec, onDone) {
+        this.eventQueue.push({
+            'eventSpec': eventSpec,
+            'onDone': onDone
+        });
+    }
+
+    dispatchQueuedEvents(dispatcher) {
+        let queuedEvents = this.eventQueue;
+        this.eventQueue = [];
+        for (let ev of queuedEvents) {
+            dispatcher(ev.eventSpec, ev.onDone);
+        }
+    }
+}
 
 export class ActionEventHandler {
     constructor(w, h, uiContainer, worldContainer) {
@@ -21,10 +46,20 @@ export class ActionEventHandler {
         // collision occurs).
         this.eventsActive = false;
 
+        this.queueEvents = false;
+        this.eventQueue = new EventQueue();
+
         EE.on(E_ABORT_EVENT_FLOW, () => {
-            if (this.eventsActive) {
+            if (this.eventsActive && !this.queueEvents) {
                 this.abortingFlow = true;
             }
+        });
+        EE.on(E_START_QUEUING_EVENTS, () => {
+            this.queueEvents = true;
+        });
+        EE.on(E_STOP_QUEUING_EVENTS, () => {
+            this.queueEvents = false;
+            this._dispatchQueuedEvents();
         });
 
         // Allow the ESC key to abort event flow prematurely when debug mode is
@@ -38,8 +73,10 @@ export class ActionEventHandler {
         ).bindListeners();
     }
 
-    runEvents(eventSpec, onDone) {
+    // Internal event runner, bypasses the queue
+    _runEvents(eventSpec, onDone) {
         EE.emit(E_SET_WORLD_LOCK, true);
+
         this.eventsActive = true;
         let events = this.loadEvents(eventSpec);
         let doEvent = (index) => {
@@ -54,6 +91,18 @@ export class ActionEventHandler {
             events[index](() => doEvent(index+1));
         };
         doEvent(0);
+    }
+
+    runEvents(eventSpec, onDone) {
+        if (this.queueEvents) {
+            this.eventQueue.queueEvents(eventSpec, onDone);
+            return;
+        }
+        this._runEvents(eventSpec, onDone);
+    }
+
+    _dispatchQueuedEvents() {
+        this.eventQueue.dispatchQueuedEvents(this._runEvents.bind(this));
     }
 
     loadEvents(eventSpec) {
@@ -89,7 +138,7 @@ export class ActionEventHandler {
         return (onFinish) => {
             let ok = this.worldContainer.doCheck(event.key, event.check, event.case);
             if (!ok) {
-                this.runEvents(event.events, onFinish);
+                this._runEvents(event.events, onFinish);
             } else {
                 onFinish();
             }
@@ -123,7 +172,7 @@ export class ActionEventHandler {
                     this.tickers.splice(index, 1);
                     onFinish();
                 } else {
-                    this.runEvents(events, done);
+                    this._runEvents(events, done);
                 }
             };
             slide = new Slide(
