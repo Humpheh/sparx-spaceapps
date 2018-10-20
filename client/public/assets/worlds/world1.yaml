@@ -1,0 +1,6 @@
+---
+
+fixedEntities:
+  - x: 3
+    y: 3
+    sprite: scratchcat.png

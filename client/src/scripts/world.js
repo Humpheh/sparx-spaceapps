@@ -1,4 +1,6 @@
 import * as PIXI from "pixi.js";
+import yaml from "js-yaml";
+
 
 const tileSize = 64;
 
@@ -26,12 +28,33 @@ class Tile {
     }
 }
 
+
+class FixedEntity {
+    constructor(x, y, resourceData) {
+        let texture = new PIXI.Texture.fromLoader(resourceData);
+        this.sprite = new PIXI.Sprite(texture);
+
+        // x,y is in the tile coordinate system
+        this.sprite.anchor.set(0.5);
+        this.sprite.x = x * tileSize;
+        this.sprite.y = y * tileSize;
+        this.sprite.width = tileSize;
+        this.sprite.height = tileSize;
+    }
+}
+
 export class World {
     constructor(world) {
         this.container = new PIXI.Container();
 
+        // Tiles in the world
         this.world = [];
+
+        // Entities present in the world
+        this.entities = [];
+
         this.fileToTileData(world, td => this.loadWorld(td));
+        this.loadWorldSpec();
     }
 
     loadWorld(tileData) {
@@ -46,6 +69,18 @@ export class World {
         }
     }
 
+    loadWorldSpec() {
+        let loader = new PIXI.loaders.Loader();
+        loader.add('worldSpec', 'public/assets/worlds/world1.yaml');
+        loader.load((loader, resources) => {
+            let spec = yaml.safeLoad(resources.worldSpec.data);
+            this.worldSpec = spec;
+        });
+        loader.onComplete.add(() => {
+            this.placeEntities(this.worldSpec.fixedEntities);
+        });
+    }
+
     fileToTileData(world, callback) {
         let loader = PIXI.loader.add('world', 'public/assets/worlds/world1.csv');
         loader.load((loader, resources) => {
@@ -58,6 +93,31 @@ export class World {
             }
             callback(tileData);
         });
+    }
+
+    placeEntities(entities) {
+        let loader = new PIXI.loaders.Loader();
+
+        for (let entity of entities) {
+            if (typeof(entity.sprite) !== 'undefined') {
+                loader.add(entity.sprite, 'public/assets/sprites/' + entity.sprite);
+            }
+        }
+
+        loader.onComplete.add(() => {
+            for (let entity of entities) {
+                this.entities.push(new FixedEntity(
+                    entity.x, entity.y,
+                    loader.resources[entity.sprite].data
+                ));
+            }
+
+            for (let entity of this.entities) {
+                this.container.addChild(entity.sprite);
+            }
+        });
+
+        loader.load();
     }
 
     createTile(x, y, data) {
@@ -84,4 +144,3 @@ export class World {
         return !this.isSolid(xt, yt);
     }
 }
-
