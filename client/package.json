@@ -43,6 +43,7 @@
     "@babel/polyfill": "^7.0.0",
     "eventemitter3": "^3.1.0",
     "js-yaml": "^3.12.0",
+    "pixi-particles": "^3.1.0",
     "pixi.js": "^4.8.2"
   }
 }

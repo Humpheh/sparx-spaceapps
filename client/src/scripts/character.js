@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import EE, {
+    E_ADD_HUNGER,
     E_PLAYER_MOVED, E_SET_WORLD_LOCK,
 } from "./events";
 import {
@@ -19,6 +20,9 @@ import yaml from "js-yaml";
 const SPRITE_IMAGE = 'public/assets/bunny.png';
 const MOVE_PER_TICK = 3;
 
+const STEP_HUNGER_TIME = 20;
+const STEP_HUNGER_REMOVAL = 1;
+
 class PlayerMovedContext {
     constructor(x, y) {
         this.x = x;
@@ -28,6 +32,7 @@ class PlayerMovedContext {
 
 export class Character {
     constructor() {
+        this.stepTimer = 0;
         this.container = new PIXI.Container();
 
         this.animationFrames = {
@@ -140,6 +145,13 @@ export class Character {
         }
 
         if (hasMoved) {
+            this.stepTimer += delta;
+            if (this.stepTimer > STEP_HUNGER_TIME) {
+                EE.emit(E_ADD_HUNGER, -STEP_HUNGER_REMOVAL);
+                this.stepTimer = 0;
+            }
+
+            // Update the animation
             if (this.sprite.textures !== frames) {
                 this.sprite.textures = frames;
             }

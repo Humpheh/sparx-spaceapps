@@ -11,6 +11,11 @@ export const E_APPEND_GLOBAL = 'APPEND_GLOBAL';
 export const E_DEPEND_GLOBAL = 'DEPEND_GLOBAL';
 export const E_GO_TO_WORLD = 'GO_TO_WORLD';
 export const E_ABORT_EVENT_FLOW = 'ABORT_EVENT_FLOW';
+export const E_ABORT_EVENT_FLOW_NEW_WORLD = 'ABORT_EVENT_FLOW_NEW_WORLD';
+export const E_START_QUEUING_EVENTS = 'START_QUEUING_EVENTS';
+export const E_STOP_QUEUING_EVENTS = 'STOP_QUEUING_EVENTS';
+export const E_ADD_HUNGER = 'ADD_HUNGER';
+export const E_RUN_EVENTS = 'RUN_EVENTS';
 
 let EE = new EventEmitter();
 
@@ -21,7 +26,6 @@ function addDebugLogger(event) {
 }
 
 if (Config.debug) {
-    addDebugLogger(E_PLAYER_MOVED);
     addDebugLogger(E_SET_WORLD_LOCK);
     addDebugLogger(E_ENTITY_DISPATCH_ACTIONS);
     addDebugLogger(E_DESTROY_ENTITY);
@@ -31,6 +35,9 @@ if (Config.debug) {
     addDebugLogger(E_DEPEND_GLOBAL);
     addDebugLogger(E_GO_TO_WORLD);
     addDebugLogger(E_ABORT_EVENT_FLOW);
+    addDebugLogger(E_ABORT_EVENT_FLOW_NEW_WORLD);
+    addDebugLogger(E_START_QUEUING_EVENTS);
+    addDebugLogger(E_STOP_QUEUING_EVENTS);
 }
 
 export default EE;

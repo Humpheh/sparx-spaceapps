@@ -4,6 +4,7 @@ import yaml from "js-yaml";
 import {
     E_APPEND_GLOBAL, E_DEPEND_GLOBAL,
     E_ABORT_EVENT_FLOW,
+    E_START_QUEUING_EVENTS, E_STOP_QUEUING_EVENTS,
     E_DESTROY_ENTITY,
     E_INC_GLOBAL,
     E_SET_GLOBAL,
@@ -15,10 +16,11 @@ import { getRandomInt } from "./utils";
 import EE, {
     E_PLAYER_MOVED,
 } from "./events";
-import { Entity } from "./entities";
+import { Entity, FishEntity } from "./entities";
 
 
 export const TILE_SIZE = 64;
+export const FISH_CHANCE = 0.002;
 
 let randomisedTiles = {
     'ice_m1': ['ice_m1', 'ice_m1a'],
@@ -87,10 +89,19 @@ class World {
             let row = [];
             for (let x = 0; x < tileData[y].length; x++) {
                 let tile = this.createTile(x, y, tileData[y][x]);
+                if (tile && Math.random() < FISH_CHANCE) {
+                    this.createFish(x, y);
+                }
                 row.push(tile);
             }
             this.world.push(row);
         }
+    }
+
+    createFish(x, y) {
+        let fish = new FishEntity(x, y);
+        this.container.addChild(fish.sprite);
+        this.entities.push(fish);
     }
 
     loadWorldSpec(world) {
@@ -127,6 +138,9 @@ class World {
     createTile(x, y, data) {
         let parts = data.split(',');
         let img = parts[0];
+        if (img.trim() === '') {
+            return null;
+        }
         let solid = (parts.length > 1 && parts[1] === 's');
 
         let gridSpace = new Tile(x, y, img, solid);
@@ -280,6 +294,8 @@ export class WorldContainer {
     _setWorld(id) {
         console.log("Setting world to: " + id);
 
+        EE.emit(E_START_QUEUING_EVENTS);
+
         // Break any active event flow on world change
         EE.emit(E_ABORT_EVENT_FLOW);
 
@@ -294,6 +310,8 @@ export class WorldContainer {
         for (let cb of this.worldChangeCallbacks) {
             cb(this.world, this);
         }
+
+        EE.emit(E_STOP_QUEUING_EVENTS);
     }
 }
 
