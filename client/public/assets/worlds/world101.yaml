@@ -36,19 +36,13 @@ entities:
             w: 181
             h: 128
             showIf:
-              key: tent_1
-              check: true
+              key: tent
               case: eq
+              check: 1
             events:
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'tent_1', value: true}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_2', value: false}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_3', value: false}
+                content: {key: 'tent', value: 1}
               - type: text
                 text: "It's a small tent. It's lightweight and quick to to pitch, and can withstand breezes of up to 10 km/h."
           - x: 493
@@ -56,19 +50,13 @@ entities:
             w: 199
             h: 128
             showIf:
-              key: tent_2
-              check: true
+              key: tent
               case: eq
+              check: 2
             events:
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'tent_1', value: false}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_2', value: true}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_3', value: false}
+                content: {key: 'tent', value: 2}
               - type: text
                 text: "This medium tent has plenty of space for a penguin and his luggage, and is ideal for environments with moderate winds of between 10 and 20 km/h."
           - x: 742
@@ -76,18 +64,12 @@ entities:
             w: 189
             h: 128
             showIf:
-              key: tent_3
-              check: true
+              key: tent
               case: eq
+              check: 2
             events:
               - type: event
                 event: SET_GLOBAL
-                content: {key: 'tent_1', value: false}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_2', value: false}
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent_3', value: true}
+                content: {key: 'tent', value: 3}
               - type: text
                 text: "This premium heavy-duty tent may weigh a lot, but it can withstand winds of up to 30 km/h."
