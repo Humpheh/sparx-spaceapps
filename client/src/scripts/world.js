@@ -176,6 +176,20 @@ class World {
         return collidees;
     }
 
+    getStartingPosition() {
+        const playerStart = this.worldSpec.playerStart;
+        if (typeof playerStart !== 'undefined' &&
+            playerStart.x && playerStart.y) {
+            return playerStart;
+        } else {
+            // TODO(matt): ensure this is actually on a tile!
+            return {
+                'x': 1,
+                'y': 1,
+            };
+        }
+    }
+
     updateCollisionStates(newCollidees) {
         // Entities we are no longer in collision with
         this.inCollision.forEach((collidee) => {
@@ -212,8 +226,9 @@ export class WorldContainer {
         this.world = null;
         this.setWorld = this.setWorld.bind(this);
 
+        this.worldChangeCallbacks = [];
+
         this.container = new PIXI.Container();
-        this.setWorld(initialId);
 
         this.registerEventListeners();
 
@@ -255,6 +270,10 @@ export class WorldContainer {
         return false;
     }
 
+    registerWorldChangeCallback(fn) {
+        this.worldChangeCallbacks.push(fn);
+    }
+
     registerEventListeners() {
         EE.on(E_PLAYER_MOVED, (context) => this.world.onPlayerMove(context.x, context.y), this.world);
         EE.on(E_GO_TO_WORLD, (worldId) => this.setWorld(worldId));
@@ -273,6 +292,10 @@ export class WorldContainer {
 
         this.world = new World(id);
         this.container.addChild(this.world.container);
+
+        for (let cb of this.worldChangeCallbacks) {
+            cb(this.world);
+        }
     }
 }
 

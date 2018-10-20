@@ -71,22 +71,17 @@ export class Character {
         this.velocityX = 0;
         this.velocityY = 0;
 
-        // Load start point for world 1
         this.loadPlayerSpec();
     }
 
+    // No longer used; could be removed?
     loadPlayerSpec() {
         let loader = new PIXI.loaders.Loader();
         loader.add('playerSpec', 'public/assets/player/player.yaml');
         loader.load((loader, resources) => {
             this.playerSpec = yaml.safeLoad(resources.playerSpec.data);
         });
-        loader.onComplete.add(() => {
-            this.setLocation(
-                tileToGlobal(this.playerSpec.startLocations.world1.x),
-                tileToGlobal(this.playerSpec.startLocations.world1.y)
-            );
-        });
+        loader.onComplete.add(() => {});
     }
 
     makeAnimation(dir, idx) {
