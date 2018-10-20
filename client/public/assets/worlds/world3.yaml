@@ -1,0 +1,13 @@
+---
+
+entities:
+  - x: 2
+    y: 20
+    walkable: true
+    tileScale: 2
+    sprite: berg
+    move:
+      - x: 2
+        y: 20
+      - x: 2
+        y: 23
