@@ -112,7 +112,7 @@ class World {
 
     fileToTileData(world, callback) {
         let worldData = PIXI.loader.resources['world' + world + '_tiles'].data;
-        let rows = worldData.split(/\r\n|\n/);
+        let rows = worldData ? worldData.split(/\r\n|\n/) : '';
 
         let tileData = [];
         for (let y = 0; y < rows.length; y++) {
