@@ -12,7 +12,7 @@ const SPRITE_IMAGE = 'public/assets/bunny.png';
 const MOVE_PER_TICK = 3;
 
 export class Character {
-    constructor() {
+    constructor(world) {
         this.container = new PIXI.Container();
 
         const sprite = PIXI.Sprite.fromImage(SPRITE_IMAGE);
@@ -33,26 +33,44 @@ export class Character {
         this.keyboardTick = this.keyboardTick.bind(this);
     }
 
-    keyboardTick(delta) {
+    keyboardTick(delta, world) {
         const moveBy = delta * MOVE_PER_TICK;
 
+        let newX = this.sprite.x;
+        let newY = this.sprite.y;
+
         if (this.moveDown.isKeyDown) {
-            this.sprite.y += moveBy;
+            newY += moveBy;
         }
         if (this.moveUp.isKeyDown) {
-            this.sprite.y -= moveBy;
+            newY -= moveBy;
         }
+        if (world.isPositionOkay(this.sprite.x, newY)) {
+            this.sprite.y = newY;
+        }
+
         if (this.moveLeft.isKeyDown) {
-            this.sprite.x -= moveBy;
+            newX -= moveBy;
         }
         if (this.moveRight.isKeyDown) {
-            this.sprite.x += moveBy;
+            newX += moveBy;
+        }
+        if (world.isPositionOkay(newX, this.sprite.y)) {
+            this.sprite.x = newX;
         }
     }
 
     setLocation(x, y) {
         this.sprite.x = x;
         this.sprite.y = y;
+    }
+
+    getX() {
+        return this.sprite.x;
+    }
+
+    getY() {
+        return this.sprite.y;
     }
 }
 

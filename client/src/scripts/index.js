@@ -4,7 +4,8 @@ import { Character } from "./character";
 import { World } from "./world";
 
 let app = new PIXI.Application(
-    document.body.clientWidth, 800,
+    window.innerWidth,
+    window.innerHeight,
     {backgroundColor : 0x1099bb}
 );
 document.body.appendChild(app.view);
@@ -21,4 +22,8 @@ app.ticker.add(function(delta) {
 });
 
 // Character position updates
-app.ticker.add(character.keyboardTick);
+app.ticker.add(t => {
+    character.keyboardTick(t, world);
+    app.stage.pivot.x = character.getX() - app.renderer.width/2;
+    app.stage.pivot.y = character.getY() - app.renderer.height/2;
+});

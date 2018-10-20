@@ -8,8 +8,8 @@ class Tile {
         this.y = y;
 
         // Can't move through it
-        this.solid = true;
         this.sprite = sprite ? Tile.loadSprite(sprite) : null;
+        this.solid = !(this.sprite);
         if (this.sprite) {
             this.sprite.anchor.set(0.5);
             this.sprite.x = x * tileSize;
@@ -25,7 +25,6 @@ class Tile {
         return new PIXI.Sprite(texture);
     }
 }
-
 
 export class World {
     constructor(world) {
@@ -70,12 +69,19 @@ export class World {
     }
 
     getTile(x, y) {
-        return this.world[x][y];
+        let row = this.world[y] || [];
+        return row[x];
     }
 
     isSolid(x, y) {
         let tile = this.getTile(x, y);
         return !tile || tile.solid;
+    }
+
+    isPositionOkay(x, y) {
+        let xt = Math.round(x / tileSize);
+        let yt = Math.round(y / tileSize);
+        return !this.isSolid(xt, yt);
     }
 }
 
