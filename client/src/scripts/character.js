@@ -29,11 +29,23 @@ export class Character {
     constructor() {
         this.container = new PIXI.Container();
 
-        const sprite = PIXI.Sprite.fromImage(SPRITE_IMAGE);
-        sprite.anchor.set(0.5);
-        this.container.addChild(sprite);
+        this.animationFrames = {
+            b: this.makeAnimation('b', [1, 2, 3, 2]),
+            f: this.makeAnimation('f', [1, 2, 3, 2]),
+            l: this.makeAnimation('l', [1, 2, 3, 2]),
+            r: this.makeAnimation('r', [1, 2, 3, 2]),
+        };
 
-        this.sprite = sprite;
+        let animation = new PIXI.extras.AnimatedSprite(this.animationFrames.b);
+        animation.animationSpeed = 0.1;
+        animation.width = animation.width*0.5;
+        animation.height = animation.height*0.5;
+        animation.anchor.set(0.5);
+        animation.play();
+
+        this.container.addChild(animation);
+
+        this.sprite = animation;
 
         this.moveDown = new KeyboardEventHandler(KEY_DOWN);
         this.moveUp = new KeyboardEventHandler(KEY_UP);
@@ -68,6 +80,15 @@ export class Character {
         });
     }
 
+    makeAnimation(dir, idx) {
+        let frames = [];
+        for (let i of idx) {
+            // magically works since the spritesheet was loaded with the pixi loader
+            frames.push(PIXI.Texture.fromFrame('penguin_'+ dir + i + '.png'));
+        }
+        return frames;
+    }
+
     keyboardTick(delta, world) {
         if (this.movementLocked) {
             // If movement is locked don't let the keyboard events
@@ -82,13 +103,17 @@ export class Character {
         let newX = this.sprite.x;
         let newY = this.sprite.y;
 
+        let frames = this.sprite.textures;
+
         if (this.moveDown.isKeyDown) {
             newY += moveBy;
             hasMoved = true;
+            frames = this.animationFrames.f;
         }
         if (this.moveUp.isKeyDown) {
             newY -= moveBy;
             hasMoved = true;
+            frames = this.animationFrames.b;
         }
         if (world.isPositionOkay(this.sprite.x, newY)) {
             this.sprite.y = newY;
@@ -97,17 +122,25 @@ export class Character {
         if (this.moveLeft.isKeyDown) {
             newX -= moveBy;
             hasMoved = true;
+            frames = this.animationFrames.r;
         }
         if (this.moveRight.isKeyDown) {
             newX += moveBy;
             hasMoved = true;
+            frames = this.animationFrames.l;
         }
         if (world.isPositionOkay(newX, this.sprite.y)) {
             this.sprite.x = newX;
         }
 
         if (hasMoved) {
+            if (this.sprite.textures !== frames) {
+                this.sprite.textures = frames;
+                this.sprite.play();
+            }
             EE.emit(E_PLAYER_MOVED, new PlayerMovedContext(this.sprite.x, this.sprite.y));
+        } else {
+            this.sprite.stop();
         }
     }
 

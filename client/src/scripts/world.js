@@ -87,28 +87,20 @@ export class World {
     }
 
     loadWorldSpec() {
-        let loader = new PIXI.loaders.Loader();
-        loader.add('worldSpec', 'public/assets/worlds/world1.yaml');
-        loader.load((loader, resources) => {
-            this.worldSpec = yaml.safeLoad(resources.worldSpec.data);
-        });
-        loader.onComplete.add(() => {
-            this.placeEntities(this.worldSpec.fixedEntities);
-        });
+        let worldSpec = PIXI.loader.resources['world1_spec'].data;
+        this.worldSpec = yaml.safeLoad(worldSpec);
+        this.placeEntities(this.worldSpec.fixedEntities);
     }
 
     fileToTileData(world, callback) {
-        let loader = PIXI.loader.add('world', 'public/assets/worlds/world1.csv');
-        loader.load((loader, resources) => {
-            let world = resources.world.data;
-            let rows = world.split(/\r\n|\n/);
+        let worldData = PIXI.loader.resources['world1_tiles'].data;
+        let rows = worldData.split(/\r\n|\n/);
 
-            let tileData = [];
-            for (let y = 0; y < rows.length; y++) {
-                tileData.push(rows[y].split(','));
-            }
-            callback(tileData);
-        });
+        let tileData = [];
+        for (let y = 0; y < rows.length; y++) {
+            tileData.push(rows[y].split(','));
+        }
+        callback(tileData);
     }
 
     placeEntities(entities) {
