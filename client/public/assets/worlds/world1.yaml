@@ -1,20 +1,36 @@
 ---
 
 entities:
-  - x: 10 # From far left
+  - x: 15 # From far left
     y: 30 # From far top
     sprite: scratchcat
-    id: 1
+    id: 2
     events:
       - type: text
-        text: 'Sup dawg'
+        text: 'Heres a val!'
         character: tuxside
         flipSide: true
 
       # Example internal event (this sets a global variable)
       - type: event
         event: SET_GLOBAL
-        content: {key: 'val', value: false}
+        content: {key: 'val', value: true}
+
+      # Example internal event (this destroys itself)
+      - type: event
+        event: DESTROY_ENTITY
+        content: 2
+
+
+  - x: 10 # From far left
+    y: 30 # From far top
+    sprite: scratchcat
+    id: 1
+    events:
+      - type: text
+        text: 'Sup dawg, do you have a val?'
+        character: tuxside
+        flipSide: true
 
       - type: check
         key: val
@@ -22,7 +38,7 @@ entities:
         case: eq # gt, lt
         events:
           - type: text
-            text: 'Sorry, you cannot do this now'
+            text: 'Sorry, you do not have a val!'
           - type: quit
 
       # Shows a text box
@@ -31,9 +47,9 @@ entities:
         character: tuxside
 
       # GO_TO_WORLD will automatically abort further events in this interaction
-      - type: event
-        event: GO_TO_WORLD
-        content: 2
+#      - type: event
+#        event: GO_TO_WORLD
+#        content: 2
 
       # Example internal event (this allows tux to move)
       - type: event
@@ -47,6 +63,10 @@ entities:
             y: 10
             w: 40
             h: 40
+            showIf:
+              - key: val
+                check: true
+                case: eq # gt, lt
             events:
               - type: text
                 text: 'HOW DID YOU DO THAT'

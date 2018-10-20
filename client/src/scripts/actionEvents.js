@@ -24,6 +24,7 @@ export class ActionEventHandler {
             if (!events[index] || this.abortingFlow) {
                 EE.emit(E_SET_WORLD_LOCK, false);
                 onDone();
+                this.abortingFlow = false;
                 return;
             }
             events[index](() => doEvent(index+1));
