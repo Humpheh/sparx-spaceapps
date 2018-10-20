@@ -10,7 +10,7 @@ import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
 
-const DEFAULT_WORLD_ID = 101;
+const DEFAULT_WORLD_ID = 1;
 
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
