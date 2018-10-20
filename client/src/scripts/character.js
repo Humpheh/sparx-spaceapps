@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 
+import EE, { E_PLAYER_MOVED } from "./events";
 import {
     KeyboardEventHandler,
     KEY_DOWN,
@@ -10,6 +11,13 @@ import {
 
 const SPRITE_IMAGE = 'public/assets/bunny.png';
 const MOVE_PER_TICK = 3;
+
+class PlayerMovedContext {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 export class Character {
     constructor() {
@@ -36,14 +44,18 @@ export class Character {
     keyboardTick(delta, world) {
         const moveBy = delta * MOVE_PER_TICK;
 
+        let hasMoved = false;
+
         let newX = this.sprite.x;
         let newY = this.sprite.y;
 
         if (this.moveDown.isKeyDown) {
             newY += moveBy;
+            hasMoved = true;
         }
         if (this.moveUp.isKeyDown) {
             newY -= moveBy;
+            hasMoved = true;
         }
         if (world.isPositionOkay(this.sprite.x, newY)) {
             this.sprite.y = newY;
@@ -51,12 +63,18 @@ export class Character {
 
         if (this.moveLeft.isKeyDown) {
             newX -= moveBy;
+            hasMoved = true;
         }
         if (this.moveRight.isKeyDown) {
             newX += moveBy;
+            hasMoved = true;
         }
         if (world.isPositionOkay(newX, this.sprite.y)) {
             this.sprite.x = newX;
+        }
+
+        if (hasMoved) {
+            EE.emit(E_PLAYER_MOVED, new PlayerMovedContext(this.sprite.x, this.sprite.y));
         }
     }
 
