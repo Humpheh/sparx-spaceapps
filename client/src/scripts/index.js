@@ -9,6 +9,8 @@ import EE, {
 import { WorldContainer } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 
+const DEFAULT_WORLD_ID = 1;
+
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
         texture, width, height
@@ -34,7 +36,7 @@ function start(loader, resources) {
     );
     app.stage.addChild(background);
 
-    let worldContainer = new WorldContainer(2);
+    let worldContainer = new WorldContainer(DEFAULT_WORLD_ID);
     app.stage.addChild(worldContainer.container);
 
     let character = new Character();
