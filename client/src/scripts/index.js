@@ -12,7 +12,7 @@ function getBackground(texture, width, height) {
         texture, width, height
     );
     tilingBackground.anchor.set(0.5);
-    tilingBackground.tileScale.set(0.25);
+    tilingBackground.tileScale.set(0.5);
     return tilingBackground;
 }
 
@@ -28,7 +28,7 @@ function start(loader, resources) {
     let background = getBackground(
         resources['sea_background'].texture,
         window.innerWidth * 10,
-        window.innerHeight * 10,
+        window.innerHeight * 10
     );
     app.stage.addChild(background);
 
