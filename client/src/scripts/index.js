@@ -113,7 +113,8 @@ function loadRootAssets() {
         .add('berg_big', 'public/assets/sprites/berg_big.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
-        .add('fakeslide_1', 'public/assets/slides/fakeslide_1.png')
+        .add('water_slide', 'public/assets/slides/water_slide.png')
+        .add('blurred_snow_slide', 'public/assets/blurred_snow_slide.png')
         .add('vignette', 'public/assets/vignette.png')
         .load(start);
 }
