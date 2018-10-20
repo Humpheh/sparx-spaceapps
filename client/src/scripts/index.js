@@ -22,8 +22,8 @@ function getBackground(texture, width, height) {
 }
 
 export const GameApp = new PIXI.Application(
-    window.innerWidth,
-    window.innerHeight,
+    1024,//window.innerWidth,
+    768,//window.innerHeight,
     {backgroundColor: 0x1099bb}
 );
 
@@ -111,6 +111,7 @@ function loadRootAssets() {
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
         .add('berg', 'public/assets/sprites/berg.png')
         .add('berg_big', 'public/assets/sprites/berg_big.png')
+        .add('walrus', 'public/assets/sprites/walrus.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
         .add('fakeslide_1', 'public/assets/slides/fakeslide_1.png')

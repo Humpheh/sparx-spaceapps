@@ -3,8 +3,9 @@
 entities:
   - x: 11
     y: 28
-    tileScale: 2
-    sprite: iceicebaby
+    tileScale: 4
+    sprite: walrus
+    flip: true
     events:
       - type: slide
         image: fakeslide_1

@@ -16,6 +16,10 @@ export class Entity {
         this.sprite.width = TILE_SIZE * (this.entitySpec.tileScale || 1);
         this.sprite.height = TILE_SIZE * (this.entitySpec.tileScale || 1);
 
+        if (entitySpec.flip) {
+            this.sprite.width = -this.sprite.width;
+        }
+
         this.events = entitySpec.events;
 
         this.dispatchInteractionActions = this.dispatchInteractionActions.bind(this);
