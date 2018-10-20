@@ -73,3 +73,54 @@ entities:
                 content: {key: 'tent', value: 3}
               - type: text
                 text: "This premium heavy-duty tent may weigh a lot, but it can withstand winds of up to 30 km/h."
+          - x: 265
+            y: 448
+            w: 180
+            h: 90
+            showIf:
+              key: sleepingbag
+              case: eq
+              check: 1
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'sleepingbag', value: 1}
+              - type: text
+                text: "This compact and portable sleeping bag is ideal for temperatures down to -3 °C."
+          - x: 502
+            y: 448
+            w: 180
+            h: 90
+            showIf:
+              key: sleepingbag
+              case: eq
+              check: 2
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'sleepingbag', value: 2}
+              - type: text
+                text: "A warm and comfortable sleeping bag that will keep you snug between -4 and -10 °C."
+          - x: 756
+            y: 448
+            w: 180
+            h: 90
+            showIf:
+              key: sleepingbag
+              case: eq
+              check: 3
+            events:
+              - type: event
+                event: SET_GLOBAL
+                content: {key: 'sleepingbag', value: 3}
+              - type: text
+                text: "Heavy duty sleeping bag ideal for extreme temperatures between -10 and -20 °C."
+          - x: 44
+            y: 669
+            w: 161
+            h: 71
+            events:
+              - type: event
+                event: GO_TO_WORLD
+                content: 1
+              - type: quit
