@@ -7,6 +7,15 @@ import EE, {
 import { World } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 
+function getBackground(texture, width, height) {
+    let tilingBackground = new PIXI.extras.TilingSprite(
+        texture, width, height
+    );
+    tilingBackground.anchor.set(0.5);
+    tilingBackground.tileScale.set(0.25);
+    return tilingBackground;
+}
+
 function start(loader, resources) {
     console.log(resources);
     let app = new PIXI.Application(
@@ -15,6 +24,13 @@ function start(loader, resources) {
         {backgroundColor: 0x1099bb}
     );
     document.body.appendChild(app.view);
+
+    let background = getBackground(
+        resources['sea_background'].texture,
+        window.innerWidth * 10,
+        window.innerHeight * 10,
+    );
+    app.stage.addChild(background);
 
     let world = new World();
     app.stage.addChild(world.container);
@@ -47,6 +63,7 @@ function start(loader, resources) {
 }
 
 PIXI.loader
+    .add('sea_background', 'public/assets/sea.png')
     .add('world1_spec', 'public/assets/worlds/world1.yaml')
     .add('world1_tiles', 'public/assets/worlds/world1.csv')
     .add('public/assets/penguin/penguin2.json')
