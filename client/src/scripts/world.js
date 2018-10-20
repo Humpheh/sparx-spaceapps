@@ -19,13 +19,13 @@ var randomisedTiles = {
 };
 
 class Tile {
-    constructor(x, y, sprite) {
+    constructor(x, y, sprite, solid) {
         this.x = x;
         this.y = y;
 
         // Can't move through it
         this.sprite = sprite.trim() ? Tile.loadSprite(sprite) : null;
-        this.solid = !(this.sprite);
+        this.solid = !(this.sprite) || solid;
         if (this.sprite) {
             this.sprite.anchor.set(0.5);
             this.sprite.x = x * TILE_SIZE;
@@ -107,7 +107,11 @@ export class World {
     }
 
     createTile(x, y, data) {
-        let gridSpace = new Tile(x, y, data);
+        let parts = data.split(',');
+        let img = parts[0];
+        let solid = (parts.length > 1 && parts[1] === 's');
+
+        let gridSpace = new Tile(x, y, img, solid);
         if (gridSpace.sprite) {
             this.container.addChild(gridSpace.sprite);
         }
