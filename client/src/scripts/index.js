@@ -125,6 +125,7 @@ function loadRootAssets() {
         .add('walrus', 'public/assets/sprites/walrus.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
+        .add('walrusside', 'public/assets/penguin/walrus_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
         .add('snow_slide', 'public/assets/slides/snow_slide.png')
         .add('select_items', 'public/assets/slides/select_items.png')
