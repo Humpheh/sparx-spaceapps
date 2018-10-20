@@ -28,7 +28,7 @@ function start(loader, resources) {
     let background = getBackground(
         resources['sea_background'].texture,
         window.innerWidth * 10,
-        window.innerHeight * 10,
+        window.innerHeight * 10
     );
     app.stage.addChild(background);
 
