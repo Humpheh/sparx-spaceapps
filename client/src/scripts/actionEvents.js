@@ -1,5 +1,5 @@
 import { TextPrompt } from "./textprompt";
-import EE, { E_SET_WORLD_LOCK } from "./events";
+import EE, { E_ABORT_EVENT_FLOW, E_SET_WORLD_LOCK } from "./events";
 import { Slide } from "./slide";
 
 export class ActionEventHandler {
@@ -10,14 +10,18 @@ export class ActionEventHandler {
         this.worldContainer = worldContainer;
 
         this.tickers = [];
+
+        // Set to true if the event flow is to be aborted for the current run
+        this.abortingFlow = false;
+        EE.on(E_ABORT_EVENT_FLOW, () => { this.abortingFlow = true; });
     }
 
     runEvents(eventSpec, onDone) {
         EE.emit(E_SET_WORLD_LOCK, true);
         let events = this.loadEvents(eventSpec);
-        let doEvent = function(index) {
+        let doEvent = (index) => {
             console.log('EVENT:', events[index]);
-            if (!events[index]) {
+            if (!events[index] || this.abortingFlow) {
                 EE.emit(E_SET_WORLD_LOCK, false);
                 onDone();
                 return;
@@ -50,6 +54,8 @@ export class ActionEventHandler {
             return this.newEventDispatcher(event);
         case 'check':
             return this.newCheck(event);
+        case 'quit':
+                return this.newQuitEventFlow(event);
         }
         return null;
     }
@@ -106,6 +112,13 @@ export class ActionEventHandler {
     newEventDispatcher(event) {
         return (onFinish) => {
             EE.emit(event.event, event.content);
+            onFinish();
+        };
+    }
+
+    newQuitEventFlow(event) {
+        return (onFinish) => {
+            EE.emit(E_ABORT_EVENT_FLOW);
             onFinish();
         };
     }

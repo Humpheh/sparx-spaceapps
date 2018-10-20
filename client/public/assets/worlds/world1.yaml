@@ -30,6 +30,11 @@ entities:
         text: "How you doin'?"
         character: tuxside
 
+      // GO_TO_WORLD will automatically abort further events in this interaction
+      - type: event
+        event: GO_TO_WORLD
+        content: 2
+
       # Example internal event (this allows tux to move)
       - type: event
         event: SET_WORLD_LOCK

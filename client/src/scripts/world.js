@@ -3,9 +3,11 @@ import yaml from "js-yaml";
 
 import {
     E_APPEND_GLOBAL, E_DEPEND_GLOBAL,
+    E_ABORT_EVENT_FLOW,
     E_DESTROY_ENTITY,
     E_INC_GLOBAL,
     E_SET_GLOBAL,
+    E_GO_TO_WORLD,
     makeEventHander
 } from "./events";
 import { getRandomInt } from "./utils";
@@ -255,10 +257,15 @@ export class WorldContainer {
 
     registerEventListeners() {
         EE.on(E_PLAYER_MOVED, (context) => this.world.onPlayerMove(context.x, context.y), this.world);
+        EE.on(E_GO_TO_WORLD, (worldId) => this.setWorld(worldId));
     }
 
     setWorld(id) {
         console.log("Setting world to: " + id);
+
+        // Break any active event flow on world change
+        EE.emit(E_ABORT_EVENT_FLOW);
+
         if (this.world) {
             console.log("Removing previous world");
             this.container.removeChild(this.world.container);
