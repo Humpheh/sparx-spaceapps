@@ -60,7 +60,6 @@ class World {
         this.loadWorldSpec(id);
 
         this.inCollision = new Set();
-        this.registerEventListeners();
     }
 
     loadWorld(tileData) {
@@ -175,13 +174,9 @@ class World {
         });
     }
 
-    playerMoved(x, y) {
+    onPlayerMove(x, y) {
         let collidees = this.collidesAt(x, y);
         this.updateCollisionStates(collidees);
-    }
-
-    registerEventListeners() {
-        EE.on(E_PLAYER_MOVED, (context) => this.playerMoved(context.x, context.y), this);
     }
 
     ticker(delta, character) {
@@ -198,6 +193,12 @@ export class WorldContainer {
 
         this.container = new PIXI.Container();
         this.setWorld(initialId);
+
+        this.registerEventListeners();
+    }
+
+    registerEventListeners() {
+        EE.on(E_PLAYER_MOVED, (context) => this.world.onPlayerMove(context.x, context.y), this.world);
     }
 
     setWorld(id) {
