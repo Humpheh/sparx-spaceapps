@@ -6,6 +6,6 @@ fixedEntities:
     sprite: scratchcat.png
     events:
       - type: text
-        text: 'Sup dog'
+        text: 'Sup dawg'
       - type: text
-        text: 'How you doing?'
+        text: "How you doin'?"
