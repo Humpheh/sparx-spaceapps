@@ -20,3 +20,6 @@ app.stage.addChild(character.container);
 // Listen for animate update
 app.ticker.add(function(delta) {
 });
+
+// Character position updates
+app.ticker.add(character.keyboardTick);
