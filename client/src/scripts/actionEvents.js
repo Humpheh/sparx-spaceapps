@@ -13,6 +13,10 @@ export class ActionEventHandler {
 
         // Set to true if the event flow is to be aborted for the current run
         this.abortingFlow = false;
+
+        // We need to know we are actually in events we can abort. If not we
+        // will abort the next attempted run of the events (e.g. when the next
+        // collision occurs).
         this.eventsActive = false;
 
         EE.on(E_ABORT_EVENT_FLOW, () => {
