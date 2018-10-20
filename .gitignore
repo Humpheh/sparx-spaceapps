@@ -4,3 +4,4 @@ client/node_modules
 client.iml
 *.pyc
 client/src/scripts/localsettings.js
+venv/*
