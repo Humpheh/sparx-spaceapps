@@ -1,126 +1,35 @@
 ---
 
+# Introductory speech
+
 playerStart:
-  x: 1
-  y: 1
+  x: 0
+  y: 0
 
 entities:
-  - x: 1
-    y: 1
-    tileScale: 4
-    sprite: walrus
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
     events:
-      # - type: slide
-      #   image: snow_slide
-      #   events:
-      #     - type: text
-      #       text: "I live in Antarctica, one of the most beautiful parts of the world."
-      #       character: tuxside
-      #     - type: text
-      #       text: "Though Antarctica has been a stunning place to raise my children, I've never really travelled much."
-      #       character: tuxside
-      #     - type: text
-      #       text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
-      #       character: tuxside
-      #     - type: text
-      #       text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
-      #       character: tuxside
-      #     - type: text
-      #       text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
-      #       character: tuxside
       - type: slide
-        image: select_items
-        hitboxes:
-          - x: 268
-            y: 204
-            w: 181
-            h: 128
-            showIf:
-              key: tent
-              case: eq
-              check: 1
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent', value: 1}
-              - type: text
-                text: "It's a small tent. It's lightweight and quick to to pitch, and can withstand breezes of up to 10 km/h."
-          - x: 493
-            y: 204
-            w: 199
-            h: 128
-            showIf:
-              key: tent
-              case: eq
-              check: 2
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent', value: 2}
-              - type: text
-                text: "This medium tent has plenty of space for a penguin and his luggage, and is ideal for environments with moderate winds of between 10 and 20 km/h."
-          - x: 742
-            y: 204
-            w: 189
-            h: 128
-            showIf:
-              key: tent
-              case: eq
-              check: 3
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'tent', value: 3}
-              - type: text
-                text: "This premium heavy-duty tent may weigh a lot, but it can withstand winds of up to 30 km/h."
-          - x: 265
-            y: 448
-            w: 180
-            h: 90
-            showIf:
-              key: sleepingbag
-              case: eq
-              check: 1
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'sleepingbag', value: 1}
-              - type: text
-                text: "This compact and portable sleeping bag is ideal for temperatures down to -3 °C."
-          - x: 502
-            y: 448
-            w: 180
-            h: 90
-            showIf:
-              key: sleepingbag
-              case: eq
-              check: 2
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'sleepingbag', value: 2}
-              - type: text
-                text: "A warm and comfortable sleeping bag that will keep you snug between -4 and -10 °C."
-          - x: 756
-            y: 448
-            w: 180
-            h: 90
-            showIf:
-              key: sleepingbag
-              case: eq
-              check: 3
-            events:
-              - type: event
-                event: SET_GLOBAL
-                content: {key: 'sleepingbag', value: 3}
-              - type: text
-                text: "Heavy duty sleeping bag ideal for extreme temperatures between -10 and -20 °C."
-          - x: 44
-            y: 669
-            w: 161
-            h: 71
-            events:
-              - type: event
-                event: GO_TO_WORLD
-                content: 1
-              - type: quit
+        image: snow_slide
+        events:
+          - type: text
+            text: "I live in Antarctica, one of the most beautiful places on Earth."
+            character: tuxside
+          - type: text
+            text: "Though it has been a stunning place to raise my children, I've never really travelled much."
+            character: tuxside
+          - type: text
+            text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
+            character: tuxside
+          - type: text
+            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has been saying that I should come and visit, so I'm taking a summer vacation there."
+            character: tuxside
+          - type: text
+            text: "I'm going to start at her home on Wrangel Island and then we are going to go travelling across the sea ice."
+            character: tuxside
+          - type: event
+            event: GO_TO_WORLD
+            content: 102
