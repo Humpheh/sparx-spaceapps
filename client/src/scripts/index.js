@@ -37,6 +37,15 @@ function start(loader, resources) {
         window.innerHeight * 10
     );
     GameApp.stage.addChild(background);
+    let bgTicker = 0;
+    GameApp.ticker.add(t => {
+        bgTicker += t;
+        background.x = Math.sin(bgTicker/200) * 32;
+        background.y = Math.cos(bgTicker/125) * 32;
+
+        background.scale.x = 1 + Math.sin(bgTicker/500) * 0.04;
+        background.scale.y = 1 + Math.cos(bgTicker/400) * 0.04;
+    });
 
     let worldContainer = new WorldContainer(DEFAULT_WORLD_ID);
     GameApp.stage.addChild(worldContainer.container);
