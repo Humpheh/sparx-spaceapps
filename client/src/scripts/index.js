@@ -53,6 +53,7 @@ function start(loader, resources) {
 
     // Character position updates
     app.ticker.add(t => {
+        world.ticker(t);
         character.keyboardTick(t, world);
         app.stage.pivot.x = character.getX() - app.renderer.width / 2;
         app.stage.pivot.y = character.getY() - app.renderer.height / 2;
@@ -67,4 +68,5 @@ PIXI.loader
     .add('world1_spec', 'public/assets/worlds/world1.yaml')
     .add('world1_tiles', 'public/assets/worlds/world1.csv')
     .add('public/assets/penguin/penguin2.json')
+    .add('scratchcat', 'public/assets/sprites/scratchcat.png')
     .load(start);

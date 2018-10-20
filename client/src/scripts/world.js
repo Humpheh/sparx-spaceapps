@@ -3,12 +3,12 @@ import yaml from "js-yaml";
 import { makeEventHander } from "./events";
 
 import EE, {
-    E_ENTITY_DISPATCH_ACTIONS,
     E_PLAYER_MOVED,
 } from "./events";
+import { Entity } from "./entities";
 
 
-const tileSize = 64;
+export const TILE_SIZE = 64;
 
 class Tile {
     constructor(x, y, sprite) {
@@ -20,10 +20,10 @@ class Tile {
         this.solid = !(this.sprite);
         if (this.sprite) {
             this.sprite.anchor.set(0.5);
-            this.sprite.x = x * tileSize;
-            this.sprite.y = y * tileSize;
-            this.sprite.width = tileSize;
-            this.sprite.height = tileSize;
+            this.sprite.x = x * TILE_SIZE;
+            this.sprite.y = y * TILE_SIZE;
+            this.sprite.width = TILE_SIZE;
+            this.sprite.height = TILE_SIZE;
         }
     }
 
@@ -31,29 +31,6 @@ class Tile {
         // create a new Sprite from an image path
         const texture = PIXI.Texture.fromImage('public/assets/sprites/' + textureLocation + '.png');
         return new PIXI.Sprite(texture);
-    }
-}
-
-
-class FixedEntity {
-    constructor(x, y, resourceData, entitySpec) {
-        let texture = new PIXI.Texture.fromLoader(resourceData);
-        this.sprite = new PIXI.Sprite(texture);
-
-        // x,y is in the tile coordinate system
-        this.sprite.anchor.set(0.5);
-        this.sprite.x = x * tileSize;
-        this.sprite.y = y * tileSize;
-        this.sprite.width = tileSize;
-        this.sprite.height = tileSize;
-
-        this.events = entitySpec.events;
-
-        this.dispatchInteractionActions = this.dispatchInteractionActions.bind(this);
-    }
-
-    dispatchInteractionActions() {
-        EE.emit(E_ENTITY_DISPATCH_ACTIONS, this.events);
     }
 }
 
@@ -89,7 +66,7 @@ export class World {
     loadWorldSpec() {
         let worldSpec = PIXI.loader.resources['world1_spec'].data;
         this.worldSpec = yaml.safeLoad(worldSpec);
-        this.placeEntities(this.worldSpec.fixedEntities);
+        this.placeEntities(this.worldSpec.entities);
     }
 
     fileToTileData(world, callback) {
@@ -104,29 +81,17 @@ export class World {
     }
 
     placeEntities(entities) {
-        let loader = new PIXI.loaders.Loader();
-
         for (let entity of entities) {
-            if (typeof(entity.sprite) !== 'undefined') {
-                loader.add(entity.sprite, 'public/assets/sprites/' + entity.sprite);
-            }
+            this.entities.push(new Entity(
+                entity.x, entity.y,
+                PIXI.loader.resources[entity.sprite].texture,
+                entity
+            ));
         }
 
-        loader.onComplete.add(() => {
-            for (let entity of entities) {
-                this.entities.push(new FixedEntity(
-                    entity.x, entity.y,
-                    loader.resources[entity.sprite].data,
-                    entity
-                ));
-            }
-
-            for (let entity of this.entities) {
-                this.container.addChild(entity.sprite);
-            }
-        });
-
-        loader.load();
+        for (let entity of this.entities) {
+            this.container.addChild(entity.sprite);
+        }
     }
 
     createTile(x, y, data) {
@@ -148,9 +113,23 @@ export class World {
     }
 
     isPositionOkay(x, y) {
-        let xt = Math.round(x / tileSize);
-        let yt = Math.round(y / tileSize);
-        return !this.isSolid(xt, yt);
+        let xt = Math.round(x / TILE_SIZE);
+        let yt = Math.round(y / TILE_SIZE);
+        let solid = !this.isSolid(xt, yt);
+
+        if (solid) {
+            return solid;
+        }
+
+        // Check if the position has entities that are walkable
+        for (let entity of this.entities) {
+            if (collidesWith(entity, x, y)) {
+                if (entity.isWalkable()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     collidesAt(x, y) {
@@ -188,6 +167,12 @@ export class World {
     registerEventListeners() {
         EE.on(E_PLAYER_MOVED, (context) => this.playerMoved(context.x, context.y), this);
     }
+
+    ticker(delta) {
+        for (let entity of this.entities) {
+            entity.ticker(delta);
+        }
+    }
 }
 
 function collidesWith(entity, x, y) {
@@ -211,5 +196,5 @@ function collidesWith(entity, x, y) {
 }
 
 export function tileToGlobal(size) {
-    return size * tileSize;
+    return size * TILE_SIZE;
 }

@@ -60,7 +60,15 @@ export class Character {
 
         // This may be a bad idea
         this.movementLocked = false;
-        EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
+        EE.on(E_SET_WORLD_LOCK, (x) => {
+            this.movementLocked = x;
+            if (x) {
+                this.sprite.stop();
+            }
+        });
+
+        this.velocityX = 0;
+        this.velocityY = 0;
 
         // Load start point for world 1
         this.loadPlayerSpec();
@@ -100,35 +108,37 @@ export class Character {
 
         let hasMoved = false;
 
-        let newX = this.sprite.x;
-        let newY = this.sprite.y;
-
         let frames = this.sprite.textures;
 
+        this.velocityX = this.velocityX * 0.5;
+        this.velocityY = this.velocityY * 0.5;
+
         if (this.moveDown.isKeyDown) {
-            newY += moveBy;
+            this.velocityY += moveBy;
             hasMoved = true;
             frames = this.animationFrames.f;
         }
         if (this.moveUp.isKeyDown) {
-            newY -= moveBy;
+            this.velocityY -= moveBy;
             hasMoved = true;
             frames = this.animationFrames.b;
         }
+        let newY = this.sprite.y + this.velocityY;
         if (world.isPositionOkay(this.sprite.x, newY)) {
             this.sprite.y = newY;
         }
 
         if (this.moveLeft.isKeyDown) {
-            newX -= moveBy;
+            this.velocityX -= moveBy;
             hasMoved = true;
             frames = this.animationFrames.r;
         }
         if (this.moveRight.isKeyDown) {
-            newX += moveBy;
+            this.velocityX += moveBy;
             hasMoved = true;
             frames = this.animationFrames.l;
         }
+        let newX = this.sprite.x + this.velocityX;
         if (world.isPositionOkay(newX, this.sprite.y)) {
             this.sprite.x = newX;
         }
@@ -136,8 +146,8 @@ export class Character {
         if (hasMoved) {
             if (this.sprite.textures !== frames) {
                 this.sprite.textures = frames;
-                this.sprite.play();
             }
+            this.sprite.play();
             EE.emit(E_PLAYER_MOVED, new PlayerMovedContext(this.sprite.x, this.sprite.y));
         } else {
             this.sprite.stop();

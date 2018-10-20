@@ -1,11 +1,22 @@
 ---
 
-fixedEntities:
+entities:
   - x: 0 # From far left
     y: 0 # From far top
-    sprite: scratchcat.png
+    sprite: scratchcat
     events:
       - type: text
         text: 'Sup dawg'
       - type: text
         text: "How you doin'?"
+
+  - x: 7
+    y: 30
+    walkable: true
+    tileScale: 2
+    sprite: scratchcat
+    move:
+      - x: 7
+        y: 30
+      - x: 7
+        y: 35
