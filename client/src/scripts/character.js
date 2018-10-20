@@ -25,11 +25,18 @@ export class Character {
     constructor() {
         this.container = new PIXI.Container();
 
-        const sprite = PIXI.Sprite.fromImage(SPRITE_IMAGE);
-        sprite.anchor.set(0.5);
-        this.container.addChild(sprite);
+        let animations = [
+            this.makeAnimation('b', [1,2,3,2]),
+            this.makeAnimation('f', [1,2,3,2]),
+            this.makeAnimation('l', [1,2,3,2]),
+            this.makeAnimation('r', [1,2,3,2]),
+        ];
 
-        this.sprite = sprite;
+        this.container.addChild(animations[0]);
+
+        this.sprite = animations[0];
+        this.sprite.anchor.set(0.5);
+        this.sprite.play();
 
         this.moveDown = new KeyboardEventHandler(KEY_DOWN);
         this.moveUp = new KeyboardEventHandler(KEY_UP);
@@ -45,6 +52,19 @@ export class Character {
         // This may be a bad idea
         this.movementLocked = false;
         EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
+    }
+
+    makeAnimation(dir, idx) {
+        let frames = [];
+        for (let i of idx) {
+            // magically works since the spritesheet was loaded with the pixi loader
+            frames.push(PIXI.Texture.fromFrame('penguin_'+ dir + i + '.png'));
+        }
+        let animation = new PIXI.extras.AnimatedSprite(frames);
+        animation.animationSpeed = 0.1;
+        animation.width = animation.width*0.5;
+        animation.height = animation.height*0.5;
+        return animation;
     }
 
     keyboardTick(delta, world) {
