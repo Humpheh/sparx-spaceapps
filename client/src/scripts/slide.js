@@ -3,7 +3,7 @@ import { GameApp } from "./index";
 
 export class Slide {
     // w and h here are the size of the window
-    constructor(image, parentContainer, conf, finishCallback) {
+    constructor(image, parentContainer, worldContainer, conf, finishCallback) {
         this.finishCallback = finishCallback;
 
         this.container = new PIXI.Container();
@@ -19,8 +19,12 @@ export class Slide {
         let startY = GameApp.renderer.height/2 - this.sprite.height / 2;
 
         for (let hitbox of conf.hitboxes) {
+            let check = hitbox.showIf;
+            let show = !check ? true :
+                worldContainer.doCheck(check.key, check.check, check.case);
+
             let hitboxarea = new PIXI.Graphics();
-            hitboxarea.beginFill(0x000000, 0.25);
+            hitboxarea.beginFill(0x000000, show ? 0.25 : 0);
             hitboxarea.drawRect(startX+hitbox.x, startY+hitbox.y, hitbox.w, hitbox.h);
             hitboxarea.endFill();
             hitboxarea.interactive = true;

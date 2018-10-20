@@ -91,6 +91,8 @@ function loadRootAssets() {
         .add('sea_background', 'public/assets/sea.png')
         .add('public/assets/penguin/penguin2.json')
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
+        .add('berg', 'public/assets/sprites/berg.png')
+        .add('berg_big', 'public/assets/sprites/berg_big.png')
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
         .add('fakeslide_1', 'public/assets/slides/fakeslide_1.png')
