@@ -1,6 +1,8 @@
 import * as PIXI from "pixi.js";
 
-import EE, { E_PLAYER_MOVED } from "./events";
+import EE, {
+    E_PLAYER_MOVED, E_SET_WORLD_LOCK,
+} from "./events";
 import {
     KeyboardEventHandler,
     KEY_DOWN,
@@ -39,9 +41,19 @@ export class Character {
         this.moveRight.bindListeners();
 
         this.keyboardTick = this.keyboardTick.bind(this);
+
+        // This may be a bad idea
+        this.movementLocked = false;
+        EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
     }
 
     keyboardTick(delta, world) {
+        if (this.movementLocked) {
+            // If movement is locked don't let the keyboard events
+            // do anything
+            return;
+        }
+
         const moveBy = delta * MOVE_PER_TICK;
 
         let hasMoved = false;

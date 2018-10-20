@@ -4,3 +4,8 @@ fixedEntities:
   - x: 3
     y: 3
     sprite: scratchcat.png
+    events:
+      - type: text
+        value: 'Sup dog'
+      - type: text
+        value: 'How you doing?'

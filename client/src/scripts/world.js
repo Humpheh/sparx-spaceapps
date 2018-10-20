@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
+import { makeEventHander } from "./events";
 
 
 const tileSize = 64;
@@ -30,7 +31,7 @@ class Tile {
 
 
 class FixedEntity {
-    constructor(x, y, resourceData) {
+    constructor(x, y, resourceData, entitySpec) {
         let texture = new PIXI.Texture.fromLoader(resourceData);
         this.sprite = new PIXI.Sprite(texture);
 
@@ -40,6 +41,8 @@ class FixedEntity {
         this.sprite.y = y * tileSize;
         this.sprite.width = tileSize;
         this.sprite.height = tileSize;
+
+        console.log(entitySpec);
     }
 }
 
@@ -73,8 +76,7 @@ export class World {
         let loader = new PIXI.loaders.Loader();
         loader.add('worldSpec', 'public/assets/worlds/world1.yaml');
         loader.load((loader, resources) => {
-            let spec = yaml.safeLoad(resources.worldSpec.data);
-            this.worldSpec = spec;
+            this.worldSpec = yaml.safeLoad(resources.worldSpec.data);
         });
         loader.onComplete.add(() => {
             this.placeEntities(this.worldSpec.fixedEntities);
@@ -108,7 +110,8 @@ export class World {
             for (let entity of entities) {
                 this.entities.push(new FixedEntity(
                     entity.x, entity.y,
-                    loader.resources[entity.sprite].data
+                    loader.resources[entity.sprite].data,
+                    entity
                 ));
             }
 

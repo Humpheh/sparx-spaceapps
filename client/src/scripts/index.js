@@ -2,7 +2,7 @@ import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
 import { Character } from "./character";
 import { World } from "./world";
-import { TextPrompt } from "./textprompt";
+import { ActionEventHandler } from "./actionEvents";
 
 let app = new PIXI.Application(
     window.innerWidth,
@@ -20,17 +20,21 @@ app.stage.addChild(character.container);
 
 let uiContainer = new PIXI.Container();
 
-let textPrompt = new TextPrompt(
-    'Hello there! What the f did you just say to me I\'ll have you know that this text is going to wrap',
-    0, 0, app.screen.width, 100,
-    uiContainer
-);
+let eventHandler = new ActionEventHandler(app.screen.width, app.screen.height, uiContainer);
+
+eventHandler.runEvents([{
+    type: 'text',
+    text: 'Wat the hell',
+}, {
+    type: 'text',
+    text: 'Why hello there'
+}], () => console.log('done'));
 
 app.stage.addChild(uiContainer);
 
 // Text prompt update
 app.ticker.add(t => {
-    textPrompt.ticker(t);
+    eventHandler.ticker(t);
 });
 
 // Character position updates
