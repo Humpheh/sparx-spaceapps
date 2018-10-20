@@ -33,13 +33,13 @@ export class Entity {
         }
     }
 
-    ticker(delta) {
+    ticker(delta, character) {
         if (this.entitySpec.move) {
-            this._doMove(delta);
+            this._doMove(delta, character);
         }
     }
 
-    _doMove(delta) {
+    _doMove(delta, character) {
         if (this.movementLocked) {
             return;
         }
@@ -50,11 +50,19 @@ export class Entity {
         let xDiff = this.sprite.x - (target.x * TILE_SIZE);
         let yDiff = this.sprite.y - (target.y * TILE_SIZE);
 
+        let movedX = 0, movedY = 0;
         if (Math.abs(xDiff) > 10) {
-            this.sprite.x += (xDiff > 0 ? -1 : 1) * delta;
+            movedX = (xDiff > 0 ? -1 : 1) * delta;
+            this.sprite.x += movedX;
         }
         if (Math.abs(yDiff) > 10) {
-            this.sprite.y += (yDiff > 0 ? -1 : 1) * delta;
+            movedY = (yDiff > 0 ? -1 : 1) * delta;
+            this.sprite.y += movedY;
+        }
+
+        if (character.collidesWith(this)) {
+            character.sprite.x += movedX;
+            character.sprite.y += movedY;
         }
 
         if (Math.abs(xDiff) < 10 && Math.abs(yDiff) < 10) {

@@ -11,6 +11,7 @@ import {
     KEY_RIGHT,
 } from "./keyboard";
 import {
+    collidesWith,
     tileToGlobal
 } from "./world";
 import yaml from "js-yaml";
@@ -110,8 +111,8 @@ export class Character {
 
         let frames = this.sprite.textures;
 
-        this.velocityX = this.velocityX * 0.5;
-        this.velocityY = this.velocityY * 0.5;
+        this.velocityX = this.velocityX * 0.2;
+        this.velocityY = this.velocityY * 0.2;
 
         if (this.moveDown.isKeyDown) {
             this.velocityY += moveBy;
@@ -165,5 +166,9 @@ export class Character {
 
     getY() {
         return this.sprite.y;
+    }
+
+    collidesWith(entity) {
+        return collidesWith(entity, this.sprite.x, this.sprite.y);
     }
 }

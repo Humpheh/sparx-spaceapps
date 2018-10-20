@@ -180,14 +180,14 @@ export class World {
         EE.on(E_PLAYER_MOVED, (context) => this.playerMoved(context.x, context.y), this);
     }
 
-    ticker(delta) {
+    ticker(delta, character) {
         for (let entity of this.entities) {
-            entity.ticker(delta);
+            entity.ticker(delta, character);
         }
     }
 }
 
-function collidesWith(entity, x, y) {
+export function collidesWith(entity, x, y) {
     // Character (x, y) is in collision with entity if the following all hold:
     //
     // entity_x_position - entity_width/2 <= x <= entity_x_position + entity_width/2

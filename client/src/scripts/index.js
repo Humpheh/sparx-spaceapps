@@ -53,7 +53,7 @@ function start(loader, resources) {
 
     // Character position updates
     app.ticker.add(t => {
-        world.ticker(t);
+        world.ticker(t, character);
         character.keyboardTick(t, world);
         app.stage.pivot.x = character.getX() - app.renderer.width / 2;
         app.stage.pivot.y = character.getY() - app.renderer.height / 2;
