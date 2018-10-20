@@ -1,10 +1,12 @@
 import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
+import yaml from "js-yaml";
+
 import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
 } from "./events";
-import { World } from "./world";
+import { WorldContainer } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 
 function getBackground(texture, width, height) {
@@ -32,8 +34,8 @@ function start(loader, resources) {
     );
     app.stage.addChild(background);
 
-    let world = new World();
-    app.stage.addChild(world.container);
+    let worldContainer = new WorldContainer(2);
+    app.stage.addChild(worldContainer.container);
 
     let character = new Character();
     // character.setLocation(app.renderer.width / 2, app.renderer.height / 2);
@@ -53,21 +55,36 @@ function start(loader, resources) {
 
     // Character position updates
     app.ticker.add(t => {
-        world.ticker(t, character);
-        character.keyboardTick(t, world);
+        worldContainer.world.ticker(t, character);
+        character.keyboardTick(t, worldContainer.world);
         app.stage.pivot.x = character.getX() - app.renderer.width / 2;
         app.stage.pivot.y = character.getY() - app.renderer.height / 2;
 
         uiContainer.x = character.getX() - app.renderer.width / 2;
         uiContainer.y = character.getY() - app.renderer.height / 2;
     });
+
+    window.setWorld = (worldId) => { worldContainer.setWorld(worldId); };
 }
 
-PIXI.loader
-    .add('sea_background', 'public/assets/sea.png')
-    .add('world1_spec', 'public/assets/worlds/world1.yaml')
-    .add('world1_tiles', 'public/assets/worlds/world1.csv')
-    .add('public/assets/penguin/penguin2.json')
-    .add('scratchcat', 'public/assets/sprites/scratchcat.png')
-    .add('tuxside', 'public/assets/penguin/tux_side.png')
-    .load(start);
+function loadRootAssets() {
+    PIXI.loader
+        .add('sea_background', 'public/assets/sea.png')
+        .add('public/assets/penguin/penguin2.json')
+        .add('scratchcat', 'public/assets/sprites/scratchcat.png')
+        .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
+        .add('tuxside', 'public/assets/penguin/tux_side.png')
+        .load(start);
+}
+
+let worldLoader = new PIXI.loaders.Loader();
+worldLoader.add('worlds', 'public/assets/worlds/worlds.yaml');
+worldLoader.load((loader, resources) => {
+    const worlds = yaml.safeLoad(resources['worlds'].data);
+    for (let world of worlds) {
+        PIXI.loader
+            .add('world' + world + '_spec', 'public/assets/worlds/world' + world + '.yaml')
+            .add('world' + world + '_tiles', 'public/assets/worlds/world' + world + '.csv');
+    }
+});
+worldLoader.onComplete.add(() => { loadRootAssets(); });

@@ -1,0 +1,13 @@
+---
+
+entities:
+  - x: 7
+    y: 30
+    walkable: true
+    tileScale: 2
+    sprite: iceicebaby
+    move:
+      - x: 7
+        y: 30
+      - x: 7
+        y: 35

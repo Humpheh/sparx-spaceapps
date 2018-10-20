@@ -46,8 +46,8 @@ class Tile {
     }
 }
 
-export class World {
-    constructor(world) {
+class World {
+    constructor(id) {
         this.container = new PIXI.Container();
 
         // Tiles in the world
@@ -56,8 +56,8 @@ export class World {
         // Entities present in the world
         this.entities = [];
 
-        this.fileToTileData(world, td => this.loadWorld(td));
-        this.loadWorldSpec();
+        this.fileToTileData(id, td => this.loadWorld(td));
+        this.loadWorldSpec(id);
 
         this.inCollision = new Set();
         this.registerEventListeners();
@@ -75,14 +75,14 @@ export class World {
         }
     }
 
-    loadWorldSpec() {
-        let worldSpec = PIXI.loader.resources['world1_spec'].data;
+    loadWorldSpec(world) {
+        let worldSpec = PIXI.loader.resources['world' + world + '_spec'].data;
         this.worldSpec = yaml.safeLoad(worldSpec);
         this.placeEntities(this.worldSpec.entities);
     }
 
     fileToTileData(world, callback) {
-        let worldData = PIXI.loader.resources['world1_tiles'].data;
+        let worldData = PIXI.loader.resources['world' + world + '_tiles'].data;
         let rows = worldData.split(/\r\n|\n/);
 
         let tileData = [];
@@ -188,6 +188,27 @@ export class World {
         for (let entity of this.entities) {
             entity.ticker(delta, character);
         }
+    }
+}
+
+export class WorldContainer {
+    constructor(initialId) {
+        this.world = null;
+        this.setWorld = this.setWorld.bind(this);
+
+        this.container = new PIXI.Container();
+        this.setWorld(initialId);
+    }
+
+    setWorld(id) {
+        console.log("Setting world to: " + id);
+        if (this.world) {
+            console.log("Removing previous world");
+            this.container.removeChild(this.world.container);
+        }
+
+        this.world = new World(id);
+        this.container.addChild(this.world.container);
     }
 }
 
