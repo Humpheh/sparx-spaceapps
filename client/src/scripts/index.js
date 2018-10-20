@@ -12,7 +12,7 @@ function getBackground(texture, width, height) {
         texture, width, height
     );
     tilingBackground.anchor.set(0.5);
-    tilingBackground.tileScale.set(0.25);
+    tilingBackground.tileScale.set(0.5);
     return tilingBackground;
 }
 
