@@ -1,0 +1,91 @@
+<html>
+   <head>
+   </head>
+   <body>
+      <div id="container">
+      </div>
+         <script type = "text/javascript">
+            var mouse_clicked = false;
+            var data = {{data_from_flask|safe}};
+
+            function saveFunct() {
+               var xml = new XMLHttpRequest();
+               var location = window.location.pathname;
+               xml.open('POST', "/save"+location);
+               xml.send(data);
+            }
+
+            function createTable(data) {
+               var container = document.getElementById('container');
+               var table = document.createElement('table');
+               table.style.borderSpacing = '0px';
+               var row, tile;
+
+               for (var r in data) {
+                  row = document.createElement('tr');
+                  for (var t in data[r]) {
+                     tile = document.createElement('td');
+                     tile.style.border = "1px solid black";
+                     tile.style.padding = "0px";
+                     tile.style.height = "15px";
+                     tile.style.width = "15px";
+                     tile.setAttribute('r', r);
+                     tile.setAttribute('t', t);
+
+                     if (data[r][t] === 'true') {
+                        tile.style.backgroundColor = 'white';
+                     } else {
+                        tile.style.backgroundColor = 'blue';
+                     }
+
+                     tile.onmouseover = function() {
+                        console.log(mouse_clicked);
+                        var r = this.getAttribute("r");
+                        var t = this.getAttribute("t");
+
+                        if (mouse_clicked) {
+                           console.log('click', r, t);
+                           if (this.style.backgroundColor == 'white') {
+                              this.style.backgroundColor = 'blue';
+                              data[r][t] = '    ';
+                           } else {
+                              this.style.backgroundColor = 'blue';
+                              data[r][t] = 'true';
+                           }
+                        }
+                     };
+                     tile.onclick = function(e) {
+                        var r = this.getAttribute("r");
+                        var t = this.getAttribute("t");
+
+                        console.log('click', r, t);
+                        if (this.style.backgroundColor == 'white') {
+                           this.style.backgroundColor = 'blue';
+                           data[r][t] = '    ';
+                        } else {
+                           this.style.backgroundColor = 'white';
+                           data[r][t] = 'true';
+                        }
+                     }
+                     row.appendChild(tile);
+                  }
+                  table.appendChild(row);
+               }
+               container.appendChild(table);
+
+               var save = document.createElement('button');
+               save.onclick = saveFunct;
+               save.innerText = "Save";
+               container.appendChild(save);
+            }
+            createTable(data);
+
+            document.onmousedown = function(e) {
+               mouse_clicked = true;
+            };
+            document.onmouseup = function(e) {
+               mouse_clicked = false;
+            };
+         </script>
+   </body>
+</html>
