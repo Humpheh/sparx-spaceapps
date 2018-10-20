@@ -18,7 +18,7 @@ let world = new World();
 app.stage.addChild(world.container);
 
 let character = new Character();
-character.setLocation(app.renderer.width / 2, app.renderer.height / 2);
+// character.setLocation(app.renderer.width / 2, app.renderer.height / 2);
 app.stage.addChild(character.container);
 
 let uiContainer = new PIXI.Container();

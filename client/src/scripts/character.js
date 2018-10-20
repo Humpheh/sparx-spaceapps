@@ -10,6 +10,10 @@ import {
     KEY_LEFT,
     KEY_RIGHT,
 } from "./keyboard";
+import {
+    tileToGlobal
+} from "./world";
+import yaml from "js-yaml";
 
 const SPRITE_IMAGE = 'public/assets/bunny.png';
 const MOVE_PER_TICK = 3;
@@ -45,6 +49,23 @@ export class Character {
         // This may be a bad idea
         this.movementLocked = false;
         EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
+
+        // Load start point for world 1
+        this.loadPlayerSpec();
+    }
+
+    loadPlayerSpec() {
+        let loader = new PIXI.loaders.Loader();
+        loader.add('playerSpec', 'public/assets/player/player.yaml');
+        loader.load((loader, resources) => {
+            this.playerSpec = yaml.safeLoad(resources.playerSpec.data);
+        });
+        loader.onComplete.add(() => {
+            this.setLocation(
+                tileToGlobal(this.playerSpec.startLocations.world1.x),
+                tileToGlobal(this.playerSpec.startLocations.world1.y)
+            );
+        });
     }
 
     keyboardTick(delta, world) {

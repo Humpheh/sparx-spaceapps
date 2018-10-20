@@ -16,7 +16,7 @@ class Tile {
         this.y = y;
 
         // Can't move through it
-        this.sprite = sprite ? Tile.loadSprite(sprite) : null;
+        this.sprite = sprite.trim() ? Tile.loadSprite(sprite) : null;
         this.solid = !(this.sprite);
         if (this.sprite) {
             this.sprite.anchor.set(0.5);
@@ -216,4 +216,8 @@ function collidesWith(entity, x, y) {
     const collidesY = (entity_y - (entity_h / 2) <= y) && (entity_y + (entity_h / 2) >= y);
 
     return collidesX && collidesY;
+}
+
+export function tileToGlobal(size) {
+    return size * tileSize;
 }

@@ -1,8 +1,8 @@
 ---
 
 fixedEntities:
-  - x: 3
-    y: 3
+  - x: 0 # From far left
+    y: 0 # From far top
     sprite: scratchcat.png
     events:
       - type: text
