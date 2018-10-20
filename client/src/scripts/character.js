@@ -25,14 +25,14 @@ export class Character {
     constructor() {
         this.container = new PIXI.Container();
 
-        let animationFrames = {
+        this.animationFrames = {
             b: this.makeAnimation('b', [1, 2, 3, 2]),
             f: this.makeAnimation('f', [1, 2, 3, 2]),
             l: this.makeAnimation('l', [1, 2, 3, 2]),
             r: this.makeAnimation('r', [1, 2, 3, 2]),
         };
 
-        let animation = new PIXI.extras.AnimatedSprite(animationFrames.b);
+        let animation = new PIXI.extras.AnimatedSprite(this.animationFrames.b);
         animation.animationSpeed = 0.1;
         animation.width = animation.width*0.5;
         animation.height = animation.height*0.5;
@@ -82,13 +82,17 @@ export class Character {
         let newX = this.sprite.x;
         let newY = this.sprite.y;
 
+        let frames = this.sprite.textures;
+
         if (this.moveDown.isKeyDown) {
             newY += moveBy;
             hasMoved = true;
+            frames = this.animationFrames.f;
         }
         if (this.moveUp.isKeyDown) {
             newY -= moveBy;
             hasMoved = true;
+            frames = this.animationFrames.b;
         }
         if (world.isPositionOkay(this.sprite.x, newY)) {
             this.sprite.y = newY;
@@ -97,17 +101,25 @@ export class Character {
         if (this.moveLeft.isKeyDown) {
             newX -= moveBy;
             hasMoved = true;
+            frames = this.animationFrames.r;
         }
         if (this.moveRight.isKeyDown) {
             newX += moveBy;
             hasMoved = true;
+            frames = this.animationFrames.l;
         }
         if (world.isPositionOkay(newX, this.sprite.y)) {
             this.sprite.x = newX;
         }
 
         if (hasMoved) {
+            if (this.sprite.textures !== frames) {
+                this.sprite.textures = frames;
+                this.sprite.play();
+            }
             EE.emit(E_PLAYER_MOVED, new PlayerMovedContext(this.sprite.x, this.sprite.y));
+        } else {
+            this.sprite.stop();
         }
     }
 
