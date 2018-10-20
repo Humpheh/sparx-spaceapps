@@ -65,19 +65,19 @@ entities:
           - type: event
             event: SET_GLOBAL
             content: {key: 'val', value: false}
-        hitboxes:
-          - x: 10
-            y: 10
-            w: 40
-            h: 40
-            showIf:
-              key: val
-              check: false
-              case: eq # gt, lt
-          - x: 50
-            y: 50
-            w: 40
-            h: 40
+#        hitboxes:
+#          - x: 10
+#            y: 10
+#            w: 40
+#            h: 40
+#            showIf:
+#              key: val
+#              check: false
+#              case: eq # gt, lt
+#          - x: 50
+#            y: 50
+#            w: 40
+#            h: 40
 
       # Example internal event (this destroys itself)
 #      - type: event

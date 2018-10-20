@@ -18,7 +18,7 @@ export class Slide {
         let startX = GameApp.renderer.width/2 - this.sprite.width / 2;
         let startY = GameApp.renderer.height/2 - this.sprite.height / 2;
 
-        for (let hitbox of conf.hitboxes) {
+        for (let hitbox of conf.hitboxes || []) {
             let check = hitbox.showIf;
             let show = !check ? true :
                 worldContainer.doCheck(check.key, check.check, check.case);
@@ -39,14 +39,23 @@ export class Slide {
         parentContainer.addChild(this.container);
 
         if (conf.events) {
-            this.runEvents(conf.events);
+            this.runEvents(conf.events, () => {
+                // If we have no hitboxes, remove the slide
+                if (!conf.hitboxes) {
+                    this.finishCallback && this.finishCallback();
+                    this.parentContainer.removeChild(this.container);
+                }
+            });
         }
     }
 
-    runEvents(events) {
+    runEvents(events, callback) {
         this.disabled = true;
         this.finishCallback && this.finishCallback(events, () => {
             this.disabled = false;
+            if (callback) {
+                callback();
+            }
         });
     }
 
