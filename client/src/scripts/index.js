@@ -3,8 +3,7 @@ import * as PIXI from 'pixi.js';
 import { World } from "./world";
 
 let app = new PIXI.Application(
-    document.body.clientWidth,
-    800,
+    document.body.clientWidth, 800,
     {backgroundColor : 0x1099bb}
 );
 document.body.appendChild(app.view);
