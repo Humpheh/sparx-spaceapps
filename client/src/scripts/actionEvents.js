@@ -163,13 +163,16 @@ export class ActionEventHandler {
     }
 
     newDelayEventsFlow(event) {
-        return (onFinish) => {
+        return (finishCallback) => {
+            let alreadyFinished = false;
+            let onFinish = () => {
+                (!alreadyFinished) && finishCallback();
+                alreadyFinished = true;
+            }
+
             let callback = () => {
-                this._runEvents(event.events, onFinish, this._getEventKey());
-                // Only dispatch onFinish when the delay is running synchronously
-                if (typeof event.async === 'undefined' || !event.async) {
-                    onFinish();
-                }
+                this._runEvents(event.events, () => {}, this._getEventKey());
+                onFinish();
             };
 
             if (event.async) {
@@ -177,6 +180,7 @@ export class ActionEventHandler {
                 // immediately so we move to the next one
                 onFinish();
             }
+
             window.setTimeout(callback, event.content * 1000);
         }
     }
