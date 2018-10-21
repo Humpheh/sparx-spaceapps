@@ -1,1 +1,0 @@
-# sparx-spaceapps
