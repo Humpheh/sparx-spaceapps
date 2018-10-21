@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 1
-  y: 1 
+  x: 50
+  y: 40
 
 entities:
   - x: -10
@@ -10,7 +10,103 @@ entities:
     walkable: false
     tileScale: 3
     moveSpeed: 1
-    sprite: berg
+    sprite: berg_big
     move:
       - x: 10
         y: -10
+  - x: 19
+    y: 5
+    tileScale: 3
+    sprite: berg_big
+    events:
+    - type: slide
+      image: snow_slide
+      events:
+        - type: text
+          text: "Welcome to the Research Tent!"
+          character: walrusside
+  - x: 60
+    y: 44
+    tileScale: 3
+    sprite: berg_big
+    events:
+    - type: slide
+      image: snow_slide
+      events:
+        - type: text
+          text: "Welcome to the second Research Tent!"
+          character: walrusside
+# Far left
+  - x: 29
+    y: 25
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2
+    move:
+    - x: 29
+      y: 25
+    - x: 29
+      y: 12
+# Top, row 2
+  - x: 32
+    y: 4
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 32
+      y: 18
+    - x: 32
+      y: 4
+# Bottom row 2
+  - x: 32
+    y: 34
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 32
+      y: 22
+    - x: 32
+      y: 34
+# Bottom row 4
+  - x: 38
+    y: 22
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 2
+    move:
+    - x: 38
+      y: 22
+    - x: 38
+      y: 34
+  # Top row 4
+  - x: 38
+    y: 20
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 38
+      y: 20
+    - x: 38
+      y: 8
+  # Long row 3
+  - x: 35
+    y: 22
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 3
+    move:
+    - x: 35
+      y: 22
+    - x: 35
+      y: 42
+    - x: 35
+      y: 2
