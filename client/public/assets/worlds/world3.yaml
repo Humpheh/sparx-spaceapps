@@ -1,10 +1,11 @@
 ---
 
 playerStart:
-  x: 16
-  y: 38
+  x: 4 # 16
+  y: 3 #38
 
 entities:
+# Mid-level berg
   - x: -0.5
     y: 20
     walkable: true
@@ -16,6 +17,7 @@ entities:
         y: 20
       - x: -0.5
         y: 24
+# Berg 2
   - x: 6.5
     y: 12
     walkable: true
@@ -27,6 +29,7 @@ entities:
         y: 12
       - x: 6.5
         y: 16
+# Parallelgram berg
   - x: 4
     y: 3
     walkable: true
@@ -36,16 +39,18 @@ entities:
     move:
       - x: 4
         y: 3
-      - x: 3
-        y: 6
-      - x: 5
-        y: 6.5
       - x: 7
-        y: 6.5
-      - x: 14
-        y: 4
+        y: 3
       - x: 11
         y: 4
+      - x: 14
+        y: 4
+      - x: 7
+        y: 7
+      - x: 5
+        y: 7
+      - x: 3
+        y: 6
   - x: 17
     y: 7
     walkable: true
