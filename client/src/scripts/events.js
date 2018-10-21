@@ -16,6 +16,8 @@ export const E_STOP_QUEUING_EVENTS = 'STOP_QUEUING_EVENTS';
 export const E_ADD_HUNGER = 'ADD_HUNGER';
 export const E_RUN_EVENTS = 'RUN_EVENTS';
 export const E_SET_WEATHER_INTENSITY = 'SET_WEATHER_INTENSITY';
+export const E_ADD_BACKPACK_ITEM = 'ADD_BACKPACK_ITEM';
+export const E_DID_UPDATE_BACKPACK_CONTENTS = 'DID_UPDATE_BACKPACK_CONTENTS';
 
 let EE = new EventEmitter();
 
@@ -40,6 +42,8 @@ if (Config.debug) {
     addDebugLogger(E_ADD_HUNGER);
     addDebugLogger(E_RUN_EVENTS);
     addDebugLogger(E_SET_WEATHER_INTENSITY);
+    addDebugLogger(E_ADD_BACKPACK_ITEM);
+    addDebugLogger(E_DID_UPDATE_BACKPACK_CONTENTS);
 }
 
 export default EE;

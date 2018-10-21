@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 import EE, {
     E_ADD_HUNGER,
     E_PLAYER_MOVED, E_SET_WORLD_LOCK,
+    E_ADD_BACKPACK_ITEM,
+    E_DID_UPDATE_BACKPACK_CONTENTS,
 } from "./events";
 import {
     KeyboardEventHandler,
@@ -42,6 +44,8 @@ export class Character {
             r: this.makeAnimation('r', [1, 2, 3, 2]),
         };
 
+        this.backpack = new Set();
+
         let animation = new PIXI.extras.AnimatedSprite(this.animationFrames.b);
         animation.animationSpeed = 0.1;
         animation.width = animation.width*0.5;
@@ -71,6 +75,12 @@ export class Character {
             if (x) {
                 this.sprite.stop();
             }
+        });
+
+        EE.on(E_ADD_BACKPACK_ITEM, (item) => {
+            this.backpack.add(item);
+            console.log("BACKPACK: ", this.backpack);
+            EE.emit(E_DID_UPDATE_BACKPACK_CONTENTS);
         });
 
         this.velocityX = 0;

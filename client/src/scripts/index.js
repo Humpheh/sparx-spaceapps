@@ -2,11 +2,13 @@ import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
 import yaml from "js-yaml";
 
+import { BackpackBar } from "./backpack";
 import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
     E_GO_TO_WORLD,
     E_PLAYER_MOVED, E_SET_WEATHER_INTENSITY,
+    E_DID_UPDATE_BACKPACK_CONTENTS,
 } from "./events";
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
@@ -50,6 +52,8 @@ export const GameApp = new PIXI.Application(
     {backgroundColor: 0x1099bb}
 );
 
+let backpack = new Set();
+
 function initGame(loader, resources) {
     console.log(resources);
     document.body.appendChild(GameApp.view);
@@ -73,7 +77,7 @@ function initGame(loader, resources) {
     let worldContainer = new WorldContainer();
     GameApp.stage.addChild(worldContainer.container);
 
-    let character = new Character();
+    let character = new Character(backpack);
     GameApp.stage.addChild(character.container);
 
     worldContainer.registerWorldChangeCallback((world) => {
@@ -103,6 +107,16 @@ function initGame(loader, resources) {
 
     let hungerMeter = new HungerMeter();
     uiContainer.addChild(hungerMeter.getComponent());
+
+    let backpackBar = new BackpackBar();
+    let backpackComponent = backpackBar.getComponent();
+    uiContainer.addChild(backpackComponent);
+    EE.on(E_DID_UPDATE_BACKPACK_CONTENTS, () => {
+        backpackBar.renderBackpack(character.backpack);
+        backpackComponent.x = (
+            GameApp.renderer.width - backpackComponent.width
+        );
+    });
 
     let eventHandler = new ActionEventHandler(
         GameApp.screen.width,

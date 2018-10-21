@@ -3,8 +3,8 @@
 initialWeatherIntensity: 0.25
 
 playerStart:
-  x: 15
-  y: 32
+  x: 13
+  y: 38
 
 entities:
   - x: 15 # From far left
@@ -41,6 +41,19 @@ entities:
       - type: text
         text: 'I should keep searching for more observations.'
         character: tuxside
+
+
+  - x: 15
+    y: 38
+    sprite: scratchcat
+    id: 222
+    events:
+      - type: event
+        event: ADD_BACKPACK_ITEM
+        content: scratchcat
+      - type: event
+        event: DESTROY_ENTITY
+        content: 222
 
 
   - x: 10 # From far left
