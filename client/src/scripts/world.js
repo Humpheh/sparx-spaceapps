@@ -164,7 +164,9 @@ class World {
                 new KeyboardEventHandler(
                     entity.spawnKey.charCodeAt(0),
                     () => { EE.emit(E_REQUEST_PLACE_ENTITY, entity.id); }
-                ).bindListeners();
+                )
+                    .bindListeners()
+                    .oneShot = true;
             }
         }
 
