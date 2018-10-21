@@ -171,7 +171,9 @@ export class ActionEventHandler {
             };
 
             let callback = () => {
-                this._runEvents(event.events, () => {}, this._getEventKey());
+                if (event.events) {
+                    this._runEvents(event.events, () => {}, this._getEventKey());
+                }
                 onFinish();
             };
 
