@@ -1,10 +1,14 @@
 import * as PIXI from "pixi.js";
 import {Emitter} from "pixi-particles";
+
+import EE, { E_SET_WEATHER_INTENSITY } from "./events";
 import { GameApp } from "./index";
 
+let snowEmitter;
+
 export function newSnow(container) {
-// Create a new emitter
-    let emitter = new Emitter(
+    // Create a new emitter
+    snowEmitter = new Emitter(
         container,
         [PIXI.loader.resources['snow'].texture],
 
@@ -67,7 +71,7 @@ export function newSnow(container) {
     );
 
     // Start emitting
-    emitter.emit = true;
+    snowEmitter.emit = true;
 
     let time = 1000;
 
@@ -75,8 +79,15 @@ export function newSnow(container) {
     return function (delta) {
         time += delta;
 
-        // The emitter requires the elapsed
+        // The snowEmitter requires the elapsed
         // number of seconds since the last update
-        emitter.update(time * 0.0001);
+        snowEmitter.update(time * 0.0001);
     };
 }
+
+EE.on(E_SET_WEATHER_INTENSITY, (intensity) => {
+    snowEmitter.maxParticles = intensity * 50000;
+    snowEmitter.spawnChance = intensity;
+
+    snowEmitter.minimumSpeedMultiplier = intensity;
+});

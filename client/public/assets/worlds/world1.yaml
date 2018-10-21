@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 11
-  y: 26
+  x: 15
+  y: 32
 
 entities:
   - x: 15 # From far left
@@ -10,6 +10,12 @@ entities:
     sprite: scratchcat
     id: 3
     events:
+      - type: text
+        text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
+        character: tuxside
+      - type: event
+        event: SET_WEATHER_INTENSITY
+        content: 1.0
       - type: text
         text: 'This is an observation station!'
         character: tuxside
@@ -32,7 +38,7 @@ entities:
             text: 'Wow that is a massive difference! What is happening to all the ice?'
       - type: text
         text: 'I should keep searching for more observations.'
-        character: tuxside 
+        character: tuxside
 
 
   - x: 10 # From far left

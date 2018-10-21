@@ -15,7 +15,9 @@ import { Slide } from "./slide";
 import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
 import { HungerMeter } from "./hunger";
 import { newSnow } from "./particles";
+
 const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
+const INITIAL_WEATHER_INTENSITY = 0.1;
 
 function getBackground(texture, width, height) {
     let tilingBackground = new PIXI.extras.TilingSprite(
@@ -144,6 +146,7 @@ function initGame(loader, resources) {
 }
 
 function start() {
+    EE.emit(E_SET_WEATHER_INTENSITY, INITIAL_WEATHER_INTENSITY);
     EE.emit(E_GO_TO_WORLD, DEFAULT_WORLD_ID);
 }
 
