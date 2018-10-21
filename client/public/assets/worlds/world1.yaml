@@ -185,6 +185,7 @@ entities:
     spawnKey: T
     sprite: tent
     tileScale: 2
+    id: tent
     events:
       - type: check
         key: storm_convo_passed

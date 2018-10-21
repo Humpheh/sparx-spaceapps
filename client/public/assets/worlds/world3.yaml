@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 4 # 16
-  y: 3 #38
+  x: 16
+  y: 38
 
 entities:
 # Mid-level berg
@@ -75,6 +75,9 @@ entities:
           - type: text
             text: "Well done!"
             character: walrusside
+          - type: event
+            event: GO_TO_WORLD
+            content: 4
 
       # - type: text
       #   text: "A good day's work!"

@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import yaml from "js-yaml";
+import log from "loglevel";
 
 import {
     E_APPEND_GLOBAL, E_DEPEND_GLOBAL,
@@ -10,9 +11,12 @@ import {
     E_SET_GLOBAL,
     E_GO_TO_WORLD,
     E_SET_WEATHER_INTENSITY,
+    E_REQUEST_PLACE_ENTITY,
+    E_SET_ENTITY_POSITION,
     makeEventHander, E_SET_CHARACTER_OPACITY
 } from "./events";
 import { getRandomInt } from "./utils";
+import { KeyboardEventHandler } from "./keyboard";
 
 import EE, {
     E_PLAYER_MOVED,
@@ -84,6 +88,23 @@ class World {
                 }
             });
         });
+
+        EE.on(E_REQUEST_PLACE_ENTITY, (id) => {
+            console.log("placing entity " + id);
+            this.entities.forEach((e, i) => {
+                if (e.id === id) {
+                    e.setVisible(true);
+                }
+            });
+        });
+
+        EE.on(E_SET_ENTITY_POSITION, ({ id, x, y }) => {
+            this.entities.forEach((e, i) => {
+                if (e.id === id) {
+                    e.setLocation(x, y);
+                }
+            });
+        });
     }
 
     loadWorld(tileData) {
@@ -134,6 +155,19 @@ class World {
                 PIXI.loader.resources[entity.sprite].texture,
                 entity
             ));
+
+            if (entity.spawnKey) {
+                if (typeof entity.id === 'undefined') {
+                    log.error("Entities with spawnKey must have an id!");
+                }
+
+                new KeyboardEventHandler(
+                    entity.spawnKey.charCodeAt(0),
+                    () => { EE.emit(E_REQUEST_PLACE_ENTITY, entity.id); }
+                )
+                    .bindListeners()
+                    .oneShot = true;
+            }
         }
 
         for (let entity of this.entities) {

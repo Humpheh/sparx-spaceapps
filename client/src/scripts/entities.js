@@ -34,14 +34,6 @@ export class Entity {
         EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
 
         this.setVisible(entitySpec.spawnVisible || typeof entitySpec.spawnVisible === 'undefined');
-
-        // Register key which spawns the entity
-        if (entitySpec.spawnKey) {
-            let onPress = () => { this.setVisible(true); };
-            new KeyboardEventHandler(
-                entitySpec.spawnKey.charCodeAt(0), onPress
-            ).bindListeners();
-        }
     }
 
     setVisible(visible) {
@@ -67,6 +59,11 @@ export class Entity {
         if (this.entitySpec.move) {
             this._doMove(delta, character);
         }
+    }
+
+    setLocation(x, y) {
+        this.sprite.x = x;
+        this.sprite.y = y;
     }
 
     _doMove(delta, character) {

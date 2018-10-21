@@ -5,6 +5,8 @@ import EE, {
     E_PLAYER_MOVED, E_SET_WORLD_LOCK,
     E_ADD_BACKPACK_ITEM,
     E_DID_UPDATE_BACKPACK_CONTENTS, E_SET_CHARACTER_OPACITY,
+    E_REQUEST_PLACE_ENTITY,
+    E_SET_ENTITY_POSITION
 } from "./events";
 import {
     KeyboardEventHandler,
@@ -85,6 +87,12 @@ export class Character {
 
         EE.on(E_SET_CHARACTER_OPACITY, (alpha) => {
             this.sprite.alpha = alpha;
+        });
+
+        // When we place entities, we want the character's current position to
+        // influence the placed position of the entity
+        EE.on(E_REQUEST_PLACE_ENTITY, (id) => {
+            EE.emit(E_SET_ENTITY_POSITION, { id: id, x: this.sprite.x, y: this.sprite.y });
         });
 
         this.velocityX = 0;

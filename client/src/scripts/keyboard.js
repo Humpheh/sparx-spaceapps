@@ -18,6 +18,9 @@ export class KeyboardEventHandler {
         this.allowRepeat = true;
         this.keyCode = keyCode;
 
+        this.oneShot = false;
+        this.everPressed = false;
+
         if (onPress !== null) {
             this.onPress = onPress;
         }
@@ -33,15 +36,26 @@ export class KeyboardEventHandler {
         window.addEventListener(
             "keyup", this.upHandler.bind(this), false
         );
+
+        // allow chaining
+        return this;
     }
 
     downHandler(evt) {
-        if (evt.keyCode === this.keyCode) {
-            if (this.allowRepeat || !this.isKeyDown) {
-                this.isKeyDown = true;
-                this.isKeyUp = false;
-                this.onPress();
-            }
+        if (evt.keyCode !== this.keyCode) {
+            return;
+        }
+
+        if (this.everPressed && this.oneShot) {
+            return;
+        }
+
+        this.everPressed = true;
+
+        if (this.allowRepeat || !this.isKeyDown) {
+            this.isKeyDown = true;
+            this.isKeyUp = false;
+            this.onPress();
         }
         evt.preventDefault();
     }
