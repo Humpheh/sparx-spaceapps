@@ -174,6 +174,7 @@ function loadRootAssets() {
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
         .add('berg', 'public/assets/sprites/berg.png')
         .add('fish', 'public/assets/sprites/fish.png')
+        .add('thermo', 'public/assets/sprites/thermo.png')
         .add('berg_big', 'public/assets/sprites/berg_big.png')
         .add('walrus', 'public/assets/sprites/walrus.png')
         .add('bear', 'public/assets/sprites/bear.png')
@@ -197,6 +198,7 @@ function loadRootAssets() {
         .add('empty', 'public/assets/sprites/empty.png')
         .add('station', 'public/assets/sprites/station.png')
         .add('station2', 'public/assets/sprites/station2.png')
+        .add('tent', 'public/assets/sprites/tent.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

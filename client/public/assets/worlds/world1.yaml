@@ -13,8 +13,14 @@ entities:
     tileScale: 3
     id: 3
     events:
+      - type: event
+        event: SET_GLOBAL
+        content: {key: 'storm_convo_passed', value: true}
       - type: text
-        text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
+        text: Ooooh argh! Thar she blows! There's a blizzard a-foot"
+        character: tuxside
+      - type: text
+        text: You can pitch your tent by pressing the 'T' key on your keyboard.
         character: tuxside
       - type: delay
         content: 1
@@ -172,3 +178,42 @@ entities:
         y: 32
       - x: 6
         y: 32
+
+  - x: 18
+    y: 31
+    spawnVisible: false
+    spawnKey: T
+    sprite: tent
+    tileScale: 2
+    events:
+      - type: check
+        key: storm_convo_passed
+        check: true
+        case: eq
+        events:
+          - type: text
+            text: It's beautiful weather right now. Why don't you explore rather than stay in your tent?
+            character: walrusside
+            speaker_name: Professor Walruson
+          - type: quit
+
+      - type: event
+        event: SET_CHARACTER_OPACITY
+        content: 0.0
+      - type: text
+        text: >
+          Well done! You found shelter. You can hide here until the storm passes.
+        character: walrusside
+        speaker_name: Professor Walruson
+      - type: delay
+        content: 3
+      - type: event
+        event: SET_WEATHER_INTENSITY
+        content: 0.1
+      - type: text
+        text: The storm has died down now, so you can step out and explore again.
+        character: walrusside
+        speaker_name: Professor Walruson
+      - type: event
+        event: SET_CHARACTER_OPACITY
+        content: 1.0

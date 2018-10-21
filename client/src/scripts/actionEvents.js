@@ -168,10 +168,12 @@ export class ActionEventHandler {
             let onFinish = () => {
                 (!alreadyFinished) && finishCallback();
                 alreadyFinished = true;
-            }
+            };
 
             let callback = () => {
-                this._runEvents(event.events, () => {}, this._getEventKey());
+                if (event.events) {
+                    this._runEvents(event.events, () => {}, this._getEventKey());
+                }
                 onFinish();
             };
 
@@ -182,7 +184,7 @@ export class ActionEventHandler {
             }
 
             window.setTimeout(callback, event.content * 1000);
-        }
+        };
     }
 
     newTextHandler(event) {

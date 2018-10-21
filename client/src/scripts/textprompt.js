@@ -89,7 +89,7 @@ export class TextPrompt {
         }
 
         text = text + this.text.substr(0, substr);
-        return text
+        return text;
     }
 
     ticker(delta) {

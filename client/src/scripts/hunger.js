@@ -16,10 +16,14 @@ export class HungerMeter {
         this.container.addChild(graphics);
         this.setBar();
 
-        this.fishIcon = new PIXI.Sprite(PIXI.loader.resources['fish'].texture);
-        this.fishIcon.x = 40;
-        this.fishIcon.y = 20;
-        this.fishIcon.anchor.set(0.5);
+        let fishIcon = new PIXI.Sprite(PIXI.loader.resources['fish'].texture);
+        fishIcon.anchor.set(0.5);
+        fishIcon.x = 40;
+        fishIcon.y = 35;
+        fishIcon.scale.x = 0.7;
+        fishIcon.scale.y = 0.7;
+        fishIcon.rotation = -Math.PI / 7;
+        this.container.addChild(fishIcon);
 
         EE.on(E_ADD_HUNGER, (diff) => {
             this.addHunger(diff);
