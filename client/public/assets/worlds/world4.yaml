@@ -3,8 +3,8 @@
 initialWeatherIntensity: 0.25
 
 playerStart:
-  x: 15
-  y: 5
+  x: 5
+  y: 55
 
 entities:
   - x: -10
