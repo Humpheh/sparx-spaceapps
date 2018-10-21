@@ -9,10 +9,11 @@ const TEXT_PADDING = 20;
 const BOX_MARGIN = 20;
 
 export class TextPrompt {
-    constructor(text, x, y, w, h, conf, parentContainer, finishCallback) {
+    constructor(text, x, y, w, h, conf, parentContainer, finishCallback, speakerName) {
         this.textLen = 0;
         this.text = text;
         this.timer = 0;
+        this.speakerName = speakerName;
 
         this.finishCallback = finishCallback;
 
@@ -80,6 +81,17 @@ export class TextPrompt {
         this.parentContainer.removeChild(this.container);
     }
 
+    getTextStringWithSpeaker(substr) {
+        let text = '';
+
+        if (this.speakerName) {
+            text = this.speakerName + ': ';
+        }
+
+        text = text + this.text.substr(0, substr);
+        return text
+    }
+
     ticker(delta) {
         this.timer += delta;
         if (this.timer > 1) {
@@ -88,7 +100,7 @@ export class TextPrompt {
 
         // Don't add characters if we've reached it
         if (!this.finished && this.timer > 1) {
-            this.textComponent.text = this.text.substr(0, this.textLen);
+            this.textComponent.text = this.getTextStringWithSpeaker(this.textLen);
             this.timer = 0;
 
             if (this.textLen >= this.text.length) {

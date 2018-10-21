@@ -8,8 +8,9 @@ playerStart:
 
 entities:
   - x: 15 # From far left
-    y: 30 # From far top
-    sprite: scratchcat
+    y: 29 # From far top
+    sprite: station
+    tileScale: 3
     id: 3
     events:
       - type: text

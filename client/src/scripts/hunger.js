@@ -10,11 +10,16 @@ export class HungerMeter {
         let graphics = new PIXI.Graphics();
         graphics.lineStyle(4, 0xFFFFFF, 1);
         graphics.beginFill(0xFFFFFF, 0.8);
-        graphics.drawRoundedRect(20, 20, 200, 30, 5);
+        graphics.drawRoundedRect(80, 20, 200, 30, 5);
         graphics.endFill();
 
         this.container.addChild(graphics);
         this.setBar();
+
+        this.fishIcon = new PIXI.Sprite(PIXI.loader.resources['fish'].texture);
+        this.fishIcon.x = 40;
+        this.fishIcon.y = 20;
+        this.fishIcon.anchor.set(0.5);
 
         EE.on(E_ADD_HUNGER, (diff) => {
             this.addHunger(diff);
@@ -32,7 +37,7 @@ export class HungerMeter {
             colour = 0xFF0000;
         }
         this.bar.beginFill(colour, 0.8);
-        this.bar.drawRoundedRect(20, 20,
+        this.bar.drawRoundedRect(80, 20,
             200 * (this.hunger / 100),
             30, 5);
         this.bar.endFill();

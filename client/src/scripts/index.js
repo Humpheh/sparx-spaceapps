@@ -195,6 +195,8 @@ function loadRootAssets() {
         .add('sepia', 'public/assets/slides/sepia.png')
         .add('black_slide', 'public/assets/slides/black_slide.png')
         .add('empty', 'public/assets/sprites/empty.png')
+        .add('station', 'public/assets/sprites/station.png')
+        .add('station2', 'public/assets/sprites/station2.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

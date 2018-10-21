@@ -14,32 +14,21 @@ entities:
         image: snow_slide
         events:
           - type: text
-            text: "I've dug out this old letter from Claudia to help me plan my trip."
+            text: "In 2018..."
+          - type: text
+            text: "I've just received this letter from my friend Claudia."
             character: tuxside
-      - type: slide
-        image: water_slide
-        events:
           - type: text
-            text: "Dear Tux,"
-            character: bearside
-            flipSide: true
-          - type: text
-            text: "Thank you for your letter! Antarctica sounds wonderful."
-            character: bearside
-            flipSide: true
-          - type: text
-            text: "You really must come and visit me on Wrangel Island one day."
-            character: bearside
-            flipSide: true
-          - type: text
-            text: "I've included a travel brochure in case you feel like planning a trip ;)"
-            character: bearside
-            flipSide: true
-      - type: slide
-        image: snow_slide
-        events:
+            text: "Wow this letter is old, it's dated 1985!"
+            character: tuxside
           - type: text
             text: "I've always wanted to explore the Arctic, so I'm going to pay Claudia a surprise visit."
+            character: tuxside
+          - type: text
+            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has always said that I should come and visit, so I'm taking a summer vacation there."
+            character: tuxside
+          - type: text
+            text: "I'm going to start at her home on Wrangel Island and then strike out across the sea ice, just like a real explorer!"
             character: tuxside
           - type: text
             text: "Let's take a look at this brochure to help me choose my gear."
