@@ -30,4 +30,4 @@ entities:
             character: tuxside
           - type: event
             event: GO_TO_WORLD
-            content: 102
+            content: _intro_climate_check

@@ -26,4 +26,4 @@ entities:
             events:
              - type: event
                event: GO_TO_WORLD
-               content: 101
+               content: _intro

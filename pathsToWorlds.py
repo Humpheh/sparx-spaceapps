@@ -110,6 +110,22 @@ def convertLinesToWorldLines(lines):
 
         # print world_lines[ii]
 
+    # Corner pass
+    for ii, line in enumerate(world_lines):
+        for jj, tile in enumerate(line):
+            if world_lines[ii][jj] != "middlemiddle":
+                continue
+
+            # At least one of these is true (pretty sure...)
+            if world_lines[ii-1][jj-1].strip() == '':
+                world_lines[ii][jj] += 'UL'
+            elif world_lines[ii-1][jj+1].strip() == '':
+                world_lines[ii][jj] += 'UR'
+            elif world_lines[ii+1][jj-1].strip() == '':
+                world_lines[ii][jj] += 'LL'
+            elif world_lines[ii+1][jj+1].strip() == '':
+                world_lines[ii][jj] += 'LR'
+
     for ii, line in enumerate(world_lines):
         for jj, tile in enumerate(line):
             world_lines[ii][jj] = convertCodes[world_lines[ii][jj]]
@@ -126,6 +142,10 @@ convertCodes = {
     "lastupper": "ice_u3",
     "lastmiddle": "ice_m3",
     "lastlower": "ice_l3",
+    "middlemiddleUL": "ice_c_tl",
+    "middlemiddleUR": "ice_c_tr",
+    "middlemiddleLL": "ice_c_bl",
+    "middlemiddleLR": "ice_c_br",
     "    ": "      "
 }
 

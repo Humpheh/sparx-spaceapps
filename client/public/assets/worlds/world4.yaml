@@ -1,105 +1,16 @@
 ---
 
 playerStart:
-  x: 1 #16
-  y: 1 #38
+  x: 1
+  y: 1 
 
 entities:
-  - x: 1
-    y: 0
-    walkable: true
-    tileScale: 2
-    moveSpeed: 0.3
-    sprite: berg
-    move:
-      - x: 1
-        y: 1
-      - x: 1
-        y: 30
-  - x: 3
-    y: 0
-    walkable: true
+  - x: -10
+    y: 5
+    walkable: false
     tileScale: 3
-    moveSpeed: 0.1
+    moveSpeed: 1
     sprite: berg
     move:
-      - x: 3
-        y: 1
-      - x: 3
-        y: 30
-  - x: 4
-    y: 0
-    walkable: true
-    tileScale: 2
-    moveSpeed: 0.2
-    sprite: berg
-    move:
-      - x: 4
-        y: 1
-      - x: 4
-        y: 30
-  - x: 5
-    y: 0
-    walkable: true
-    tileScale: 2
-    moveSpeed: 0.1
-    sprite: berg
-    move:
-      - x: 5
-        y: 1
-      - x: 5
-        y: 30
-  - x: 6
-    y: 0
-    walkable: true
-    tileScale: 1
-    moveSpeed: 0.2
-    sprite: berg
-    move:
-      - x: 6
-        y: 1
-      - x: 6
-        y: 30
-  - x: 7
-    y: 0
-    walkable: true
-    tileScale: 1
-    moveSpeed: 0.1
-    sprite: berg
-    move:
-      - x: 7
-        y: 1
-      - x: 7
-        y: 30
-  - x: 8
-    y: 0
-    walkable: true
-    tileScale: 3
-    moveSpeed: 0.3
-    sprite: berg
-    move:
-      - x: 8
-        y: 1
-      - x: 8
-        y: 30
-  - x: 9
-    y: 0
-    walkable: true
-    tileScale: 3
-    moveSpeed: 0.2
-    sprite: berg
-    move:
-      - x: 9
-        y: 1
-      - x: 9
-        y: 30
-
-
-
-
-
-
-
-
-
-
+      - x: 10
+        y: -10

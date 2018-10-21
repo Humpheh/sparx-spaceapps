@@ -18,4 +18,4 @@ entities:
             character: walrusside
           - type: event
             event: GO_TO_WORLD
-            content: 103
+            content: _intro_item_select
