@@ -76,7 +76,9 @@ function initGame(loader, resources) {
         background.scale.y = 1 + Math.cos(bgTicker/400) * 0.04;
     });
 
-    let worldContainer = new WorldContainer();
+    let uiContainer = new PIXI.Container();
+
+    let worldContainer = new WorldContainer(uiContainer);
     GameApp.stage.addChild(worldContainer.container);
 
     let character = new Character(backpack);
@@ -101,8 +103,6 @@ function initGame(loader, resources) {
         window.innerHeight * 10
     );
     GameApp.stage.addChild(clouds);
-
-    let uiContainer = new PIXI.Container();
 
     let snowEmitter = newSnow(uiContainer);
     GameApp.ticker.add(snowEmitter);
@@ -190,7 +190,9 @@ function loadRootAssets() {
         .add('splash', 'public/assets/slides/splash.png')
         .add('ice_1_slide', 'public/assets/slides/ice_1_slide.png')
         .add('ice_2_slide', 'public/assets/slides/ice_2_slide.png')
+        .add('sepia', 'public/assets/slides/sepia.png')
         .add('black_slide', 'public/assets/slides/black_slide.png')
+        .add('empty', 'public/assets/sprites/empty.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

@@ -46,7 +46,7 @@ export class Character {
 
         this.backpack = new Set();
 
-        let animation = new PIXI.extras.AnimatedSprite(this.animationFrames.b);
+        let animation = new PIXI.extras.AnimatedSprite(this.animationFrames.r);
         animation.animationSpeed = 0.1;
         animation.width = animation.width*0.5;
         animation.height = animation.height*0.5;

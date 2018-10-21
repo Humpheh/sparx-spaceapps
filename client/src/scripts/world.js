@@ -68,7 +68,8 @@ class World {
         // Entities present in the world
         this.entities = [];
 
-        this.fileToTileData(id, td => this.loadWorld(td));
+        let tileData = this.fileToTileData(id);
+        this.loadWorld(tileData)
         this.loadWorldSpec(id);
 
         this.inCollision = new Set();
@@ -115,7 +116,7 @@ class World {
         EE.emit(E_SET_WEATHER_INTENSITY, intensity);
     }
 
-    fileToTileData(world, callback) {
+    fileToTileData(world) {
         let worldData = PIXI.loader.resources['world' + world + '_tiles'].data;
         let rows = worldData ? worldData.split(/\r\n|\n/) : '';
 
@@ -123,7 +124,7 @@ class World {
         for (let y = 0; y < rows.length; y++) {
             tileData.push(rows[y].split(','));
         }
-        callback(tileData);
+        return tileData;
     }
 
     placeEntities(entities) {
@@ -239,7 +240,9 @@ class World {
 }
 
 export class WorldContainer {
-    constructor(initialId) {
+    constructor(uiContainer) {
+        this.uiContainer = uiContainer;
+
         this.values = {};
         this.world = null;
         this.worldChangeCallbacks = [];
@@ -265,6 +268,18 @@ export class WorldContainer {
             }
             console.log('depend values', this.values);
         });
+    }
+
+    setSepia(on) {
+        if (this.sepia && !on) {
+            this.uiContainer.removeChild(this.sepia);
+        } else if (!this.sepia && on) {
+            this.sepia = new PIXI.Sprite(PIXI.loader.resources['sepia'].texture);
+            this.sepia.x = 0;
+            this.sepia.y = 0;
+            this.sepia.alpha = 0.5;
+            this.uiContainer.addChild(this.sepia);
+        }
     }
 
     doCheck(key, val, check) {
@@ -311,6 +326,8 @@ export class WorldContainer {
 
         this.world = new World(id);
         this.container.addChild(this.world.container);
+
+        this.setSepia(this.world.worldSpec.sepia);
 
         for (let cb of this.worldChangeCallbacks) {
             cb(this.world, this);
