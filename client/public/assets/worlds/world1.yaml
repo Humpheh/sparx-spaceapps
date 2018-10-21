@@ -1,5 +1,7 @@
 ---
 
+initialWeatherIntensity: 0.25
+
 playerStart:
   x: 15
   y: 32
