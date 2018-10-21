@@ -1,0 +1,3 @@
+[submodule "client/build"]
+	path = client/build
+	url = https://github.com/Humpheh/sparx-spaceapps.git
