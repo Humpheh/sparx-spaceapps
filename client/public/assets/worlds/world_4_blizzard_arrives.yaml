@@ -26,6 +26,7 @@ entities:
           The weather changes quickly in the Arctic,
           and there's now a nasty storm a-brewin'!
         character: piratewalrusside
+        speaker_name: Professor Walruson
 
       - type: text
         text: >

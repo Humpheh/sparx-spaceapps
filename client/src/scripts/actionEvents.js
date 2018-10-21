@@ -196,7 +196,8 @@ export class ActionEventHandler {
             prompt = new TextPrompt(
                 event.text,
                 0, this.worldHeight - 200, this.worldWidth, 200,
-                event, this.uiContainer, finishHandler
+                event, this.uiContainer, finishHandler,
+                event.speaker_name
             );
             this.tickers.push(prompt);
             return prompt;
