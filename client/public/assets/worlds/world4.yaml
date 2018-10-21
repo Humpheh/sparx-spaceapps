@@ -22,7 +22,7 @@ entities:
     sprite: station
     events:
       - type: text
-        text: "This is a Research Tent!"
+        text: "This is a Research Outpost!"
         character: tuxside
       - type: text
         text: 'It receives satellite images of the arctic ice for monitoring.'
@@ -66,26 +66,23 @@ entities:
     tileScale: 3
     sprite: station2
     events:
-    - type: slide
-      image: snow_slide
+    - type: text
+      text: "This is a Research Outpost!"
+      character: tuxside
+    - type: text
+      text: "You've received an anemometer!"
+    - type: event
+      event: SET_GLOBAL
+      content: {key: 'anemometer', value: 1}
+    - type: check
+      key: thermometer
+      check: 1
+      case: eq # gt, lt
       events:
-      - type: text
-        text: "Welcome to the Research Tent!"
-        character: tuxside
-      - type: text
-        text: "You've received an anemometer!"
-      - type: event
-        event: SET_GLOBAL
-        content: {key: 'anemometer', value: 1}
-      - type: check
-        key: thermometer
-        check: 1
-        case: eq # gt, lt
-        events:
-          - type: quit
-      - type: event
-        event: GO_TO_WORLD
-        content: "_4_blizzard_arrives"
+        - type: quit
+    - type: event
+      event: GO_TO_WORLD
+      content: "_4_blizzard_arrives"
 # Far left
   - x: 29
     y: 25

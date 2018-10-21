@@ -1,14 +1,14 @@
 ---
 
-initialWeatherIntensity: 0.0
+initialWeatherIntensity: 1.5
 
 playerStart:
-  x: 10
-  y: 10
+  x: 60
+  y: 49
 
 entities:
-  - x: 10
-    y: 10
+  - x: 60
+    y: 49
     sprite: walrus
     id: 1
     events:
@@ -18,15 +18,11 @@ entities:
         events:
           - type: event
             event: SET_WEATHER_INTENSITY
-            content: 1
+            content: 1.5
 
-      - type: text
-        text: >
-          Whoa, watch your step, explorer!
-          The weather changes quickly in the Arctic,
-          and there's now a nasty storm a-brewin'!
-        character: piratewalrusside
-        speaker_name: Professor Walruson
+          - type: event
+            event: SET_GLOBAL
+            content: {key: 'storm_convo_passed', value: true}
 
       - type: text
         text: >
@@ -34,7 +30,146 @@ entities:
           Professor Walruson has already been here too long and is
           going to leave now.
         character: piratewalrusside
+      - type: text
+        text: You can pitch your tent by pressing the 'T' key on your keyboard.
+        character: piratewalrusside
 
       - type: event
         event: DESTROY_ENTITY
         content: 1
+  - x: 60
+    y: 49
+    spawnVisible: false
+    spawnKey: T
+    sprite: tent
+    tileScale: 2
+    id: tent
+    events:
+     - type: check
+       key: storm_convo_passed
+       check: true
+       case: eq
+       events:
+         - type: text
+           text: It's beautiful weather right now. Why don't you explore rather than stay in your tent?
+           character: walrusside
+           speaker_name: Professor Walruson
+         - type: quit
+
+     - type: event
+       event: SET_CHARACTER_OPACITY
+       content: 0.0
+     - type: text
+       text: >
+         Well done! You found shelter. You can hide here until the storm passes.
+       character: walrusside
+       speaker_name: Professor Walruson
+     - type: delay
+       content: 3
+     - type: event
+       event: SET_WEATHER_INTENSITY
+       content: 0.1
+     - type: event
+       event: SET_GLOBAL
+       content: {key: 'storm_convo_passed', value: false}
+     - type: text
+       text: The storm has died down now, so you can step out and explore again.
+       character: walrusside
+       speaker_name: Professor Walruson
+     - type: event
+       event: SET_CHARACTER_OPACITY
+       content: 1.0
+  # Claudia
+  - x: 5
+    y: 10
+    sprite: bear
+    tileScale: 4
+    events:
+      - type: text
+        text: "Tux! Is that you!?"
+        character: bearside
+        speaker_name: "Claudia"
+      - type: slide
+        image: splash
+        events:
+          - type: text
+            text: "Thanks for playing!"
+          - type: event
+            event: GO_TO_WORLD
+            content: "_splash"
+  # Far left
+  - x: 29
+    y: 25
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2
+    move:
+    - x: 29
+      y: 25
+    - x: 29
+      y: 12
+
+# Top, row 2
+  - x: 32
+    y: 4
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 32
+      y: 18
+    - x: 32
+      y: 4
+
+# Bottom row 2
+  - x: 32
+    y: 34
+    tileScale: 3
+    sprite: berg
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 32
+      y: 22
+    - x: 32
+      y: 34
+# Bottom row 4
+  - x: 38
+    y: 22
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 2
+    move:
+    - x: 38
+      y: 22
+    - x: 38
+      y: 34
+  # Top row 4
+  - x: 38
+    y: 20
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 2.5
+    move:
+    - x: 38
+      y: 20
+    - x: 38
+      y: 8
+  # Long row 3
+  - x: 35
+    y: 22
+    tileScale: 3
+    sprite: berg_big
+    walkable: true
+    moveSpeed: 3
+    move:
+    - x: 35
+      y: 22
+    - x: 35
+      y: 42
+    - x: 35
+      y: 2
