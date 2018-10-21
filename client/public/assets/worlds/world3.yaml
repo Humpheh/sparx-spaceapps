@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 4 #16
-  y: 2 #38
+  x: 16
+  y: 38
 
 entities:
   - x: -0.5
