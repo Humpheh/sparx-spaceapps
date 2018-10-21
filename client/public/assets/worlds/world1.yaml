@@ -13,12 +13,15 @@ entities:
     tileScale: 3
     id: 3
     events:
-      - type: text
-        text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
-        character: tuxside
       - type: event
         event: SET_GLOBAL
         content: {key: 'storm_convo_passed', value: true}
+      - type: text
+        text: Ooooh argh! Thar she blows! There's a blizzard a-foot"
+        character: tuxside
+      - type: text
+        text: You can pitch your tent by pressing the 'T' key on your keyboard.
+        character: tuxside
       - type: delay
         content: 1
         async: true
