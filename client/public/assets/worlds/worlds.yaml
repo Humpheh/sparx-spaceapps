@@ -3,7 +3,7 @@
 - 2
 - 3
 - 4
-- 101 # Intro speech
-- 102 # Check the climate
-- 103 # Choose your items
+- _intro
+- _intro_climate_check
+- _intro_item_select
 - 104 # Off to the Arctic
