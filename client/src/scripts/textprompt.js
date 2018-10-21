@@ -22,7 +22,7 @@ export class TextPrompt {
 
         this.textComponent = new PIXI.Text('', new PIXI.TextStyle({
             fontFamily: 'Tahoma',
-            fontSize: 22,
+            fontSize: 28,
             wordWrap: true,
             wordWrapWidth: w - TEXT_PADDING*2 - BOX_MARGIN*2
         }));

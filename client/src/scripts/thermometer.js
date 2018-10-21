@@ -1,5 +1,10 @@
 import * as PIXI from "pixi.js";
-import EE, { E_ADD_HUNGER, E_RUN_EVENTS, E_SET_TEMPRATURE } from "./events";
+import EE, {
+    E_ADD_HUNGER,
+    E_RUN_EVENTS,
+    E_SET_TEMPRATURE,
+    E_SET_WEATHER_INTENSITY
+} from "./events";
 
 export class Thermometer {
     constructor() {
@@ -19,6 +24,10 @@ export class Thermometer {
         EE.on(E_SET_TEMPRATURE, (temp) => {
             this.setTemperature(temp);
         });
+        EE.on(E_SET_WEATHER_INTENSITY, intensity => {
+            this.temperature = 20 + (50-intensity*50);
+            this.setBar();
+        });
     }
 
     setBar() {
@@ -34,7 +43,7 @@ export class Thermometer {
 
         this.bar.lineStyle(2, 0xFFFFFF, 1);
         this.bar.beginFill(0xFF0000, 1);
-        this.bar.drawCircle(30, 77.5, 15);
+        this.bar.drawCircle(33, 77.5, 15);
         this.bar.endFill();
 
         this.container.addChild(this.bar);

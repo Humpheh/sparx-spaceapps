@@ -12,9 +12,8 @@ import EE, {
 } from "./events";
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
-import { Slide } from "./slide";
 
-import { LOCAL_DEFAULT_WORLD_ID, FULL_WIDTH } from "./localsettings";
+import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
 import { HungerMeter } from "./hunger";
 import { newSnow } from "./particles";
 import { Thermometer } from "./thermometer";
@@ -46,6 +45,8 @@ function getClouds(texture, width, height) {
     tilingBackground.blendMode = PIXI.BLEND_MODES['SCREEN'];
     return tilingBackground;
 }
+
+export const FULL_WIDTH = false;
 
 export const GameApp = new PIXI.Application(
     FULL_WIDTH ? window.innerWidth : 1024,
