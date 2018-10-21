@@ -10,7 +10,7 @@ import {
     E_SET_GLOBAL,
     E_GO_TO_WORLD,
     E_SET_WEATHER_INTENSITY,
-    makeEventHander
+    makeEventHander, E_SET_CHARACTER_OPACITY
 } from "./events";
 import { getRandomInt } from "./utils";
 
@@ -328,6 +328,8 @@ export class WorldContainer {
         this.container.addChild(this.world.container);
 
         this.setSepia(this.world.worldSpec.sepia);
+
+        EE.emit(E_SET_CHARACTER_OPACITY, this.world.worldSpec.hideCharacter ? 0 : 1);
 
         for (let cb of this.worldChangeCallbacks) {
             cb(this.world, this);

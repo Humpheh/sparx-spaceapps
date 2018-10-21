@@ -4,7 +4,7 @@ import EE, {
     E_ADD_HUNGER,
     E_PLAYER_MOVED, E_SET_WORLD_LOCK,
     E_ADD_BACKPACK_ITEM,
-    E_DID_UPDATE_BACKPACK_CONTENTS,
+    E_DID_UPDATE_BACKPACK_CONTENTS, E_SET_CHARACTER_OPACITY,
 } from "./events";
 import {
     KeyboardEventHandler,
@@ -81,6 +81,10 @@ export class Character {
             this.backpack.add(item);
             console.log("BACKPACK: ", this.backpack);
             EE.emit(E_DID_UPDATE_BACKPACK_CONTENTS);
+        });
+
+        EE.on(E_SET_CHARACTER_OPACITY, (alpha) => {
+            this.sprite.alpha = alpha;
         });
 
         this.velocityX = 0;

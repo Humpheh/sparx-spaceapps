@@ -23,11 +23,11 @@ entities:
             text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
             character: tuxside
           - type: text
-            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has always said that I should come and visit, so I'm taking a summer vacation there."
+            text: "I'm just not sure where I would be good for me to continue my research..."
             character: tuxside
           - type: text
-            text: "I'm going to start at her home on Wrangel Island and then strike out across the sea ice, just like a real explorer!"
+            text: "Ohh, a letter!"
             character: tuxside
           - type: event
             event: GO_TO_WORLD
-            content: _intro_letters
+            content: _intro_past

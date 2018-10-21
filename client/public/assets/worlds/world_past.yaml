@@ -3,13 +3,14 @@
 initialWeatherIntensity: 0
 
 sepia: true
+hideCharacter: true
 
 playerStart:
   x: 10
   y: 7
 
 entities:
-  - x: 7 # From far left
+  - x: 10 # From far left
     y: 6 # From far top
     sprite: walrus
     tileScale: 4
@@ -21,18 +22,31 @@ entities:
     events:
       - type: text
         text: 'Back in 1985...'
-        character: tuxside
-        flipSide: true
 
       - type: text
-        text: "Need dialogue"
-        character: tuxside
-        flipSide: true
-
-      - type: text
-        text: "Need dialogue"
+        text: "Dear Tux,    \nI hope this letter finds you well..."
         character: walrusside
-        flipSide: false
+        flipSide: true
+
+      - type: text
+        text: "I've heard your research is going pretty well down in Antarctica!"
+        character: walrusside
+        flipSide: true
+
+      - type: text
+        text: "You really must come and visit me on Wrangel Island up here in the Arctic one day, there is loads of data that you would find useful!"
+        character: walrusside
+        flipSide: true
+
+      - type: text
+        text: "I've included a travel brochure in case you feel like planning a trip."
+        character: walrusside
+        flipSide: true
+
+      - type: text
+        text: "Hope to see you soon,    \nLove, Claudia                           \nxoxo"
+        character: walrusside
+        flipSide: true
 
       - type: event
         event: GO_TO_WORLD
