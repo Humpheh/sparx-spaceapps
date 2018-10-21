@@ -64,7 +64,7 @@ export class Character {
 
         this.keyboardTick = this.keyboardTick.bind(this);
 
-        // This may be a bad idea
+        // This may be a bad idea - probably not, it's been here for 9 hours?
         this.movementLocked = false;
         EE.on(E_SET_WORLD_LOCK, (x) => {
             this.movementLocked = x;
