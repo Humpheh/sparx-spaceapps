@@ -27,10 +27,10 @@ ggplot(climate, aes(x = month_num, y = wind_speed)) +
     minor_breaks = NULL
   ) +
   scale_y_continuous(
-    breaks = c(0, 5, 10, 15, 20, 25),
+    breaks = c(0, 10, 20, 30, 40, 50),
     minor_breaks = NULL
   ) +
-  labs(x = "Month", y = "Wind speed (km/h)") +
+  labs(x = "Month", y = "Peak wind speed (km/h)") +
   geom_hline(yintercept = 0, size = 2, alpha = 0.2) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ggsave("winds.png", width = 5, height = 3)
