@@ -8,22 +8,32 @@ entities:
   - x: 15 # From far left
     y: 30 # From far top
     sprite: scratchcat
-    id: 2
+    id: 3
     events:
       - type: text
-        text: 'Heres a val!'
+        text: 'This is an observation station!'
         character: tuxside
-        flipSide: true
+      - type: text
+        text: 'It receives satellite images of the arctic ice for monitoring.'
+        character: tuxside
+      - type: slide
+        image: ice_1_slide
+        events:
+          - type: text
+            text: 'This is my past data on how the arctic ice looked back in XXXX'
+          - type: text
+            text: "Let's compare it to now..."
+      - type: slide
+        image: ice_2_slide
+        events:
+          - type: text
+            text: 'This is how it looks now.'
+          - type: text
+            text: 'Wow that is a massive difference! What is happening to all the ice?'
+      - type: text
+        text: 'I should keep searching for more observations.'
+        character: tuxside 
 
-      # Example internal event (this sets a global variable)
-      - type: event
-        event: SET_GLOBAL
-        content: {key: 'val', value: true}
-
-      # Example internal event (this destroys itself)
-      - type: event
-        event: DESTROY_ENTITY
-        content: 2
 
   - x: 10 # From far left
     y: 30 # From far top

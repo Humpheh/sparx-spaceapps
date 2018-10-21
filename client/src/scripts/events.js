@@ -16,6 +16,7 @@ export const E_START_QUEUING_EVENTS = 'START_QUEUING_EVENTS';
 export const E_STOP_QUEUING_EVENTS = 'STOP_QUEUING_EVENTS';
 export const E_ADD_HUNGER = 'ADD_HUNGER';
 export const E_RUN_EVENTS = 'RUN_EVENTS';
+export const E_SET_WEATHER_INTENSITY = 'SET_WEATHER_INTENSITY';
 
 let EE = new EventEmitter();
 

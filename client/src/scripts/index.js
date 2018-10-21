@@ -6,7 +6,7 @@ import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
     E_GO_TO_WORLD,
-    E_PLAYER_MOVED,
+    E_PLAYER_MOVED, E_SET_WEATHER_INTENSITY,
 } from "./events";
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
@@ -23,6 +23,23 @@ function getBackground(texture, width, height) {
     );
     tilingBackground.anchor.set(0.5);
     tilingBackground.tileScale.set(0.5);
+    return tilingBackground;
+}
+
+function getClouds(texture, width, height) {
+    let tilingBackground = new PIXI.extras.TilingSprite(
+        texture, width, height
+    );
+    tilingBackground.anchor.set(0.5);
+    tilingBackground.tileScale.set(2);
+    tilingBackground.alpha = 0.2;
+
+    EE.on(E_SET_WEATHER_INTENSITY, intensity => {
+        tilingBackground.alpha = intensity;
+    });
+
+    // console.log(PIXI.BLEND_MODES);
+    tilingBackground.blendMode = PIXI.BLEND_MODES['SCREEN'];
     return tilingBackground;
 }
 
@@ -56,7 +73,6 @@ function initGame(loader, resources) {
     GameApp.stage.addChild(worldContainer.container);
 
     let character = new Character();
-    // character.setLocation(GameApp.renderer.width / 2, GameApp.renderer.height / 2);
     GameApp.stage.addChild(character.container);
 
     worldContainer.registerWorldChangeCallback((world) => {
@@ -71,6 +87,13 @@ function initGame(loader, resources) {
         worldContainer.doDetectCollisions(x, y);
     });
 
+    // Add the clouds
+    let clouds = getClouds(
+        resources['cloud'].texture,
+        window.innerWidth * 10,
+        window.innerHeight * 10
+    );
+    GameApp.stage.addChild(clouds);
 
     let uiContainer = new PIXI.Container();
 
@@ -142,6 +165,9 @@ function loadRootAssets() {
         .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
         .add('snow', 'public/assets/particles/snow.png')
+        .add('cloud', 'public/assets/particles/cloud.png')
+        .add('ice_1_slide', 'public/assets/slides/ice_1_slide.png')
+        .add('ice_2_slide', 'public/assets/slides/ice_2_slide.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();
