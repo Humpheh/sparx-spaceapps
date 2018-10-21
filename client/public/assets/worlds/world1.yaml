@@ -3,8 +3,8 @@
 initialWeatherIntensity: 0.25
 
 playerStart:
-  x: 13
-  y: 38
+  x: 15
+  y: 31
 
 entities:
   - x: 15 # From far left
@@ -15,9 +15,12 @@ entities:
       - type: text
         text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
         character: tuxside
-      - type: event
-        event: SET_WEATHER_INTENSITY
-        content: 1.0
+      - type: delay
+        content: 3
+        events:
+        - type: event
+          event: SET_WEATHER_INTENSITY
+          content: 1.0
       - type: text
         text: 'This is an observation station!'
         character: tuxside

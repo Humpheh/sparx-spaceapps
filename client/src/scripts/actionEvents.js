@@ -144,7 +144,9 @@ export class ActionEventHandler {
         case 'check':
             return this.newCheck(event);
         case 'quit':
-                return this.newQuitEventFlow(event);
+            return this.newQuitEventFlow(event);
+        case 'delay':
+            return this.newDelayEventsFlow(event);
         }
         return null;
     }
@@ -158,6 +160,16 @@ export class ActionEventHandler {
                 onFinish();
             }
         };
+    }
+
+    newDelayEventsFlow(event) {
+        return (onFinish) => {
+            let callback = () => {
+                this._runEvents(event.events, onFinish, this._getEventKey());
+                onFinish();
+            };
+            window.setTimeout(callback, event.content * 1000);
+        }
     }
 
     newTextHandler(event) {
