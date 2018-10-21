@@ -14,28 +14,58 @@ entities:
     move:
       - x: 10
         y: -10
-  - x: 19
-    y: 5
+  - x: 5 #19
+    y: 56 #5
     tileScale: 3
     sprite: berg_big
     events:
     - type: slide
       image: snow_slide
       events:
-        - type: text
-          text: "Welcome to the Research Tent!"
-          character: walrusside
-  - x: 60
-    y: 44
+      - type: text
+        text: "Welcome to the Research Tent!"
+        character: walrusside
+      - type: text
+        text: "You've received a thermometer!"
+        character: walrusside
+      - type: event
+        event: SET_GLOBAL
+        content: {key: 'thermometer', value: 1}
+      - type: check
+        key: anemometer
+        check: 1
+        case: eq # gt, lt
+        events:
+          - type: quit
+      - type: event
+        event: GO_TO_WORLD
+        content: "_4_blizzard_arrives"
+  - x: 5 #60
+    y: 50 #44
     tileScale: 3
     sprite: berg_big
     events:
     - type: slide
       image: snow_slide
       events:
-        - type: text
-          text: "Welcome to the second Research Tent!"
-          character: walrusside
+      - type: text
+        text: "Welcome to the Research Tent!"
+        character: walrusside
+      - type: text
+        text: "You've received an anemometer!"
+        character: walrusside
+      - type: event
+        event: SET_GLOBAL
+        content: {key: 'anemometer', value: 1}
+      - type: check
+        key: thermometer
+        check: 1
+        case: eq # gt, lt
+        events:
+          - type: quit
+      - type: event
+        event: GO_TO_WORLD
+        content: "_4_blizzard_arrives"
 # Far left
   - x: 29
     y: 25
