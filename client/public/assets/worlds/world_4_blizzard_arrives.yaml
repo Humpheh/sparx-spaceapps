@@ -33,7 +33,7 @@ entities:
           You need to find yourself some suitable shelter, and fast!
           Professor Walruson has already been here too long and is
           going to leave now.
-        character: walrusside
+        character: piratewalrusside
 
       - type: event
         event: DESTROY_ENTITY
