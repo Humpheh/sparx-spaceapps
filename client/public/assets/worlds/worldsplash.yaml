@@ -1,0 +1,29 @@
+---
+
+initialWeatherIntensity: 0
+
+playerStart:
+  x: 0
+  y: 0
+
+entities:
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
+    events:
+      - type: slide
+        image: splash
+        hitboxes:
+          - x: -500
+            y: -500
+            w: 2000
+            h: 1500
+            showIf:
+              key: I_NEVER_WANT_THIS_TO_SHOW
+              case: eq
+              check: 69
+            events:
+             - type: event
+               event: GO_TO_WORLD
+               content: 101

@@ -11,11 +11,14 @@ export const E_APPEND_GLOBAL = 'APPEND_GLOBAL';
 export const E_DEPEND_GLOBAL = 'DEPEND_GLOBAL';
 export const E_GO_TO_WORLD = 'GO_TO_WORLD';
 export const E_ABORT_EVENT_FLOW = 'ABORT_EVENT_FLOW';
-export const E_ABORT_EVENT_FLOW_NEW_WORLD = 'ABORT_EVENT_FLOW_NEW_WORLD';
 export const E_START_QUEUING_EVENTS = 'START_QUEUING_EVENTS';
 export const E_STOP_QUEUING_EVENTS = 'STOP_QUEUING_EVENTS';
 export const E_ADD_HUNGER = 'ADD_HUNGER';
 export const E_RUN_EVENTS = 'RUN_EVENTS';
+export const E_SET_WEATHER_INTENSITY = 'SET_WEATHER_INTENSITY';
+export const E_ADD_BACKPACK_ITEM = 'ADD_BACKPACK_ITEM';
+export const E_DID_UPDATE_BACKPACK_CONTENTS = 'DID_UPDATE_BACKPACK_CONTENTS';
+export const E_SET_TEMPRATURE = 'SET_TEMPERATURE';
 
 let EE = new EventEmitter();
 
@@ -35,9 +38,13 @@ if (Config.debug) {
     addDebugLogger(E_DEPEND_GLOBAL);
     addDebugLogger(E_GO_TO_WORLD);
     addDebugLogger(E_ABORT_EVENT_FLOW);
-    addDebugLogger(E_ABORT_EVENT_FLOW_NEW_WORLD);
     addDebugLogger(E_START_QUEUING_EVENTS);
     addDebugLogger(E_STOP_QUEUING_EVENTS);
+    addDebugLogger(E_ADD_HUNGER);
+    addDebugLogger(E_RUN_EVENTS);
+    addDebugLogger(E_SET_WEATHER_INTENSITY);
+    addDebugLogger(E_ADD_BACKPACK_ITEM);
+    addDebugLogger(E_DID_UPDATE_BACKPACK_CONTENTS);
 }
 
 export default EE;

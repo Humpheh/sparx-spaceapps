@@ -2,19 +2,23 @@ import '../styles/index.scss';
 import * as PIXI from 'pixi.js';
 import yaml from "js-yaml";
 
+import { BackpackBar } from "./backpack";
 import { Character } from "./character";
 import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
     E_GO_TO_WORLD,
-    E_PLAYER_MOVED,
+    E_PLAYER_MOVED, E_SET_WEATHER_INTENSITY,
+    E_DID_UPDATE_BACKPACK_CONTENTS,
 } from "./events";
 import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
 
-import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
+import { LOCAL_DEFAULT_WORLD_ID, FULL_WIDTH } from "./localsettings";
 import { HungerMeter } from "./hunger";
 import { newSnow } from "./particles";
+import { Thermometer } from "./thermometer";
+
 const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
 
 function getBackground(texture, width, height) {
@@ -26,11 +30,30 @@ function getBackground(texture, width, height) {
     return tilingBackground;
 }
 
+function getClouds(texture, width, height) {
+    let tilingBackground = new PIXI.extras.TilingSprite(
+        texture, width, height
+    );
+    tilingBackground.anchor.set(0.5);
+    tilingBackground.tileScale.set(2);
+    tilingBackground.alpha = 0.2;
+
+    EE.on(E_SET_WEATHER_INTENSITY, intensity => {
+        tilingBackground.alpha = intensity;
+    });
+
+    // console.log(PIXI.BLEND_MODES);
+    tilingBackground.blendMode = PIXI.BLEND_MODES['SCREEN'];
+    return tilingBackground;
+}
+
 export const GameApp = new PIXI.Application(
-    1024,//window.innerWidth,
-    768,//window.innerHeight,
+    FULL_WIDTH ? window.innerWidth : 1024,
+    FULL_WIDTH ? window.innerHeight : 768,
     {backgroundColor: 0x1099bb}
 );
+
+let backpack = new Set();
 
 function initGame(loader, resources) {
     console.log(resources);
@@ -55,8 +78,7 @@ function initGame(loader, resources) {
     let worldContainer = new WorldContainer();
     GameApp.stage.addChild(worldContainer.container);
 
-    let character = new Character();
-    // character.setLocation(GameApp.renderer.width / 2, GameApp.renderer.height / 2);
+    let character = new Character(backpack);
     GameApp.stage.addChild(character.container);
 
     worldContainer.registerWorldChangeCallback((world) => {
@@ -71,6 +93,13 @@ function initGame(loader, resources) {
         worldContainer.doDetectCollisions(x, y);
     });
 
+    // Add the clouds
+    let clouds = getClouds(
+        resources['cloud'].texture,
+        window.innerWidth * 10,
+        window.innerHeight * 10
+    );
+    GameApp.stage.addChild(clouds);
 
     let uiContainer = new PIXI.Container();
 
@@ -79,6 +108,19 @@ function initGame(loader, resources) {
 
     let hungerMeter = new HungerMeter();
     uiContainer.addChild(hungerMeter.getComponent());
+
+    let backpackBar = new BackpackBar();
+    let backpackComponent = backpackBar.getComponent();
+    uiContainer.addChild(backpackComponent);
+    EE.on(E_DID_UPDATE_BACKPACK_CONTENTS, () => {
+        backpackBar.renderBackpack(character.backpack);
+        backpackComponent.x = (
+            GameApp.renderer.width - backpackComponent.width
+        );
+    });
+
+    let thermometer = new Thermometer();
+    uiContainer.addChild(thermometer.getComponent());
 
     let eventHandler = new ActionEventHandler(
         GameApp.screen.width,
@@ -142,6 +184,11 @@ function loadRootAssets() {
         .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
         .add('snow', 'public/assets/particles/snow.png')
+        .add('cloud', 'public/assets/particles/cloud.png')
+        .add('splash', 'public/assets/slides/splash.png')
+        .add('ice_1_slide', 'public/assets/slides/ice_1_slide.png')
+        .add('ice_2_slide', 'public/assets/slides/ice_2_slide.png')
+        .add('black_slide', 'public/assets/slides/black_slide.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

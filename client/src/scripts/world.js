@@ -9,6 +9,7 @@ import {
     E_INC_GLOBAL,
     E_SET_GLOBAL,
     E_GO_TO_WORLD,
+    E_SET_WEATHER_INTENSITY,
     makeEventHander
 } from "./events";
 import { getRandomInt } from "./utils";
@@ -18,6 +19,7 @@ import EE, {
 } from "./events";
 import { Entity, FishEntity } from "./entities";
 
+const DEFAULT_WEATHER_INTENSITY = 0.0;
 
 export const TILE_SIZE = 64;
 export const FISH_CHANCE = 0.002;
@@ -108,6 +110,9 @@ class World {
         let worldSpec = PIXI.loader.resources['world' + world + '_spec'].data;
         this.worldSpec = yaml.safeLoad(worldSpec);
         this.placeEntities(this.worldSpec.entities);
+
+        const intensity = this.worldSpec.initialWeatherIntensity || DEFAULT_WEATHER_INTENSITY;
+        EE.emit(E_SET_WEATHER_INTENSITY, intensity);
     }
 
     fileToTileData(world, callback) {

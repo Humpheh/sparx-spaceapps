@@ -1,29 +1,60 @@
 ---
 
+initialWeatherIntensity: 0.25
+
 playerStart:
-  x: 11
-  y: 26
+  x: 13
+  y: 38
 
 entities:
   - x: 15 # From far left
     y: 30 # From far top
     sprite: scratchcat
-    id: 2
+    id: 3
     events:
       - type: text
-        text: 'Heres a val!'
+        text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
         character: tuxside
-        flipSide: true
-
-      # Example internal event (this sets a global variable)
       - type: event
-        event: SET_GLOBAL
-        content: {key: 'val', value: true}
+        event: SET_WEATHER_INTENSITY
+        content: 1.0
+      - type: text
+        text: 'This is an observation station!'
+        character: tuxside
+      - type: text
+        text: 'It receives satellite images of the arctic ice for monitoring.'
+        character: tuxside
+      - type: slide
+        image: ice_1_slide
+        events:
+          - type: text
+            text: 'This is my past data on how the arctic ice looked back in 1984.'
+          - type: text
+            text: "Let's compare it to now..."
+      - type: slide
+        image: ice_2_slide
+        events:
+          - type: text
+            text: 'This is how it looks on one of the more recent observations.'
+          - type: text
+            text: 'Wow that is a massive difference! What is happening to all the ice?'
+      - type: text
+        text: 'I should keep searching for more observations.'
+        character: tuxside
 
-      # Example internal event (this destroys itself)
+
+  - x: 15
+    y: 38
+    sprite: scratchcat
+    id: 222
+    events:
+      - type: event
+        event: ADD_BACKPACK_ITEM
+        content: scratchcat
       - type: event
         event: DESTROY_ENTITY
-        content: 2
+        content: 222
+
 
   - x: 10 # From far left
     y: 30 # From far top
