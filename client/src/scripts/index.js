@@ -182,7 +182,7 @@ function loadRootAssets() {
         .add('piratewalrusside', 'public/assets/penguin/pirate_walrus_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
         .add('snow_slide', 'public/assets/slides/snow_slide.png')
-        .add('world_map', 'public/assets/slides/world_map.jpg')
+        .add('brochure', 'public/assets/slides/brochure.png')
         .add('select_items', 'public/assets/slides/select_items.png')
         .add('vignette', 'public/assets/vignette.png')
         .add('snow', 'public/assets/particles/snow.png')

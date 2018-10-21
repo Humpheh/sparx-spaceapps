@@ -1,0 +1,29 @@
+playerStart:
+  x: 0
+  y: 0
+
+entities:
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
+    events:
+      - type: slide
+        image: brochure
+        events:
+          - type: text
+            text: "I'll be visiting in July, so I'll need to choose a tent and sleeping bag suitable for the conditions then."
+            character: tuxside
+        hitboxes:
+          - x: -500
+            y: -500
+            w: 2000
+            h: 1500
+            showIf:
+              key: NEVER_SHOW
+              case: eq
+              check: 42
+            events:
+              - type: event
+                event: GO_TO_WORLD
+                content: _intro_item_select

@@ -46,4 +46,4 @@ entities:
             character: tuxside
           - type: event
             event: GO_TO_WORLD
-            content: _intro_item_select
+            content: _intro_brochure
