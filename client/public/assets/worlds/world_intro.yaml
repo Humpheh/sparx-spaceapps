@@ -23,10 +23,10 @@ entities:
             text: "But it's time for that to change! With the chicks grown up and moved out to start their own families, I'm planning a trip..."
             character: tuxside
           - type: text
-            text: "I'm just not sure where I would be good for me to continue my research..."
+            text: "I'm just not sure where I would be good for me to continue my research."
             character: tuxside
           - type: text
-            text: "Ohh, a letter!"
+            text: "Hold on, what if I look at those old letters to Claudia?"
             character: tuxside
           - type: event
             event: GO_TO_WORLD
