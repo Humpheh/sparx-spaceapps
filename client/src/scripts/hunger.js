@@ -1,9 +1,15 @@
 import * as PIXI from "pixi.js";
-import EE, { E_ADD_HUNGER, E_RUN_EVENTS } from "./events";
+import EE, {
+    E_ADD_HUNGER,
+    E_RUN_EVENTS,
+    E_SET_HUNGER_ABSOLUTE
+} from "./events";
+
+export const MAX_HUNGER = 100;
 
 export class HungerMeter {
     constructor() {
-        this.hunger = 100;
+        this.hunger = MAX_HUNGER;
 
         this.container = new PIXI.Container();
 
@@ -28,6 +34,10 @@ export class HungerMeter {
         EE.on(E_ADD_HUNGER, (diff) => {
             this.addHunger(diff);
         });
+
+        EE.on(E_SET_HUNGER_ABSOLUTE, (newHunger) => {
+            this.hunger = newHunger;
+        });
     }
 
     setBar() {
@@ -42,7 +52,7 @@ export class HungerMeter {
         }
         this.bar.beginFill(colour, 0.8);
         this.bar.drawRoundedRect(80, 20,
-            200 * (this.hunger / 100),
+            200 * (this.hunger / MAX_HUNGER),
             30, 5);
         this.bar.endFill();
 
@@ -55,8 +65,8 @@ export class HungerMeter {
 
     addHunger(diff) {
         this.hunger += diff;
-        if (this.hunger > 100) {
-            this.hunger = 100;
+        if (this.hunger > MAX_HUNGER) {
+            this.hunger = MAX_HUNGER;
         }
 
         if (this.hunger <= 0) {
@@ -73,7 +83,7 @@ export class HungerMeter {
                     text: '...                                \nTux blacked out.' // Oh yeah >:)
                 }]
             }], () => {
-                this.hunger = 100;
+                this.hunger = MAX_HUNGER;
                 this.setBar();
             });
         } else {

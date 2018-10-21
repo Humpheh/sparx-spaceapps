@@ -13,8 +13,10 @@ import {
     E_SET_WEATHER_INTENSITY,
     E_REQUEST_PLACE_ENTITY,
     E_SET_ENTITY_POSITION,
+    E_SET_HUNGER_ABSOLUTE,
     makeEventHander, E_SET_CHARACTER_OPACITY
 } from "./events";
+import { MAX_HUNGER } from "./hunger";
 import { getRandomInt } from "./utils";
 import { KeyboardEventHandler } from "./keyboard";
 
@@ -369,6 +371,7 @@ export class WorldContainer {
             cb(this.world, this);
         }
 
+        EE.emit(E_SET_HUNGER_ABSOLUTE, MAX_HUNGER);
         EE.emit(E_STOP_QUEUING_EVENTS);
     }
 }
