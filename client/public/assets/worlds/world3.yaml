@@ -75,6 +75,7 @@ entities:
           - type: text
             text: "Well done!"
             character: walrusside
+            speaker_name: Professor Walruson
           - type: event
             event: GO_TO_WORLD
             content: 4
