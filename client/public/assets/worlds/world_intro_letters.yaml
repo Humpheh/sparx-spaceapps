@@ -1,0 +1,49 @@
+# Check the climate
+
+playerStart:
+  x: 0
+  y: 0
+
+entities:
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
+    events:
+      - type: slide
+        image: snow_slide
+        events:
+          - type: text
+            text: "I've dug out this old letter from Claudia to help me plan my trip."
+            character: tuxside
+      - type: slide
+        image: water_slide
+        events:
+          - type: text
+            text: "Dear Tux,"
+            character: piratewalrusside
+            flipSide: true
+          - type: text
+            text: "Thank you for your letter! Antarctica sounds wonderful."
+            character: piratewalrusside
+            flipSide: true
+          - type: text
+            text: "You really must come and visit me on Wrangel Island one day."
+            character: piratewalrusside
+            flipSide: true
+          - type: text
+            text: "I've included a travel brochure in case you feel like planning a trip ;)"
+            character: piratewalrusside
+            flipSide: true
+      - type: slide
+        image: snow_slide
+        events:
+          - type: text
+            text: "I've always wanted to explore the Arctic, so I'm going to pay Claudia a surprise visit."
+            character: tuxside
+          - type: text
+            text: "Let's take a look at this brochure to help me choose my gear."
+            character: tuxside
+          - type: event
+            event: GO_TO_WORLD
+            content: _intro_item_select

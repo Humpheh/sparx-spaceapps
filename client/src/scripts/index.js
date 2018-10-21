@@ -179,6 +179,7 @@ function loadRootAssets() {
         .add('iceicebaby', 'public/assets/sprites/iceicebaby.jpg')
         .add('tuxside', 'public/assets/penguin/tux_side.png')
         .add('walrusside', 'public/assets/penguin/walrus_side.png')
+        .add('piratewalrusside', 'public/assets/penguin/pirate_walrus_side.png')
         .add('water_slide', 'public/assets/slides/water_slide.png')
         .add('snow_slide', 'public/assets/slides/snow_slide.png')
         .add('world_map', 'public/assets/slides/world_map.jpg')

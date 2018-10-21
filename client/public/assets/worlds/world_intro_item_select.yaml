@@ -26,7 +26,7 @@ entities:
                 event: SET_GLOBAL
                 content: {key: 'tent', value: 1}
               - type: text
-                text: "It's a small tent. It's lightweight and quick to to pitch, and can withstand breezes of up to 10 km/h."
+                text: "It's a small tent. It's lightweight and quick to to pitch, and can withstand breezes of up to 20 km/h."
           - x: 493
             y: 204
             w: 199
@@ -40,7 +40,7 @@ entities:
                 event: SET_GLOBAL
                 content: {key: 'tent', value: 2}
               - type: text
-                text: "This medium tent has plenty of space for a penguin and his luggage, and is ideal for environments with moderate winds of between 10 and 20 km/h."
+                text: "This medium tent has plenty of space for a penguin and his luggage, and is ideal for environments with moderate winds of between 20 and 40 km/h."
           - x: 742
             y: 204
             w: 189
@@ -54,7 +54,7 @@ entities:
                 event: SET_GLOBAL
                 content: {key: 'tent', value: 3}
               - type: text
-                text: "This premium heavy-duty tent may weigh a lot, but it can withstand winds of up to 30 km/h."
+                text: "This premium heavy-duty tent may weigh a lot, but it can withstand winds of 40 to 60 km/h."
           - x: 265
             y: 448
             w: 180
