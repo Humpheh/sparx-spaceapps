@@ -91,10 +91,6 @@ function initGame(loader, resources) {
             tileToGlobal(startingPosition.y)
         );
     });
-    worldContainer.registerWorldChangeCallback((_, worldContainer) => {
-        let { x, y } = character.getLocation();
-        worldContainer.doDetectCollisions(x, y);
-    });
 
     // Add the clouds
     let clouds = getClouds(
@@ -130,7 +126,6 @@ function initGame(loader, resources) {
         worldContainer
     );
     EE.on(E_ENTITY_DISPATCH_ACTIONS, (context) => { eventHandler.runEvents(context, () => {}); });
-    EE.on(E_PLAYER_MOVED, (context) => worldContainer.doDetectCollisions(context.x, context.y));
 
     GameApp.stage.addChild(uiContainer);
 
@@ -151,6 +146,8 @@ function initGame(loader, resources) {
         character.keyboardTick(t, worldContainer.world);
         GameApp.stage.pivot.x = character.getX() - GameApp.renderer.width / 2;
         GameApp.stage.pivot.y = character.getY() - GameApp.renderer.height / 2;
+
+        worldContainer.doDetectCollisions(character.sprite.x, character.sprite.y);
 
         let xx = character.getX() - GameApp.renderer.width / 2;
         let yy = character.getY() - GameApp.renderer.height / 2;
