@@ -22,6 +22,7 @@ export const E_SET_TEMPRATURE = 'SET_TEMPERATURE';
 export const E_SET_CHARACTER_OPACITY = 'SET_CHARACTER_OPACITY';
 export const E_REQUEST_PLACE_ENTITY = 'REQUEST_PLACE_ENTITY';
 export const E_SET_ENTITY_POSITION = 'E_SET_ENTITY_POSITION';
+export const E_SET_METABOLIC_RATE = 'SET_METABOLIC_RATE';
 
 let EE = new EventEmitter();
 
@@ -52,6 +53,7 @@ if (Config.debug) {
     addDebugLogger(E_SET_CHARACTER_OPACITY);
     addDebugLogger(E_REQUEST_PLACE_ENTITY);
     addDebugLogger(E_SET_ENTITY_POSITION);
+    addDebugLogger(E_SET_METABOLIC_RATE);
 }
 
 export default EE;

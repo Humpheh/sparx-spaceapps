@@ -6,7 +6,8 @@ import EE, {
     E_ADD_BACKPACK_ITEM,
     E_DID_UPDATE_BACKPACK_CONTENTS, E_SET_CHARACTER_OPACITY,
     E_REQUEST_PLACE_ENTITY,
-    E_SET_ENTITY_POSITION
+    E_SET_ENTITY_POSITION,
+    E_SET_WEATHER_INTENSITY
 } from "./events";
 import {
     KeyboardEventHandler,
@@ -26,6 +27,7 @@ const MOVE_PER_TICK = 3;
 
 const STEP_HUNGER_TIME = 20;
 const STEP_HUNGER_REMOVAL = 1;
+const IDLE_ENERGY_BURN = 0.2;
 
 class PlayerMovedContext {
     constructor(x, y) {
@@ -38,6 +40,8 @@ export class Character {
     constructor() {
         this.stepTimer = 0;
         this.container = new PIXI.Container();
+
+        this.metabolicRate = 1.0;
 
         this.animationFrames = {
             b: this.makeAnimation('b', [1, 2, 3, 2]),
@@ -70,6 +74,8 @@ export class Character {
 
         this.keyboardTick = this.keyboardTick.bind(this);
 
+        this.shouldBurnEnergy = true;
+
         // This may be a bad idea - probably not, it's been here for 9 hours?
         this.movementLocked = false;
         EE.on(E_SET_WORLD_LOCK, (x) => {
@@ -87,12 +93,18 @@ export class Character {
 
         EE.on(E_SET_CHARACTER_OPACITY, (alpha) => {
             this.sprite.alpha = alpha;
+            this.shouldBurnEnergy = alpha > 0;
         });
 
         // When we place entities, we want the character's current position to
         // influence the placed position of the entity
         EE.on(E_REQUEST_PLACE_ENTITY, (id) => {
             EE.emit(E_SET_ENTITY_POSITION, { id: id, x: this.sprite.x, y: this.sprite.y });
+        });
+
+        // Metabolic rate is related to weather intensity
+        EE.on(E_SET_WEATHER_INTENSITY, (intensity) => {
+            this.metabolicRate = Math.exp(intensity);
         });
 
         this.velocityX = 0;
@@ -168,10 +180,6 @@ export class Character {
 
         if (hasMoved) {
             this.stepTimer += delta;
-            if (this.stepTimer > STEP_HUNGER_TIME) {
-                EE.emit(E_ADD_HUNGER, -STEP_HUNGER_REMOVAL);
-                this.stepTimer = 0;
-            }
 
             // Update the animation
             if (this.sprite.textures !== frames) {
@@ -180,8 +188,30 @@ export class Character {
             this.sprite.play();
             EE.emit(E_PLAYER_MOVED, new PlayerMovedContext(this.sprite.x, this.sprite.y));
         } else {
+            this.stepTimer += delta;
             this.sprite.stop();
         }
+
+        this.updateEnergy(hasMoved)
+        console.log("Metabolic rate:", this.metabolicRate);
+    }
+
+    updateEnergy(hasMoved) {
+        let energyToBurn = -STEP_HUNGER_REMOVAL * this.metabolicRate;
+
+        if (!this.shouldBurnEnergy) {
+            return;
+        }
+        if (this.stepTimer <= STEP_HUNGER_TIME) {
+            return;
+        }
+
+        if (!hasMoved) {
+            energyToBurn *= IDLE_ENERGY_BURN;
+        }
+
+        EE.emit(E_ADD_HUNGER, energyToBurn);
+        this.stepTimer = 0;
     }
 
     getLocation() {
