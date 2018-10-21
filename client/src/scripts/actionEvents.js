@@ -163,11 +163,24 @@ export class ActionEventHandler {
     }
 
     newDelayEventsFlow(event) {
-        return (onFinish) => {
+        return (finishCallback) => {
+            let alreadyFinished = false;
+            let onFinish = () => {
+                (!alreadyFinished) && finishCallback();
+                alreadyFinished = true;
+            }
+
             let callback = () => {
-                this._runEvents(event.events, onFinish, this._getEventKey());
+                this._runEvents(event.events, () => {}, this._getEventKey());
                 onFinish();
             };
+
+            if (event.async) {
+                // Surprise! We're async. Dispatch the "finish" event
+                // immediately so we move to the next one
+                onFinish();
+            }
+
             window.setTimeout(callback, event.content * 1000);
         }
     }

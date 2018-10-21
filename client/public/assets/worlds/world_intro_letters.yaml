@@ -21,19 +21,19 @@ entities:
         events:
           - type: text
             text: "Dear Tux,"
-            character: piratewalrusside
+            character: bearside
             flipSide: true
           - type: text
             text: "Thank you for your letter! Antarctica sounds wonderful."
-            character: piratewalrusside
+            character: bearside
             flipSide: true
           - type: text
             text: "You really must come and visit me on Wrangel Island one day."
-            character: piratewalrusside
+            character: bearside
             flipSide: true
           - type: text
             text: "I've included a travel brochure in case you feel like planning a trip ;)"
-            character: piratewalrusside
+            character: bearside
             flipSide: true
       - type: slide
         image: snow_slide
@@ -46,4 +46,4 @@ entities:
             character: tuxside
           - type: event
             event: GO_TO_WORLD
-            content: _intro_item_select
+            content: _intro_brochure

@@ -1,6 +1,7 @@
 - _splash
 - _intro
 - _intro_letters
+- _intro_brochure
 - _intro_item_select
 - _past
 - 1
@@ -8,3 +9,4 @@
 - 3
 - 4
 - 104 # Off to the Arctic
+- "_4_blizzard_arrives"
