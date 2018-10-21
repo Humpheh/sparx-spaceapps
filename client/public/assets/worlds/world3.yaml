@@ -1,8 +1,8 @@
 ---
 
 playerStart:
-  x: 4 # 16
-  y: 3 #38
+  x: 16
+  y: 38
 
 entities:
 # Mid-level berg
