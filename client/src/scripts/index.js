@@ -198,6 +198,7 @@ function loadRootAssets() {
         .add('empty', 'public/assets/sprites/empty.png')
         .add('station', 'public/assets/sprites/station.png')
         .add('station2', 'public/assets/sprites/station2.png')
+        .add('tent', 'public/assets/sprites/tent.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();

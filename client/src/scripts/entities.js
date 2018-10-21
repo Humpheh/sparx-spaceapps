@@ -5,6 +5,7 @@ import EE, {
     E_ENTITY_DISPATCH_ACTIONS,
     E_SET_WORLD_LOCK
 } from "./events";
+import { KeyboardEventHandler } from "./keyboard";
 import { TILE_SIZE } from "./world";
 
 export class Entity {
@@ -31,6 +32,21 @@ export class Entity {
 
         this.movementLocked = false;
         EE.on(E_SET_WORLD_LOCK, (x) => this.movementLocked = x);
+
+        this.setVisible(entitySpec.spawnVisible || typeof entitySpec.spawnVisible === 'undefined');
+
+        // Register key which spawns the entity
+        if (entitySpec.spawnKey) {
+            let onPress = () => { this.setVisible(true); };
+            new KeyboardEventHandler(
+                entitySpec.spawnKey.charCodeAt(0), onPress
+            ).bindListeners();
+        }
+    }
+
+    setVisible(visible) {
+        this.visible = visible;
+        this.sprite.alpha = (visible) ? 1.0 : 0.0;
     }
 
     isWalkable() {
@@ -38,6 +54,10 @@ export class Entity {
     }
 
     dispatchInteractionActions() {
+        if (!this.visible) {
+            return;
+        }
+
         if (this.entitySpec.events) {
             EE.emit(E_ENTITY_DISPATCH_ACTIONS, this.entitySpec.events);
         }

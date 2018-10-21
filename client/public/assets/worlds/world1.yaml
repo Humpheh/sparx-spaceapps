@@ -172,3 +172,12 @@ entities:
         y: 32
       - x: 6
         y: 32
+
+  - x: 18
+    y: 31
+    spawnVisible: false
+    spawnKey: T
+    sprite: tent
+    tileScale: 2
+    events:
+      - type: quit
