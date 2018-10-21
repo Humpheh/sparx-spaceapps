@@ -15,10 +15,14 @@ entities:
       - type: slide
         image: splash
         hitboxes:
-          - x: 0
-            y: 0
-            w: 1500
-            h: 800
+          - x: -500
+            y: -500
+            w: 2000
+            h: 1500
+            showIf:
+              key: I_NEVER_WANT_THIS_TO_SHOW
+              case: eq
+              check: 69
             events:
              - type: event
                event: GO_TO_WORLD

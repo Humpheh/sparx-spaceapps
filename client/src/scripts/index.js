@@ -14,9 +14,10 @@ import { WorldContainer, tileToGlobal } from "./world";
 import { ActionEventHandler } from "./actionEvents";
 import { Slide } from "./slide";
 
-import { LOCAL_DEFAULT_WORLD_ID } from "./localsettings";
+import { LOCAL_DEFAULT_WORLD_ID, FULL_WIDTH } from "./localsettings";
 import { HungerMeter } from "./hunger";
 import { newSnow } from "./particles";
+import { Thermometer } from "./thermometer";
 
 const DEFAULT_WORLD_ID = LOCAL_DEFAULT_WORLD_ID || 4;
 
@@ -47,8 +48,8 @@ function getClouds(texture, width, height) {
 }
 
 export const GameApp = new PIXI.Application(
-    1024,//window.innerWidth,
-    768,//window.innerHeight,
+    FULL_WIDTH ? window.innerWidth : 1024,
+    FULL_WIDTH ? window.innerHeight : 768,
     {backgroundColor: 0x1099bb}
 );
 
@@ -117,6 +118,9 @@ function initGame(loader, resources) {
             GameApp.renderer.width - backpackComponent.width
         );
     });
+
+    let thermometer = new Thermometer();
+    uiContainer.addChild(thermometer.getComponent());
 
     let eventHandler = new ActionEventHandler(
         GameApp.screen.width,
