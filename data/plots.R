@@ -4,7 +4,7 @@ library(readr)
 
 climate = read_csv("climate.csv")
 ggplot(climate, aes(x = month_num, y = temperature)) +
-  geom_smooth(se = FALSE, color = "darkorchid", size = 2.5) +
+  geom_smooth(se = FALSE, color = "darkorchid", size = 2) +
   scale_x_continuous(
     breaks = climate$month_num,
     labels = climate$month_name,
@@ -17,10 +17,10 @@ ggplot(climate, aes(x = month_num, y = temperature)) +
   labs(x = "Month", y = "Temperature (°C)") +
   geom_hline(yintercept = 0, size = 2, alpha = 0.2) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave("temps.png", width = 5, height = 3)
+ggsave("temps.png", width = 3, height = 4)
 
 ggplot(climate, aes(x = month_num, y = wind_speed)) +
-  geom_smooth(se = FALSE, color = "darkorchid", size = 2.5) +
+  geom_smooth(se = FALSE, color = "darkorchid", size = 2) +
   scale_x_continuous(
     breaks = climate$month_num,
     labels = climate$month_name,
@@ -33,4 +33,4 @@ ggplot(climate, aes(x = month_num, y = wind_speed)) +
   labs(x = "Month", y = "Peak wind speed (km/h)") +
   geom_hline(yintercept = 0, size = 2, alpha = 0.2) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave("winds.png", width = 5, height = 3)
+ggsave("winds.png", width = 3, height = 4)

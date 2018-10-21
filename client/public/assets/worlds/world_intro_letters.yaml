@@ -16,19 +16,16 @@ entities:
           - type: text
             text: "In 2018..."
           - type: text
-            text: "I've just received this letter from my friend Claudia."
-            character: tuxside
-          - type: text
-            text: "Wow this letter is old, it's dated 1985!"
+            text: "Claudia and I drifted apart and eventually stopped writing, but I really miss her too. I wonder how she is doing?"
             character: tuxside
           - type: text
             text: "I've always wanted to explore the Arctic, so I'm going to pay Claudia a surprise visit."
             character: tuxside
           - type: text
-            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has always said that I should come and visit, so I'm taking a summer vacation there."
+            text: "A summer vacation there will be perfect. I'll start at her home on Wrangel Island and then strike out across the sea ice, just like a real explorer!"
             character: tuxside
           - type: text
-            text: "I'm going to start at her home on Wrangel Island and then strike out across the sea ice, just like a real explorer!"
+            text: "It will be the exchange trip I never got to go on."
             character: tuxside
           - type: text
             text: "Let's take a look at this brochure to help me choose my gear."

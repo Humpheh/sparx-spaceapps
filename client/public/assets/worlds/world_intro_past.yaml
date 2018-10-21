@@ -12,7 +12,7 @@ playerStart:
 entities:
   - x: 10 # From far left
     y: 6 # From far top
-    sprite: walrus
+    sprite: bear
     tileScale: 4
 
   - x: 10
@@ -25,27 +25,27 @@ entities:
 
       - type: text
         text: "Dear Tux,    \nI hope this letter finds you well..."
-        character: walrusside
+        character: bearside
         flipSide: true
 
       - type: text
-        text: "I've heard your research is going pretty well down in Antarctica!"
-        character: walrusside
+        text: "I really enjoyed my exchange trip to Antarctica. But it's so sad that the programme was cancelled before you got to take part."
+        character: bearside
         flipSide: true
 
       - type: text
-        text: "You really must come and visit me on Wrangel Island up here in the Arctic one day, there is loads of data that you would find useful!"
-        character: walrusside
+        text: "I know you have your heart set on becoming an Antarctic researcher. But you really must come and visit me on Wrangel Island up here in the Arctic one day."
+        character: bearside
         flipSide: true
 
       - type: text
         text: "I've included a travel brochure in case you feel like planning a trip."
-        character: walrusside
+        character: bearside
         flipSide: true
 
       - type: text
-        text: "Hope to see you soon,    \nLove, Claudia                           \nxoxo"
-        character: walrusside
+        text: "Miss you and hope to see you soon,    \nYour buddy, Claudia                           \nxoxo"
+        character: bearside
         flipSide: true
 
       - type: event
