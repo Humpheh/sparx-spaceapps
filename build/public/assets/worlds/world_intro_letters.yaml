@@ -1,0 +1,38 @@
+# Check the climate
+
+playerStart:
+  x: 0
+  y: 0
+
+entities:
+  - x: 0
+    y: 0
+    tileScale: 2
+    sprite: berg
+    events:
+      - type: slide
+        image: snow_slide
+        events:
+          - type: text
+            text: "In 2018..."
+          - type: text
+            text: "I've just received this letter from my friend Claudia."
+            character: tuxside
+          - type: text
+            text: "Wow this letter is old, it's dated 1985!"
+            character: tuxside
+          - type: text
+            text: "I've always wanted to explore the Arctic, so I'm going to pay Claudia a surprise visit."
+            character: tuxside
+          - type: text
+            text: "... a trip to the other side of the planet, to THE ARCTIC! My penpal Claudia has always said that I should come and visit, so I'm taking a summer vacation there."
+            character: tuxside
+          - type: text
+            text: "I'm going to start at her home on Wrangel Island and then strike out across the sea ice, just like a real explorer!"
+            character: tuxside
+          - type: text
+            text: "Let's take a look at this brochure to help me choose my gear."
+            character: tuxside
+          - type: event
+            event: GO_TO_WORLD
+            content: _intro_brochure
