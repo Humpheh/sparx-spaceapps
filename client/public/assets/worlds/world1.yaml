@@ -16,7 +16,8 @@ entities:
         text: "Ooooh argh! Thar she blows! There's a blizzard a-foot"
         character: tuxside
       - type: delay
-        content: 3
+        content: 1
+        async: true
         events:
         - type: event
           event: SET_WEATHER_INTENSITY

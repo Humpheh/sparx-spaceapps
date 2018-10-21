@@ -166,8 +166,17 @@ export class ActionEventHandler {
         return (onFinish) => {
             let callback = () => {
                 this._runEvents(event.events, onFinish, this._getEventKey());
-                onFinish();
+                // Only dispatch onFinish when the delay is running synchronously
+                if (typeof event.async === 'undefined' || !event.async) {
+                    onFinish();
+                }
             };
+
+            if (event.async) {
+                // Surprise! We're async. Dispatch the "finish" event
+                // immediately so we move to the next one
+                onFinish();
+            }
             window.setTimeout(callback, event.content * 1000);
         }
     }
