@@ -69,8 +69,8 @@ export class TextPrompt {
     static _makeReadyPrompt(x, y, w, h) {
         let readyPrompt = new PIXI.Graphics();
         readyPrompt.lineStyle(0);
-        readyPrompt.beginFill(0xFF00FF, 1);
-        readyPrompt.drawRoundedRect(x+w-TEXT_PADDING-20, y+h-TEXT_PADDING-20, 20, 20, 4);
+        readyPrompt.beginFill(0x222255, 0.5);
+        readyPrompt.drawRoundedRect(x+w-TEXT_PADDING-40, y+h-TEXT_PADDING-40, 20, 20, 4);
         readyPrompt.endFill();
         return readyPrompt;
     }

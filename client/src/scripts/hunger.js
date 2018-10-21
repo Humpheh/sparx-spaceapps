@@ -56,6 +56,13 @@ export class HungerMeter {
             EE.emit(E_RUN_EVENTS, [{
                 type: 'text',
                 text: 'You have run out of food!',
+            }, {
+                type: 'slide',
+                image: 'black_slide',
+                events: [{
+                    type: 'text',
+                    text: '...                                \nTux blacked out.' // Oh yeah >:)
+                }]
             }], () => {
                 this.hunger = 100;
                 this.setBar();

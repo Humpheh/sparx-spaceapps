@@ -28,14 +28,14 @@ entities:
         image: ice_1_slide
         events:
           - type: text
-            text: 'This is my past data on how the arctic ice looked back in XXXX'
+            text: 'This is my past data on how the arctic ice looked back in 1984.'
           - type: text
             text: "Let's compare it to now..."
       - type: slide
         image: ice_2_slide
         events:
           - type: text
-            text: 'This is how it looks now.'
+            text: 'This is how it looks on one of the more recent observations.'
           - type: text
             text: 'Wow that is a massive difference! What is happening to all the ice?'
       - type: text

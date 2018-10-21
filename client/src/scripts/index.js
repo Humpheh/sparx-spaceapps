@@ -169,6 +169,7 @@ function loadRootAssets() {
         .add('cloud', 'public/assets/particles/cloud.png')
         .add('ice_1_slide', 'public/assets/slides/ice_1_slide.png')
         .add('ice_2_slide', 'public/assets/slides/ice_2_slide.png')
+        .add('black_slide', 'public/assets/slides/black_slide.png')
         .load((loader, resources) => {
             initGame(loader, resources);
             start();
