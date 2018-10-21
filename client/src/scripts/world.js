@@ -69,7 +69,7 @@ class World {
         this.entities = [];
 
         let tileData = this.fileToTileData(id);
-        this.loadWorld(tileData)
+        this.loadWorld(tileData);
         this.loadWorldSpec(id);
 
         this.inCollision = new Set();
