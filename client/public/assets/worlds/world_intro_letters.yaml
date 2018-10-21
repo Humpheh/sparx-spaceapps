@@ -11,11 +11,14 @@ entities:
     sprite: berg
     events:
       - type: slide
-        image: water_slide
+        image: snow_slide
         events:
           - type: text
             text: "I've dug out this old letter from Claudia to help me plan my trip."
             character: tuxside
+      - type: slide
+        image: water_slide
+        events:
           - type: text
             text: "Dear Tux,"
             character: piratewalrusside
