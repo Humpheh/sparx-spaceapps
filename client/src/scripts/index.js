@@ -167,6 +167,7 @@ function loadRootAssets() {
         .add('vignette', 'public/assets/vignette.png')
         .add('snow', 'public/assets/particles/snow.png')
         .add('cloud', 'public/assets/particles/cloud.png')
+        .add('splash', 'public/assets/slides/splash.png')
         .add('ice_1_slide', 'public/assets/slides/ice_1_slide.png')
         .add('ice_2_slide', 'public/assets/slides/ice_2_slide.png')
         .add('black_slide', 'public/assets/slides/black_slide.png')
