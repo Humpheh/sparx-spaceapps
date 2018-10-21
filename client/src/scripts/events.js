@@ -20,6 +20,8 @@ export const E_ADD_BACKPACK_ITEM = 'ADD_BACKPACK_ITEM';
 export const E_DID_UPDATE_BACKPACK_CONTENTS = 'DID_UPDATE_BACKPACK_CONTENTS';
 export const E_SET_TEMPRATURE = 'SET_TEMPERATURE';
 export const E_SET_CHARACTER_OPACITY = 'SET_CHARACTER_OPACITY';
+export const E_REQUEST_PLACE_ENTITY = 'REQUEST_PLACE_ENTITY';
+export const E_SET_ENTITY_POSITION = 'E_SET_ENTITY_POSITION';
 
 let EE = new EventEmitter();
 
@@ -46,6 +48,10 @@ if (Config.debug) {
     addDebugLogger(E_SET_WEATHER_INTENSITY);
     addDebugLogger(E_ADD_BACKPACK_ITEM);
     addDebugLogger(E_DID_UPDATE_BACKPACK_CONTENTS);
+    addDebugLogger(E_SET_TEMPRATURE);
+    addDebugLogger(E_SET_CHARACTER_OPACITY);
+    addDebugLogger(E_REQUEST_PLACE_ENTITY);
+    addDebugLogger(E_SET_ENTITY_POSITION);
 }
 
 export default EE;
