@@ -174,6 +174,7 @@ function loadRootAssets() {
         .add('scratchcat', 'public/assets/sprites/scratchcat.png')
         .add('berg', 'public/assets/sprites/berg.png')
         .add('fish', 'public/assets/sprites/fish.png')
+        .add('thermo', 'public/assets/sprites/thermo.png')
         .add('berg_big', 'public/assets/sprites/berg_big.png')
         .add('walrus', 'public/assets/sprites/walrus.png')
         .add('bear', 'public/assets/sprites/bear.png')
