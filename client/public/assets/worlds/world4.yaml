@@ -1,8 +1,10 @@
 ---
 
+initialWeatherIntensity: 0.25
+
 playerStart:
-  x: 5
-  y: 55
+  x: 15
+  y: 5
 
 entities:
   - x: -10
@@ -17,20 +19,39 @@ entities:
   - x: 19
     y: 5
     tileScale: 3
-    sprite: berg_big
+    sprite: station
     events:
-    - type: slide
-      image: snow_slide
-      events:
       - type: text
-        text: "Welcome to the Research Tent!"
-        character: walrusside
+        text: "This is a Research Tent!"
+        character: tuxside
       - type: text
-        text: "You've received a thermometer!"
-        character: walrusside
-      - type: event
-        event: SET_GLOBAL
-        content: {key: 'thermometer', value: 1}
+        text: 'It receives satellite images of the arctic ice for monitoring.'
+        character: tuxside
+      - type: slide
+        image: ice_1_slide
+        events:
+          - type: text
+            text: 'This is my past data on how the arctic ice looked back in 1984...'
+      - type: slide
+        image: ice_2_slide
+        events:
+          - type: event
+            event: SET_WEATHER_INTENSITY
+            content: 1.0
+          - type: text
+            text: 'And this is how it looks on one of the more recent observations.'
+          - type: text
+            text: 'Wow that is a massive difference! What is happening to all the ice?'
+          - type: text
+            text: 'I should keep searching for more observations...'
+          - type: text
+            text: "You've received a thermometer!"
+          - type: event
+            event: SET_GLOBAL
+            content: {key: 'thermometer', value: 1}
+      - type: text
+        text: 'The weather has got really bad since I was in there, I better be careful.'
+        character: tuxside
       - type: check
         key: anemometer
         check: 1
@@ -43,17 +64,16 @@ entities:
   - x: 60
     y: 44
     tileScale: 3
-    sprite: berg_big
+    sprite: station2
     events:
     - type: slide
       image: snow_slide
       events:
       - type: text
         text: "Welcome to the Research Tent!"
-        character: walrusside
+        character: tuxside
       - type: text
         text: "You've received an anemometer!"
-        character: walrusside
       - type: event
         event: SET_GLOBAL
         content: {key: 'anemometer', value: 1}
@@ -78,6 +98,7 @@ entities:
       y: 25
     - x: 29
       y: 12
+
 # Top, row 2
   - x: 32
     y: 4
@@ -90,6 +111,20 @@ entities:
       y: 18
     - x: 32
       y: 4
+
+  - x: 32
+    y: 17
+    sprite: empty
+    tileScale: 6
+    id: xox
+    events:
+      - type: text
+        text: "This may not be a good idea!"
+        character: tuxside
+      - type: event
+        event: DESTROY_ENTITY
+        content: xox
+
 # Bottom row 2
   - x: 32
     y: 34

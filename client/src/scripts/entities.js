@@ -108,6 +108,9 @@ export class FishEntity extends Entity {
         super(x, y, PIXI.loader.resources['fish'].texture, {
             id: id,
             events: [{
+                type: 'text',
+                text: 'You found a fish! Hunger replenished.',
+            }, {
                 type: 'event',
                 event: E_ADD_HUNGER,
                 content: 25,
