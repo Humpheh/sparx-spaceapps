@@ -15,10 +15,10 @@ entities:
             text: "I'll be visiting in July, so I'll need to choose a tent and sleeping bag suitable for the conditions then."
             character: tuxside
         hitboxes:
-          - x: -500
-            y: -500
-            w: 2000
-            h: 1500
+          - x: 821
+            y: 668
+            w: 159
+            h: 74
             showIf:
               key: NEVER_SHOW
               case: eq
