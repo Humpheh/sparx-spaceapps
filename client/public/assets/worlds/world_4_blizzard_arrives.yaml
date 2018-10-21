@@ -24,8 +24,8 @@ entities:
         text: >
           Whoa, watch your step, explorer!
           The weather changes quickly in the Arctic,
-          and there's now a nasty storm a-brewing!
-        character: walrusside
+          and there's now a nasty storm a-brewin'!
+        character: piratewalrusside
 
       - type: text
         text: >
